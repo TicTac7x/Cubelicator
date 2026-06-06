@@ -8,7 +8,6 @@ namespace ConsoleApp1
     {
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
-        public static readonly int STICK_RANGE = 128;
 
         private GamecubeController[] _controllers = new GamecubeController[4];
 
@@ -52,7 +51,28 @@ namespace ConsoleApp1
             _vigemClient = new ViGEmClient();
             for (int i = 0; i < _controllers.Length; i++)
             {
-                _controllers[i] = new GamecubeController(_vigemClient, new GamecubeControllerProfile());
+                _controllers[i] = new GamecubeController(_vigemClient, new GamecubeControllerProfile(), new GamecubeControllerCalibration(
+                    leftStickXMin: -104,
+                    leftStickXMax: 101,
+                    leftStickXCenter: -1,
+
+                    leftStickYMin: -115,
+                    leftStickYMax: 92,
+                    leftStickYCenter: -11,
+
+                    rightStickXMin: -87,
+                    rightStickXMax: 100,
+                    rightStickXCenter: 5,
+
+                    rightStickYMin: -92,
+                    rightStickYMax: 99,
+                    rightStickYCenter: 7,
+
+                    leftTriggerMin: 27,
+                    leftTriggerMax: 224,
+                    rightTriggerMin: 41,
+                    rightTriggerMax: 239
+                ));
             }
         }
 
@@ -125,18 +145,18 @@ namespace ConsoleApp1
 
                 Start = (b2 & 1) != 0,
                 Z = (b2 & 2) != 0,
-                R = (b2 & 4) != 0,
-                L = (b2 & 8) != 0,
+                RightTriggerButton = (b2 & 4) != 0,
+                LeftTriggerButton = (b2 & 8) != 0,
 
                 DpadLeft = (b1 & 0x10) != 0,
                 DpadRight = (b1 & 0x20) != 0,
                 DpadDown = (b1 & 0x40) != 0,
                 DpadUp = (b1 & 0x80) != 0,
 
-                LeftStickX = (short)((data[offset + 3] - STICK_RANGE)),
-                LeftStickY = (short)((data[offset + 4] - STICK_RANGE)),
-                RightStickX = (short)((data[offset + 5] - STICK_RANGE)),
-                RightStickY = (short)((data[offset + 6] - STICK_RANGE)),
+                LeftStickX = (short)((data[offset + 3] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
+                LeftStickY = (short)((data[offset + 4] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
+                RightStickX = (short)((data[offset + 5] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
+                RightStickY = (short)((data[offset + 6] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
 
                 LeftTrigger = data[offset + 7],
                 RightTrigger = data[offset + 8]

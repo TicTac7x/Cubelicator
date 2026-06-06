@@ -7,8 +7,8 @@ namespace ConsoleApp1
         public string Name { get; set; } = "Default";
 
         // Buttons
-        public Xbox360Button A { get; set; } = Xbox360Button.B;
-        public Xbox360Button B { get; set; } = Xbox360Button.A;
+        public Xbox360Button A { get; set; } = Xbox360Button.A;
+        public Xbox360Button B { get; set; } = Xbox360Button.B;
         public Xbox360Button X { get; set; } = Xbox360Button.X;
         public Xbox360Button Y { get; set; } = Xbox360Button.Y;
         public Xbox360Button Z { get; set; } = Xbox360Button.Back;

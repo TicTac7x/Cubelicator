@@ -1,10 +1,6 @@
 ﻿using LibUsbDotNet;
 using LibUsbDotNet.Main;
 using Nefarius.ViGEm.Client;
-using System;
-using System.Net.Sockets;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -12,6 +8,7 @@ namespace ConsoleApp1
     {
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
+        public static readonly int STICK_RANGE = 128;
 
         private GamecubeController[] _controllers = new GamecubeController[4];
 
@@ -22,18 +19,16 @@ namespace ConsoleApp1
         private CancellationTokenSource? _cts;
         private Task? _loopTask;
 
-        private GamecubeControllerState[] _lastStates = new GamecubeControllerState[4];
-
         public Adapter()
         {
             InitializeAdapter();
             CreateControllers();
-            StartLoop();
+            StartPolling();
         }
 
         private void InitializeAdapter()
         {
-            UsbDeviceFinder finder = new UsbDeviceFinder(DEVICE_VID, DEVICE_PID);
+            var finder = new UsbDeviceFinder(DEVICE_VID, DEVICE_PID);
 
             _device = UsbDevice.OpenUsbDevice(finder);
             if (_device == null)
@@ -47,8 +42,7 @@ namespace ConsoleApp1
             _writer = _device.OpenEndpointWriter(WriteEndpointID.Ep02);
 
             // Initialize adapter into streaming mode
-            byte[] buffer = new byte[256];
-            UsbSetupPacket usbSetupPacket = new UsbSetupPacket(0x21, 11, 0x0001, 0, 0);
+            var usbSetupPacket = new UsbSetupPacket(0x21, 11, 0x0001, 0, 0);
             _device.ControlTransfer(ref usbSetupPacket, IntPtr.Zero, 0, out _);
             _writer.Write([0x13], 5000, out int _);
         }
@@ -58,11 +52,11 @@ namespace ConsoleApp1
             _vigemClient = new ViGEmClient();
             for (int i = 0; i < _controllers.Length; i++)
             {
-                _controllers[i] = new GamecubeController(_vigemClient);
+                _controllers[i] = new GamecubeController(_vigemClient, new GamecubeControllerProfile());
             }
         }
 
-        private void StartLoop()
+        private void StartPolling()
         {
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
@@ -76,8 +70,7 @@ namespace ConsoleApp1
                     if (_device == null || _reader == null)
                         break;
 
-                    var result = _reader.Read(data, 10000, out int len);
-                    App.DebugOutput(BitConverter.ToString(data, 0, len));
+                    var result = _reader.Read(data, 5000000, out int len);
 
                     if (result != ErrorCode.None || len <= 0)
                         continue;
@@ -87,11 +80,7 @@ namespace ConsoleApp1
 
                     for (int port = 0; port < _controllers.Length; port++)
                     {
-                        var state = DecodeAdapterHexDataToControllerState(data, port);
-
-                        PrintIfChanged(port, state);
-
-                        _controllers[port].SetState(state);
+                        _controllers[port].SetState(DecodeAdapterHexDataToControllerState(data, port));
                     }
                 }
             }, token);
@@ -144,31 +133,14 @@ namespace ConsoleApp1
                 DpadDown = (b1 & 0x40) != 0,
                 DpadUp = (b1 & 0x80) != 0,
 
-                LeftStickX = (short)((data[offset + 3] - 128)),
-                LeftStickY = (short)((data[offset + 4] - 128)),
-                RightStickX = (short)((data[offset + 5] - 128)),
-                RightStickY = (short)((data[offset + 6] - 128)),
+                LeftStickX = (short)((data[offset + 3] - STICK_RANGE)),
+                LeftStickY = (short)((data[offset + 4] - STICK_RANGE)),
+                RightStickX = (short)((data[offset + 5] - STICK_RANGE)),
+                RightStickY = (short)((data[offset + 6] - STICK_RANGE)),
 
-                TriggerLeft = data[offset + 7],
-                TriggerRight = data[offset + 8]
+                LeftTrigger = data[offset + 7],
+                RightTrigger = data[offset + 8]
             };
-        }
-
-        private void PrintIfChanged(int port, GamecubeControllerState state)
-        {
-            if (!_lastStates[port].Equals(state))
-            {
-                App.DebugOutput(
-    $"P{port} " +
-    $"A:{state.A} B:{state.B} X:{state.X} Y:{state.Y} " +
-    $"L:{state.L} R:{state.R} Z:{state.Z} Start:{state.Start} | " +
-    $"Up:{state.DpadUp} Down:{state.DpadDown} Left:{state.DpadLeft} Right:{state.DpadRight} | " +
-    $"LX:{state.LeftStickX} LY:{state.LeftStickY} RX:{state.RightStickX} RY:{state.RightStickY} | " +
-    $"TL:{state.TriggerLeft} TR:{state.TriggerRight}"
-);
-
-                _lastStates[port] = state;
-            }
         }
     }
 }

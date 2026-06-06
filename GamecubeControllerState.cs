@@ -10,6 +10,6 @@
         public short LeftStickX, LeftStickY;
         public short RightStickX, RightStickY;
 
-        public byte TriggerLeft, TriggerRight;
+        public byte LeftTrigger, RightTrigger;
     }
 }

@@ -27,9 +27,13 @@ namespace ConsoleApp1
         public Xbox360Slider RightTrigger { get; set; } = Xbox360Slider.RightTrigger;
 
         // Calibration
-        public float LeftStickDeadzone { get; set; } = 0.2f;
-        public float RightStickDeadzone { get; set; } = 0.1f;
-        public float LeftTriggerDeadzone { get; set; } = 0.15f;
-        public float RightTriggerDeadzone { get; set; } = 0.20f;
+        public float LeftStickDeadzone { get; set; } = 0f;
+        public float RightStickDeadzone { get; set; } = 0f;
+        public float LeftTriggerDeadzone { get; set; } = 0f;
+        public float RightTriggerDeadzone { get; set; } = 0f;
+        //public float LeftStickDeadzone { get; set; } = 0.2f;
+        //public float RightStickDeadzone { get; set; } = 0.1f;
+        //public float LeftTriggerDeadzone { get; set; } = 0.15f;
+        //public float RightTriggerDeadzone { get; set; } = 0.20f;
     }
 }

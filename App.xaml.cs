@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ConsoleApp1
+namespace CubeGem
 {
     public partial class App : System.Windows.Application
     {
@@ -11,34 +11,36 @@ namespace ConsoleApp1
         {
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
             _adapter = new Adapter();
-            CreateTrayIcon();
+            _notifyIcon = CreateTrayIcon();
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override void OnExit(ExitEventArgs args)
         {
             _adapter?.Stop();
             _notifyIcon.Visible = false;
             _notifyIcon.Dispose();
-            base.OnExit(e);
+            base.OnExit(args);
         }
 
-        private void CreateTrayIcon()
+        private NotifyIcon CreateTrayIcon()
         {
-            _notifyIcon = new NotifyIcon
+            var notifyIcon = new NotifyIcon
             {
                 Icon = SystemIcons.Application,
-                Text = "My Controller App",
+                Text = Strings.AppName,
                 Visible = true
             };
 
             var menu = new ContextMenuStrip();
 
-            menu.Items.Add("Exit", null, (_, _) =>
+            menu.Items.Add(Strings.Exit + " " + Strings.AppName, null, (_, _) =>
             {
                 Shutdown();
             });
 
-            _notifyIcon.ContextMenuStrip = menu;
+            notifyIcon.ContextMenuStrip = menu;
+
+            return notifyIcon;
         }
 
         public static void DebugOutput(object a)

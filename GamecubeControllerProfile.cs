@@ -1,6 +1,6 @@
 ﻿using Nefarius.ViGEm.Client.Targets.Xbox360;
 
-namespace ConsoleApp1
+namespace CubeGem
 {
     internal class GamecubeControllerProfile
     {
@@ -26,7 +26,7 @@ namespace ConsoleApp1
         public Xbox360Slider LeftTrigger { get; set; } = Xbox360Slider.LeftTrigger;
         public Xbox360Slider RightTrigger { get; set; } = Xbox360Slider.RightTrigger;
 
-        // Calibration
+        // Deadzones
         public float LeftStickDeadzone { get; set; } = 0f;
         public float RightStickDeadzone { get; set; } = 0f;
         public float LeftTriggerDeadzone { get; set; } = 0f;
@@ -35,5 +35,12 @@ namespace ConsoleApp1
         //public float RightStickDeadzone { get; set; } = 0.1f;
         //public float LeftTriggerDeadzone { get; set; } = 0.15f;
         //public float RightTriggerDeadzone { get; set; } = 0.20f;
+
+        // Sensitivity
+        public double LeftStickSensitivity { get; set; } = 2f;
+        public double RightStickSensitivity { get; set; } = 2f;
+        public double LeftTriggerSensitivity { get; set; } = 2f;
+        public double RightTriggerSensitivity { get; set; } = 2f;
+
     }
 }

@@ -4,7 +4,7 @@ using Nefarius.ViGEm.Client;
 
 namespace CubeGem
 {
-    internal class Adapter
+    internal class GamecubeAdapter
     {
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
@@ -18,7 +18,7 @@ namespace CubeGem
         private CancellationTokenSource? _cts;
         private Task? _loopTask;
 
-        public Adapter()
+        public GamecubeAdapter()
         {
             InitializeAdapter();
             CreateControllers();
@@ -51,7 +51,8 @@ namespace CubeGem
             _vigemClient = new ViGEmClient();
             for (int i = 0; i < _controllers.Length; i++)
             {
-                _controllers[i] = new GamecubeController(_vigemClient, new GamecubeControllerProfile(), new GamecubeControllerCalibration(
+                int port = i + 1;
+                var controller = new GamecubeController(_vigemClient, new GamecubeControllerProfile(), new GamecubeControllerCalibration(
                     leftStickXMin: -104,
                     leftStickXMax: 101,
                     leftStickXCenter: -1,
@@ -73,7 +74,21 @@ namespace CubeGem
                     rightTriggerMin: 41,
                     rightTriggerMax: 239
                 ));
+
+                controller.RumbleChanged += (bool rumble) =>
+                {
+                    SetControllerRumble(port, rumble);
+                };
+
+                _controllers[i] = controller;
             }
+        }
+
+        private void SetControllerRumble(int port, bool rumble)
+        {
+            byte[] report = [0x11, 0, 0, 0, 0];
+            report[port] = (byte) (rumble ? 1 : 0);
+            _writer?.Write(report, 1000, out _);
         }
 
         private void StartPolling()

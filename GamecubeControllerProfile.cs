@@ -37,10 +37,10 @@ namespace CubeGem
         //public float RightTriggerDeadzone { get; set; } = 0.20f;
 
         // Sensitivity
-        public double LeftStickSensitivity { get; set; } = 2f;
-        public double RightStickSensitivity { get; set; } = 2f;
-        public double LeftTriggerSensitivity { get; set; } = 2f;
-        public double RightTriggerSensitivity { get; set; } = 2f;
+        public float LeftStickSensitivity { get; set; } = 1.6f;
+        public float RightStickSensitivity { get; set; } = 1.6f;
+        public float LeftTriggerSensitivity { get; set; } = 1f;
+        public float RightTriggerSensitivity { get; set; } = 1f;
 
     }
 }

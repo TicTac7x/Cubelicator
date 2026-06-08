@@ -4,13 +4,13 @@ namespace CubeGem
 {
     public partial class App : System.Windows.Application
     {
-        private readonly Adapter _adapter;
+        private readonly GamecubeAdapter _adapter;
         private NotifyIcon _notifyIcon;
 
         public App()
         {
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            _adapter = new Adapter();
+            _adapter = new GamecubeAdapter();
             _notifyIcon = CreateTrayIcon();
         }
 

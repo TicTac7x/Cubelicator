@@ -1,4 +1,4 @@
-﻿namespace CubeGem
+﻿namespace Cubelicator
 {
     internal struct GamecubeControllerState
     {

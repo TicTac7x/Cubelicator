@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CubeGem
+namespace Cubelicator
 {
     public partial class App : System.Windows.Application
     {

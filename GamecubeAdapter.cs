@@ -2,7 +2,7 @@
 using LibUsbDotNet.Main;
 using Nefarius.ViGEm.Client;
 
-namespace CubeGem
+namespace Cubelicator
 {
     internal class GamecubeAdapter
     {

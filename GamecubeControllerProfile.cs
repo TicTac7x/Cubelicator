@@ -1,6 +1,6 @@
 ﻿using Nefarius.ViGEm.Client.Targets.Xbox360;
 
-namespace CubeGem
+namespace Cubelicator
 {
     internal class GamecubeControllerProfile
     {

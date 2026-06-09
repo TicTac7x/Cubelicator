@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CubeGem
+namespace Cubelicator
 {
     internal static class Strings
     {
-        public static readonly string AppName = "CubeGem";
+        public static readonly string AppName = "Cubelicator";
         public static readonly string Exit = "Exit";
     }
 }

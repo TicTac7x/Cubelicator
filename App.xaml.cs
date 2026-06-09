@@ -1,51 +1,32 @@
-﻿using System.Windows;
+﻿using Microsoft.UI.Xaml;
 
-namespace Cubelicator
+namespace Cubelicator;
+
+public partial class App : Application
 {
-    public partial class App : System.Windows.Application
+    private readonly GamecubeAdapter _adapter;
+    private readonly TrayIcon _trayIcon;
+    private Window1? _window1;
+
+    public App()
     {
-        private readonly GamecubeAdapter _adapter;
-        private NotifyIcon _notifyIcon;
+        InitializeComponent();
+        _adapter = new GamecubeAdapter();
+        _trayIcon = new TrayIcon(Exit);
+        _window1 = new Window1();
+        _window1.Activate();
+    }
 
-        public App()
-        {
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            _adapter = new GamecubeAdapter();
-            _notifyIcon = CreateTrayIcon();
-        }
+    public new void Exit()
+    {
+        _window1?.Close();
+        _adapter.Stop();
+        _trayIcon.Stop();
+        Current.Exit();
+    }
 
-        protected override void OnExit(ExitEventArgs args)
-        {
-            _adapter?.Stop();
-            _notifyIcon.Visible = false;
-            _notifyIcon.Dispose();
-            base.OnExit(args);
-        }
-
-        private NotifyIcon CreateTrayIcon()
-        {
-            var notifyIcon = new NotifyIcon
-            {
-                Icon = SystemIcons.Application,
-                Text = Strings.AppName,
-                Visible = true
-            };
-
-            var menu = new ContextMenuStrip();
-
-            menu.Items.Add(Strings.Exit + " " + Strings.AppName, null, (_, _) =>
-            {
-                Shutdown();
-            });
-
-            notifyIcon.ContextMenuStrip = menu;
-
-            return notifyIcon;
-        }
-
-        public static void DebugOutput(object a)
-        {
-            System.Diagnostics.Debug.WriteLine(a);
-        }
+    public static void DebugOutput(object a)
+    {
+        System.Diagnostics.Debug.WriteLine(a);
     }
 }

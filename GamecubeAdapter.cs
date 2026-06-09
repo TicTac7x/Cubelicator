@@ -9,12 +9,11 @@ namespace CubeGem
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
 
-        private GamecubeController[] _controllers = new GamecubeController[4];
-
+        private readonly GamecubeController[] _controllers = new GamecubeController[4];
         private ViGEmClient? _vigemClient;
-        private UsbDevice? _device;
-        private UsbEndpointReader? _reader;
-        private UsbEndpointWriter? _writer;
+        private UsbDevice? _usbDevice;
+        private UsbEndpointReader? _usbReader;
+        private UsbEndpointWriter? _usbWriter;
         private CancellationTokenSource? _cts;
         private Task? _loopTask;
 
@@ -29,21 +28,21 @@ namespace CubeGem
         {
             var finder = new UsbDeviceFinder(DEVICE_VID, DEVICE_PID);
 
-            _device = UsbDevice.OpenUsbDevice(finder);
-            if (_device == null)
+            _usbDevice = UsbDevice.OpenUsbDevice(finder);
+            if (_usbDevice == null)
             {
                 System.Diagnostics.Debug.WriteLine("Adapter device not found.");
                 return;
 
             }
 
-            _reader = _device.OpenEndpointReader(ReadEndpointID.Ep01);
-            _writer = _device.OpenEndpointWriter(WriteEndpointID.Ep02);
+            _usbReader = _usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
+            _usbWriter = _usbDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
 
             // Initialize adapter into streaming mode
             var usbSetupPacket = new UsbSetupPacket(0x21, 11, 0x0001, 0, 0);
-            _device.ControlTransfer(ref usbSetupPacket, IntPtr.Zero, 0, out _);
-            _writer.Write([0x13], 5000, out int _);
+            _usbDevice.ControlTransfer(ref usbSetupPacket, IntPtr.Zero, 0, out _);
+            _usbWriter.Write([0x13], 5000, out int _);
         }
 
         private void CreateControllers()
@@ -88,7 +87,7 @@ namespace CubeGem
         {
             byte[] report = [0x11, 0, 0, 0, 0];
             report[port] = (byte) (rumble ? 1 : 0);
-            _writer?.Write(report, 1000, out _);
+            _usbWriter?.Write(report, 1000, out _);
         }
 
         private void StartPolling()
@@ -102,10 +101,10 @@ namespace CubeGem
 
                 while (!token.IsCancellationRequested)
                 {
-                    if (_device == null || _reader == null)
+                    if (_usbDevice == null || _usbReader == null)
                         break;
 
-                    var result = _reader.Read(data, 5000000, out int len);
+                    var result = _usbReader.Read(data, 5000000, out int len);
 
                     if (result != ErrorCode.None || len <= 0)
                         continue;
@@ -136,7 +135,7 @@ namespace CubeGem
             {
                 controller?.Disconnect();
             }
-            _device?.Close();
+            _usbDevice?.Close();
 
             UsbDevice.Exit();
         }

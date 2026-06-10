@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="Cubelicator.UI.Controls.IconDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Viewbox Width="16" Height="16">
+    <Canvas Width="16" Height="16">
+
+        <Rectangle
+            x:Name="DotTop"
+            Width="4"
+            Height="3"
+            RadiusX="3"
+            RadiusY="3"
+            Fill="{ThemeResource DeviceForeground}"
+            Canvas.Left="6"
+            Canvas.Top="1" />
+
+        <Rectangle
+            x:Name="DotMiddle"
+            Width="4"
+            Height="3"
+            RadiusX="3"
+            RadiusY="3"
+            Fill="{ThemeResource DeviceForeground}"
+            Canvas.Left="6"
+            Canvas.Top="6" />
+
+        <Rectangle
+            x:Name="DotBottom"
+            Width="4"
+            Height="3"
+            RadiusX="3"
+            RadiusY="3"
+            Fill="{ThemeResource DeviceForeground}"
+            Canvas.Left="6"
+            Canvas.Top="12" />
+
+    </Canvas>
+</Viewbox>
+</UserControl>

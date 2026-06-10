@@ -56,28 +56,7 @@ namespace Cubelicator
             for (int i = 0; i < _controllers.Length; i++)
             {
                 int port = i + 1;
-                var controller = new GamecubeController(_vigemClient, new GamecubeControllerProfile(), new GamecubeControllerCalibration(
-                    leftStickXMin: -104,
-                    leftStickXMax: 101,
-                    leftStickXCenter: -1,
-
-                    leftStickYMin: -115,
-                    leftStickYMax: 92,
-                    leftStickYCenter: -11,
-
-                    rightStickXMin: -87,
-                    rightStickXMax: 100,
-                    rightStickXCenter: 5,
-
-                    rightStickYMin: -92,
-                    rightStickYMax: 99,
-                    rightStickYCenter: 7,
-
-                    leftTriggerMin: 27,
-                    leftTriggerMax: 224,
-                    rightTriggerMin: 41,
-                    rightTriggerMax: 239
-                ));
+                var controller = new GamecubeController(_vigemClient, new GamecubeControllerProfile());
 
                 controller.OnRumbleChanged += (bool rumble) =>
                 {
@@ -185,6 +164,11 @@ namespace Cubelicator
                 LeftTrigger = data[offset + 7],
                 RightTrigger = data[offset + 8]
             };
+        }
+
+        public void SetPortCalibration(int port, GamecubeControllerCalibration calibration)
+        {
+            _controllers[port - 1].SetCalibration(calibration);
         }
     }
 }

@@ -31,6 +31,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="Assets\Uncalibrated.svg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Page Update="UI\Controls\ControllerPort.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>

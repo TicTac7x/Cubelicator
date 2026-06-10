@@ -55,4 +55,9 @@ public sealed partial class MainWindow : Window
         e.Handled = true;
         AppWindow.Hide();
     }
+
+    public void SetPortCalibration(int port, GamecubeControllerCalibration calibration)
+    {
+        _controllerPortTiles[port - 1].SetControllerCalibration(calibration);
+    }
 }

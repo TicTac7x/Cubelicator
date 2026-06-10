@@ -1,20 +1,24 @@
 ﻿using Microsoft.UI.Xaml;
 using Cubelicator.UI.Windows;
+using Cubelicator.Services;
 
 namespace Cubelicator;
 
 public partial class App : Application
 {
-    private readonly GamecubeAdapter _gamecubeAdapter;
-    private readonly TrayIcon _trayIcon;
     private readonly MainWindow _mainWindow;
+    private readonly TrayIcon _trayIcon;
+    private readonly CalibrationManager _calibrationManager;
+    private readonly GamecubeAdapter _gamecubeAdapter;
 
     public App()
     {
         InitializeComponent();
         _mainWindow = new MainWindow();
-        _gamecubeAdapter = CreateGamecubeAdapter();
         _trayIcon = CreateTrayIcon();
+        _gamecubeAdapter = CreateGamecubeAdapter();
+        _calibrationManager = CreateCalibrationManager();
+        _calibrationManager.LoadCalibrations();
         _mainWindow.Activate();
     }
 
@@ -49,6 +53,19 @@ public partial class App : Application
         trayIcon.OnAppExit += Exit;
 
         return trayIcon;
+    }
+
+    private CalibrationManager CreateCalibrationManager()
+    {
+        var calibrationManager = new CalibrationManager();
+
+        calibrationManager.OnCalibrationLoaded += (port, calibration) =>
+        {
+            _gamecubeAdapter.SetPortCalibration(port, calibration);
+            _mainWindow.SetPortCalibration(port, calibration);
+        };
+
+        return calibrationManager;
     }
 
     public static void DebugOutput(object a)

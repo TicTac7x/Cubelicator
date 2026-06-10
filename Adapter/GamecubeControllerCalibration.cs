@@ -1,6 +1,6 @@
 ﻿namespace Cubelicator
 {
-    internal class GamecubeControllerCalibration
+    public class GamecubeControllerCalibration
     {
         public int LeftStickXMin { get; set; }
         public int LeftStickXMax { get; set; }
@@ -23,6 +23,8 @@
 
         public int RightTriggerMin { get; set; }
         public int RightTriggerMax { get; set; }
+
+        public GamecubeControllerCalibration() { }
 
         public GamecubeControllerCalibration(
             int leftStickXMin, int leftStickXMax, int leftStickXCenter,

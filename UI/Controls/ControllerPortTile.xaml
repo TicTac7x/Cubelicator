@@ -17,6 +17,43 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <Image
+                x:Name="IconCalibrated"
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Source="ms-appx:///Assets/Calibrated.svg"
+                Width="16"
+                Height="16"
+                Visibility="Collapsed"/>
+
+            <Image
+                x:Name="IconNotCalibrated"
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Source="ms-appx:///Assets/NotCalibrated.svg"
+                Width="16"
+                Height="16"
+                ToolTipService.ToolTip="{x:Bind TooltipControllerIsNotCalibrated}"
+                Visibility="Collapsed"/>
+
+            <Button
+                x:Name="DetailsButton"
+                Background="Transparent"
+                BorderThickness="0"
+                Padding="5"
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                PointerEntered="DetailsButton_PointerEntered"
+                PointerExited="DetailsButton_PointerExited">
+
+                <controls:IconDetails
+                    Width="16"
+                    Height="16"/>
+            </Button>
+
             <Grid x:Name="Controller" Grid.Row="0" Padding="20" Visibility="Collapsed">
                 <controls:GamecubeController />
             </Grid>

@@ -12,7 +12,7 @@
 
             <SolidColorBrush x:Key="AppBackground" Color="#222222"/>
             <SolidColorBrush x:Key="DeviceBackground" Color="#111111"/>
-            <SolidColorBrush x:Key="DeviceForeground" Color="#ffffff"/>
+            <SolidColorBrush x:Key="DeviceForeground" Color="LightGray"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

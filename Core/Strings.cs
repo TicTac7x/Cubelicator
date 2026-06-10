@@ -13,5 +13,7 @@ namespace Cubelicator
         public const string Open = "Open";
         public const string Controller = "Controller";
         public const string Port = "Port";
+        public const string TooltipControllerIsNotCalibrated = "Controller is not calibrated";
+        public const string TooltipControllerIsCalibrated = "Controller is calibrated";
     }
 }

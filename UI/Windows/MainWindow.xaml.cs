@@ -58,6 +58,6 @@ public sealed partial class MainWindow : Window
 
     public void SetPortCalibration(int port, GamecubeControllerCalibration calibration)
     {
-        _controllerPortTiles[port - 1].SetControllerCalibration(calibration);
+        _controllerPortTiles[port - 1].SetPortCalibration(calibration);
     }
 }

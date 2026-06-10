@@ -7,7 +7,6 @@ namespace Cubelicator.UI.Controls
 {
     public sealed partial class ControllerPortTile : UserControl
     {
-
         public ControllerPortTile(int port)
         {
             InitializeComponent();
@@ -28,7 +27,7 @@ namespace Cubelicator.UI.Controls
             });
         }
 
-        public void SetControllerCalibration(GamecubeControllerCalibration calibration)
+        public void SetPortCalibration(GamecubeControllerCalibration calibration)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -38,7 +37,7 @@ namespace Cubelicator.UI.Controls
                 ToolTipService.SetToolTip(
                     IconCalibrated,
                     $"""
-                    {Strings.TooltipControllerIsCalibrated}
+                    {Strings.TooltipPortIsCalibrated}
 
                     Left Stick X: {calibration.LeftStickXMin} / {calibration.LeftStickXCenter} / {calibration.LeftStickXMax}
                     Left Stick Y: {calibration.LeftStickYMin} / {calibration.LeftStickYCenter} / {calibration.LeftStickYMax}
@@ -57,8 +56,8 @@ namespace Cubelicator.UI.Controls
             ControllerText.Text = ControllerText.Text + " " + port;
         }
 
-        public string TooltipControllerIsNotCalibrated => Strings.TooltipControllerIsNotCalibrated;
-        public string TooltipControllerIsCalibrated => Strings.TooltipControllerIsCalibrated;
+        public string TooltipControllerIsNotCalibrated => Strings.TooltipPortIsNotCalibrated;
+        public string TooltipControllerIsCalibrated => Strings.TooltipPortIsCalibrated;
 
         private void DetailsButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {

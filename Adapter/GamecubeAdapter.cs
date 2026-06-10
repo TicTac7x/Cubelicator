@@ -167,10 +167,10 @@ namespace Cubelicator
                 DpadDown = (b1 & 0x40) != 0,
                 DpadUp = (b1 & 0x80) != 0,
 
-                LeftStickX = (short)((data[offset + 3] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
-                LeftStickY = (short)((data[offset + 4] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
-                RightStickX = (short)((data[offset + 5] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
-                RightStickY = (short)((data[offset + 6] - Constants.GAMECUBE_CONTROLLER_STICK_RANGE)),
+                LeftStickX = (short)((data[offset + 3] - Constants.GamecubeControllerStickRange)),
+                LeftStickY = (short)((data[offset + 4] - Constants.GamecubeControllerStickRange)),
+                RightStickX = (short)((data[offset + 5] - Constants.GamecubeControllerStickRange)),
+                RightStickY = (short)((data[offset + 6] - Constants.GamecubeControllerStickRange)),
 
                 LeftTrigger = data[offset + 7],
                 RightTrigger = data[offset + 8]

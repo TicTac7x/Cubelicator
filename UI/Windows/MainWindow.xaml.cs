@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 
-namespace Cubelicator;
+namespace Cubelicator.UI.Windows;
 
 public sealed partial class MainWindow : Window
 {
@@ -11,6 +11,10 @@ public sealed partial class MainWindow : Window
         SetTitleBar(TitleBar);
         TitleBar.Title = Strings.AppName;
         Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
+        ControllerPortTile1.SetPort(1);
+        ControllerPortTile2.SetPort(2);
+        ControllerPortTile3.SetPort(3);
+        ControllerPortTile4.SetPort(4);
     }
 
     private void UpdateTitleBarTheme()

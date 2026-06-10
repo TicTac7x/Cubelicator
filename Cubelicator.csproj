@@ -9,6 +9,12 @@
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="ControllerView.xaml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Remove="UI\Views\GamecubeController.xaml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="LibUsbDotNet" Version="2.2.29" />
@@ -20,5 +26,18 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+		<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="UI\Views\GamecubeController.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="ControllerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 </Project>

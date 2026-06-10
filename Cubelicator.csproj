@@ -11,6 +11,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="ControllerView.xaml" />
+	  <None Remove="UI\Controls\ControllerPort.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Remove="UI\Views\GamecubeController.xaml" />
@@ -30,6 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Page Update="UI\Controls\ControllerPort.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	  <None Update="UI\Views\GamecubeController.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>

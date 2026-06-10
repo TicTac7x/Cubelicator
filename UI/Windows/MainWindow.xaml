@@ -16,24 +16,14 @@
             </TitleBar.IconSource>
         </TitleBar>
 
-        <Grid
+        <StackPanel
+            x:Name="ControllerPortTiles"
             Grid.Row="1"
             Margin="20"
-            ColumnSpacing="30"
+            Spacing="30"
+            Orientation="Horizontal"
             HorizontalAlignment="Center">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <controls:ControllerPortTile x:Name="ControllerPortTile1" Grid.Column="0"/>
-            <controls:ControllerPortTile x:Name="ControllerPortTile2" Grid.Column="1"/>
-            <controls:ControllerPortTile x:Name="ControllerPortTile3" Grid.Column="2"/>
-            <controls:ControllerPortTile x:Name="ControllerPortTile4" Grid.Column="3"/>
-        </Grid>
+        </StackPanel>
     </Grid>
 
 </Window>

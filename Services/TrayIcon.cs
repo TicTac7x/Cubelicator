@@ -5,16 +5,17 @@ namespace Cubelicator;
 
 public sealed class TrayIcon
 {
+    public event Action OnOpenMainWindow = delegate { };
+    public event Action OnAppExit = delegate { };
+
     private readonly NotifyIcon _notifyIcon;
 
-    public TrayIcon(Action ExitApp)
+    public TrayIcon()
     {
         var menu = new ContextMenuStrip();
 
-        menu.Items.Add(Strings.Exit + " " + Strings.AppName, null, (_, _) =>
-        {
-            ExitApp();
-        });
+        menu.Items.Add(Strings.Open, null, (_, _) => OnOpenMainWindow.Invoke());
+        menu.Items.Add(Strings.Exit, null, (_, _) => OnAppExit.Invoke());
 
         _notifyIcon = new NotifyIcon
         {

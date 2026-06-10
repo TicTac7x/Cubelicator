@@ -8,7 +8,10 @@ namespace Cubelicator
 {
     internal static class Strings
     {
-        public static readonly string AppName = "Cubelicator";
-        public static readonly string Exit = "Exit";
+        public const string AppName = "Cubelicator";
+        public const string Exit = "Exit";
+        public const string Open = "Open";
+        public const string Controller = "Controller";
+        public const string Port = "Port";
     }
 }

@@ -5,25 +5,50 @@ namespace Cubelicator;
 
 public partial class App : Application
 {
-    private readonly GamecubeAdapter _adapter;
+    private readonly GamecubeAdapter _gamecubeAdapter;
     private readonly TrayIcon _trayIcon;
-    private MainWindow? _mainWindow;
+    private readonly MainWindow _mainWindow;
 
     public App()
     {
         InitializeComponent();
-        _adapter = new GamecubeAdapter();
-        _trayIcon = new TrayIcon(Exit);
         _mainWindow = new MainWindow();
+        _gamecubeAdapter = CreateGamecubeAdapter();
+        _trayIcon = CreateTrayIcon();
         _mainWindow.Activate();
     }
 
     public new void Exit()
     {
-        _mainWindow?.Close();
-        _adapter.Stop();
+        _mainWindow.Close();
+        _gamecubeAdapter.Stop();
         _trayIcon.Stop();
         Current.Exit();
+    }
+
+    private void OpenMainWindow()
+    {
+        _mainWindow.Activate();
+    }
+
+    private GamecubeAdapter CreateGamecubeAdapter()
+    {
+        var gamecubeAdapter = new GamecubeAdapter();
+
+        gamecubeAdapter.OnControllerConnectionChanged += (port, connected) =>
+            _mainWindow.OnControllerConnectionChanged(port, connected);
+
+        return gamecubeAdapter;
+    }
+
+    private TrayIcon CreateTrayIcon()
+    {
+        var trayIcon = new TrayIcon();
+
+        trayIcon.OnOpenMainWindow += OpenMainWindow;
+        trayIcon.OnAppExit += Exit;
+
+        return trayIcon;
     }
 
     public static void DebugOutput(object a)

@@ -6,7 +6,9 @@ namespace Cubelicator
 {
     internal class GamecubeController
     {
-        public event Action<bool> RumbleChanged = delegate { };
+        public event Action<bool> OnConnectionChanged = delegate { };
+        public event Action<bool> OnRumbleChanged = delegate { };
+
         private readonly IXbox360Controller _controller;
         private bool _connected = false;
         private readonly GamecubeControllerProfile _profile;
@@ -25,7 +27,7 @@ namespace Cubelicator
             var controller = vigem.CreateXbox360Controller();
             controller.FeedbackReceived += (sender, args) =>
             {
-                RumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
+                OnRumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
             };
 
             return controller;
@@ -47,11 +49,14 @@ namespace Cubelicator
             if (_connected != state.Connected)
             {
                 _connected = state.Connected;
-
-                if (_connected)
+                if (state.Connected)
+                {
                     _controller.Connect();
-                else
+                } else
+                {
                     _controller.Disconnect();
+                }
+                OnConnectionChanged.Invoke(state.Connected);
             }
 
             if (!state.Connected)

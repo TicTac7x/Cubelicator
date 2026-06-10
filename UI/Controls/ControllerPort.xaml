@@ -1,0 +1,53 @@
+<UserControl
+    x:Class="Cubelicator.UI.Controls.ControllerPort"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Viewbox>
+		<Canvas Width="200" Height="200">
+
+			<Ellipse Width="200" Height="200" Fill="#404040"/>
+
+			<Path Fill="#121212"
+				  Data="M148.5 48
+                    C149.784 48 151.024 48.4886 151.929 49.3995
+                    C164.953 62.5062 173 80.5633 173 100.5
+                    C173 140.541 140.541 173 100.5 173
+                    C60.4594 173 28 140.541 28 100.5
+                    C28 80.5633 36.0473 62.5062 49.0707 49.3995
+                    C49.9758 48.4886 51.2163 48 52.5004 48
+                    H148.5Z"/>
+
+			<Rectangle Canvas.Left="65"
+					   Canvas.Top="99"
+					   Width="70"
+					   Height="12"
+					   Fill="#2C2C2C"/>
+
+			<Path Fill="#997500"
+				  Data="M115 111H135C135 113.209 133.209 115 131 115H115V111Z"/>
+
+			<Rectangle Canvas.Left="89"
+					   Canvas.Top="111"
+					   Width="22"
+					   Height="4"
+					   Fill="#997500"/>
+
+			<Path Fill="#997500"
+				  Data="M65 111H85V115H69C66.7909 115 65 113.209 65 111Z"/>
+
+			<Path Fill="#997500"
+				  Data="M115 95H131C133.209 95 135 96.7909 135 99H115V95Z"/>
+
+			<Rectangle Canvas.Left="89"
+					   Canvas.Top="95"
+					   Width="22"
+					   Height="4"
+					   Fill="#997500"/>
+
+			<Path Fill="#997500"
+				  Data="M65 99C65 96.7909 66.7909 95 69 95H85V99H65Z"/>
+
+		</Canvas>
+	</Viewbox>
+</UserControl>

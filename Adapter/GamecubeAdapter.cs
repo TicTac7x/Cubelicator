@@ -6,8 +6,12 @@ namespace Cubelicator
 {
     internal class GamecubeAdapter
     {
+        public event Action<int, bool> OnControllerConnectionChanged = delegate { };
+
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
+        private const int ADAPTER_CONNECTED = 0x21;
+        private const int ADAPTER_RUMBLE = 0x11;
 
         private readonly GamecubeController[] _controllers = new GamecubeController[4];
         private ViGEmClient? _vigemClient;
@@ -17,6 +21,7 @@ namespace Cubelicator
         private CancellationTokenSource? _cts;
         private Task? _loopTask;
 
+        
         public GamecubeAdapter()
         {
             InitializeAdapter();
@@ -74,9 +79,14 @@ namespace Cubelicator
                     rightTriggerMax: 239
                 ));
 
-                controller.RumbleChanged += (bool rumble) =>
+                controller.OnRumbleChanged += (bool rumble) =>
                 {
                     SetControllerRumble(port, rumble);
+                };
+
+                controller.OnConnectionChanged += (bool connected) =>
+                {
+                    OnControllerConnectionChanged(port, connected);
                 };
 
                 _controllers[i] = controller;
@@ -85,7 +95,7 @@ namespace Cubelicator
 
         private void SetControllerRumble(int port, bool rumble)
         {
-            byte[] report = [0x11, 0, 0, 0, 0];
+            byte[] report = [ADAPTER_RUMBLE, 0, 0, 0, 0];
             report[port] = (byte) (rumble ? 1 : 0);
             _usbWriter?.Write(report, 1000, out _);
         }
@@ -104,12 +114,12 @@ namespace Cubelicator
                     if (_usbDevice == null || _usbReader == null)
                         break;
 
-                    var result = _usbReader.Read(data, 5000000, out int len);
+                    var result = _usbReader.Read(data, 5000, out int len);
 
                     if (result != ErrorCode.None || len <= 0)
                         continue;
 
-                    if (data[0] != 0x21)
+                    if (data[0] != ADAPTER_CONNECTED)
                         continue;
 
                     for (int port = 0; port < _controllers.Length; port++)

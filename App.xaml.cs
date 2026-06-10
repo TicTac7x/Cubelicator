@@ -14,11 +14,26 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        _calibrationManager = new CalibrationManager();
+        _gamecubeAdapter = new GamecubeAdapter();
         _mainWindow = new MainWindow();
-        _trayIcon = CreateTrayIcon();
-        _gamecubeAdapter = CreateGamecubeAdapter();
-        _calibrationManager = CreateCalibrationManager();
-        _calibrationManager.LoadCalibrations();
+        _trayIcon = new TrayIcon();
+
+        _trayIcon.OnOpenMainWindow += OpenMainWindow;
+        _trayIcon.OnAppExit += Exit;
+
+        _calibrationManager.OnCalibrationLoaded += (port, calibration) =>
+            _gamecubeAdapter.SetPortCalibration(port, calibration);
+
+        _gamecubeAdapter.OnControllerConnectionChanged += (port, connected) =>
+            _mainWindow.OnControllerConnectionChanged(port, connected);
+
+        _calibrationManager.OnCalibrationLoaded += (port, calibration) =>
+            _mainWindow.SetPortCalibration(port, calibration);
+
+        _gamecubeAdapter.Start();
+        _calibrationManager.Start();
         _mainWindow.Activate();
     }
 
@@ -33,39 +48,6 @@ public partial class App : Application
     private void OpenMainWindow()
     {
         _mainWindow.Activate();
-    }
-
-    private GamecubeAdapter CreateGamecubeAdapter()
-    {
-        var gamecubeAdapter = new GamecubeAdapter();
-
-        gamecubeAdapter.OnControllerConnectionChanged += (port, connected) =>
-            _mainWindow.OnControllerConnectionChanged(port, connected);
-
-        return gamecubeAdapter;
-    }
-
-    private TrayIcon CreateTrayIcon()
-    {
-        var trayIcon = new TrayIcon();
-
-        trayIcon.OnOpenMainWindow += OpenMainWindow;
-        trayIcon.OnAppExit += Exit;
-
-        return trayIcon;
-    }
-
-    private CalibrationManager CreateCalibrationManager()
-    {
-        var calibrationManager = new CalibrationManager();
-
-        calibrationManager.OnCalibrationLoaded += (port, calibration) =>
-        {
-            _gamecubeAdapter.SetPortCalibration(port, calibration);
-            _mainWindow.SetPortCalibration(port, calibration);
-        };
-
-        return calibrationManager;
     }
 
     public static void DebugOutput(object a)

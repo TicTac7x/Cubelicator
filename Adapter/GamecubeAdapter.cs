@@ -26,7 +26,6 @@ namespace Cubelicator
         {
             InitializeAdapter();
             CreateControllers();
-            StartPolling();
         }
 
         private void InitializeAdapter()
@@ -79,7 +78,7 @@ namespace Cubelicator
             _usbWriter?.Write(report, 1000, out _);
         }
 
-        private void StartPolling()
+        public void Start()
         {
             _cts = new CancellationTokenSource();
             var token = _cts.Token;

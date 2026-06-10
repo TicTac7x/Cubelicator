@@ -16,7 +16,7 @@ namespace Cubelicator.Services
             Directory.CreateDirectory(_basePath);
         }
 
-        public void LoadCalibrations()
+        public void Start()
         {
             for (int port = 1; port <= 4; port++)
             {

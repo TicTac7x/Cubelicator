@@ -25,7 +25,6 @@ namespace Cubelicator.UI.Controls
                 PortText.Visibility = portVisible;
                 Controller.Visibility = controllerVisible;
                 ControllerText.Visibility = controllerVisible;
-                IconNotCalibrated.Visibility = controllerVisible;
             });
         }
 

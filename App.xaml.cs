@@ -6,51 +6,39 @@ namespace Cubelicator;
 
 public partial class App : Application
 {
-    private readonly MainWindow _mainWindow;
-    private readonly TrayIcon _trayIcon;
-    private readonly CalibrationManager _calibrationManager;
-    private readonly GamecubeAdapter _gamecubeAdapter;
+    private readonly MainWindow mainWindow;
+    private readonly TrayIcon trayIcon;
+    private readonly CalibrationManager calibrationManager;
+    private readonly GamecubeAdapter gamecubeAdapter;
 
     public App()
     {
         InitializeComponent();
 
-        _calibrationManager = new CalibrationManager();
-        _gamecubeAdapter = new GamecubeAdapter();
-        _mainWindow = new MainWindow();
-        _trayIcon = new TrayIcon();
+        calibrationManager = new CalibrationManager();
+        gamecubeAdapter = new GamecubeAdapter(calibrationManager);
+        trayIcon = new TrayIcon(openMainWindow, Exit);
+        mainWindow = new MainWindow(gamecubeAdapter);
 
-        _trayIcon.OnOpenMainWindow += OpenMainWindow;
-        _trayIcon.OnAppExit += Exit;
-
-        _calibrationManager.OnCalibrationLoaded += (port, calibration) =>
-            _gamecubeAdapter.SetPortCalibration(port, calibration);
-
-        _gamecubeAdapter.OnControllerConnectionChanged += (port, connected) =>
-            _mainWindow.OnControllerConnectionChanged(port, connected);
-
-        _calibrationManager.OnCalibrationLoaded += (port, calibration) =>
-            _mainWindow.SetPortCalibration(port, calibration);
-
-        _gamecubeAdapter.Start();
-        _calibrationManager.Start();
-        _mainWindow.Activate();
+        gamecubeAdapter.start();
+        calibrationManager.start();
+        mainWindow.Activate();
     }
 
     public new void Exit()
     {
-        _mainWindow.Close();
-        _gamecubeAdapter.Stop();
-        _trayIcon.Stop();
+        mainWindow.Close();
+        gamecubeAdapter.stop();
+        trayIcon.stop();
         Current.Exit();
     }
 
-    private void OpenMainWindow()
+    private void openMainWindow()
     {
-        _mainWindow.Activate();
+        mainWindow.Activate();
     }
 
-    public static void DebugOutput(object a)
+    public static void debugOutput(object a)
     {
         System.Diagnostics.Debug.WriteLine(a);
     }

@@ -4,161 +4,169 @@ using Nefarius.ViGEm.Client.Targets.Xbox360;
 
 namespace Cubelicator
 {
-    internal class GamecubeController
+    public class GamecubeController
     {
-        public event Action<bool> OnConnectionChanged = delegate { };
-        public event Action<bool> OnRumbleChanged = delegate { };
+        public event Action<bool> onConnectionChanged = delegate { };
+        public event Action<bool> onRumbleChanged = delegate { };
+        public event Action<GamecubeControllerCalibration> onCalibrationChanged = delegate { };
 
-        private readonly IXbox360Controller _controller;
-        private bool _connected = false;
-        private readonly GamecubeControllerProfile _profile;
-        private GamecubeControllerCalibration? _calibration;
+        private readonly IXbox360Controller controller;
+        private bool connected = false;
+        private readonly GamecubeControllerProfile profile;
+        private GamecubeControllerCalibration? calibration;
 
         public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile)
         {
-            _profile = profile;
-            _controller = CreateController(vigem);
-            _controller.AutoSubmitReport = false;
+            this.profile = profile;
+            controller = createController(vigem);
+            controller.AutoSubmitReport = false;
         }
 
-        private IXbox360Controller CreateController(ViGEmClient vigem)
+        private IXbox360Controller createController(ViGEmClient vigem)
         {
             var controller = vigem.CreateXbox360Controller();
-            controller.FeedbackReceived += (sender, args) =>
+            controller.FeedbackReceived += (_, args) =>
             {
-                OnRumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
+                onRumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
             };
 
             return controller;
         }
 
-        public void Disconnect()
+        public void disconnect()
         {
-            _controller.Disconnect();
-            _connected = false;
+            controller.Disconnect();
+            connected = false;
         }
 
-        public bool IsConnected()
+        public bool isConnected()
         {
-            return _connected;
+            return connected;
         }
 
-        public void SetState(GamecubeControllerState state)
+        public bool isCalibrated()
         {
-            if (_connected != state.Connected)
+            return calibration != null;
+        }
+
+        public void setState(GamecubeControllerState state)
+        {
+            if (connected != state.connected)
             {
-                _connected = state.Connected;
-                if (state.Connected)
+                connected = state.connected;
+                if (state.connected)
                 {
-                    _controller.Connect();
+                    controller.Connect();
                 } else
                 {
-                    _controller.Disconnect();
+                    controller.Disconnect();
                 }
-                OnConnectionChanged.Invoke(state.Connected);
+                onConnectionChanged.Invoke(state.connected);
             }
 
-            if (!state.Connected)
+            if (!state.connected)
             {
                 return;
             }
 
             // Buttons
-            _controller.SetButtonState(_profile.A, state.A);
-            _controller.SetButtonState(_profile.B, state.B);
-            _controller.SetButtonState(_profile.X, state.X);
-            _controller.SetButtonState(_profile.Y, state.Y);
-            _controller.SetButtonState(_profile.Z, state.Z);
-            _controller.SetButtonState(_profile.Start, state.Start);
-            _controller.SetButtonState(_profile.LeftTriggerButton, state.LeftTriggerButton);
-            _controller.SetButtonState(_profile.RightTriggerButton, state.RightTriggerButton);
+            controller.SetButtonState(profile.A, state.buttonA);
+            controller.SetButtonState(profile.B, state.buttonB);
+            controller.SetButtonState(profile.X, state.buttonX);
+            controller.SetButtonState(profile.Y, state.buttonY);
+            controller.SetButtonState(profile.Z, state.buttonZ);
+            controller.SetButtonState(profile.Start, state.buttonStart);
+            controller.SetButtonState(profile.LeftTriggerButton, state.buttonLeftTrigger);
+            controller.SetButtonState(profile.RightTriggerButton, state.buttonRightTrigger);
 
             // Dpad
-            _controller.SetButtonState(_profile.DPadUp, state.DpadUp);
-            _controller.SetButtonState(_profile.DPadDown, state.DpadDown);
-            _controller.SetButtonState(_profile.DPadLeft, state.DpadLeft);
-            _controller.SetButtonState(_profile.DPadRight, state.DpadRight);
+            controller.SetButtonState(profile.DPadUp, state.buttonDPadUp);
+            controller.SetButtonState(profile.DPadDown, state.buttonDPadDown);
+            controller.SetButtonState(profile.DPadLeft, state.buttonDPadLeft);
+            controller.SetButtonState(profile.DPadRight, state.buttonDPadRight);
 
             // Left Stick X
-            int leftStickX = ApplyDeadzone(state.LeftStickX, _profile.LeftStickDeadzone, Constants.GamecubeControllerStickRange);
-            if (_calibration != null)
-                leftStickX = CalibrateStick(leftStickX, _calibration.LeftStickXCenter, _calibration.LeftStickXMin, _calibration.LeftStickXMax, Constants.GamecubeControllerStickRange);
-            float leftStickXSensitivity = leftStickX * _profile.LeftStickSensitivity;
-            short leftStickXFinal = (short) Math.Clamp(leftStickXSensitivity * Constants.XboxControllerAxisMultiplier, -Constants.XboxControllerAxisRange, Constants.XboxControllerAxisRange);
-            _controller.SetAxisValue(Xbox360Axis.LeftThumbX, leftStickXFinal);
+            int leftStickX = applyDeadzone(state.stickLeftX, profile.LeftStickDeadzone, Constants.gamecubeControllerStickRange);
+            if (calibration != null)
+                leftStickX = calibrateStick(leftStickX, calibration.leftStickXCenter, calibration.leftStickXMin, calibration.leftStickXMax, Constants.gamecubeControllerStickRange);
+            float leftStickXSensitivity = leftStickX * profile.LeftStickSensitivity;
+            short leftStickXFinal = (short) Math.Clamp(leftStickXSensitivity * Constants.xboxControllerAxisMultiplier, -Constants.xboxControllerAxisRange, Constants.xboxControllerAxisRange);
+            controller.SetAxisValue(Xbox360Axis.LeftThumbX, leftStickXFinal);
 
             // Left Stick Y
-            int leftStickY = ApplyDeadzone(state.LeftStickY, _profile.LeftStickDeadzone, Constants.GamecubeControllerStickRange);
-            if (_calibration != null)
-                leftStickY = CalibrateStick(leftStickY, _calibration.LeftStickYCenter, _calibration.LeftStickYMin, _calibration.LeftStickYMax, Constants.GamecubeControllerStickRange);
-            float leftStickYSensitivity = leftStickY * _profile.LeftStickSensitivity;
+            int leftStickY = applyDeadzone(state.stickLeftY, profile.LeftStickDeadzone, Constants.gamecubeControllerStickRange);
+            if (calibration != null)
+                leftStickY = calibrateStick(leftStickY, calibration.leftStickYCenter, calibration.leftStickYMin, calibration.leftStickYMax, Constants.gamecubeControllerStickRange);
+            float leftStickYSensitivity = leftStickY * profile.LeftStickSensitivity;
             short leftStickYFinal = (short)Math.Clamp(
-                leftStickYSensitivity * Constants.XboxControllerAxisMultiplier,
-                -Constants.XboxControllerAxisRange,
-                Constants.XboxControllerAxisRange
+                leftStickYSensitivity * Constants.xboxControllerAxisMultiplier,
+                -Constants.xboxControllerAxisRange,
+                Constants.xboxControllerAxisRange
             );
-            _controller.SetAxisValue(Xbox360Axis.LeftThumbY, leftStickYFinal);
+            controller.SetAxisValue(Xbox360Axis.LeftThumbY, leftStickYFinal);
 
             // Right Stick X
-            int rightStickX = ApplyDeadzone(state.RightStickX, _profile.RightStickDeadzone, Constants.GamecubeControllerStickRange);
-            if (_calibration != null)
-                rightStickX = CalibrateStick(rightStickX, _calibration.RightStickXCenter, _calibration.RightStickXMin, _calibration.RightStickXMax, Constants.GamecubeControllerStickRange);
-            float rightStickXSensitivity = rightStickX * _profile.RightStickSensitivity;
+            int rightStickX = applyDeadzone(state.stickRightX, profile.RightStickDeadzone, Constants.gamecubeControllerStickRange);
+            if (calibration != null)
+                rightStickX = calibrateStick(rightStickX, calibration.rightStickXCenter, calibration.rightStickXMin, calibration.rightStickXMax, Constants.gamecubeControllerStickRange);
+            float rightStickXSensitivity = rightStickX * profile.RightStickSensitivity;
             short rightStickXFinal = (short)Math.Clamp(
-                rightStickXSensitivity * Constants.XboxControllerAxisMultiplier,
-                -Constants.XboxControllerAxisRange,
-                Constants.XboxControllerAxisRange
+                rightStickXSensitivity * Constants.xboxControllerAxisMultiplier,
+                -Constants.xboxControllerAxisRange,
+                Constants.xboxControllerAxisRange
             );
-            _controller.SetAxisValue(Xbox360Axis.RightThumbX, rightStickXFinal);
+            controller.SetAxisValue(Xbox360Axis.RightThumbX, rightStickXFinal);
 
             // Right Stick Y
-            int rightStickY = ApplyDeadzone(state.RightStickY, _profile.RightStickDeadzone, Constants.GamecubeControllerStickRange);
-            if (_calibration != null)
-                rightStickY = CalibrateStick(rightStickY, _calibration.RightStickYCenter, _calibration.RightStickYMin, _calibration.RightStickYMax, Constants.GamecubeControllerStickRange);
-            float rightStickYSensitivity = rightStickY * _profile.RightStickSensitivity;
+            int rightStickY = applyDeadzone(state.stickRightY, profile.RightStickDeadzone, Constants.gamecubeControllerStickRange);
+            if (calibration != null)
+                rightStickY = calibrateStick(rightStickY, calibration.rightStickYCenter, calibration.rightStickYMin, calibration.rightStickYMax, Constants.gamecubeControllerStickRange);
+            float rightStickYSensitivity = rightStickY * profile.RightStickSensitivity;
             short rightStickYFinal = (short)Math.Clamp(
-                rightStickYSensitivity * Constants.XboxControllerAxisMultiplier,
-                -Constants.XboxControllerAxisRange,
-                Constants.XboxControllerAxisRange
+                rightStickYSensitivity * Constants.xboxControllerAxisMultiplier,
+                -Constants.xboxControllerAxisRange,
+                Constants.xboxControllerAxisRange
             );
-            _controller.SetAxisValue(Xbox360Axis.RightThumbY, rightStickYFinal);
+            controller.SetAxisValue(Xbox360Axis.RightThumbY, rightStickYFinal);
 
             // Left Trigger
-            int leftTrigger = ApplyDeadzone(state.LeftTrigger, _profile.LeftTriggerDeadzone, Constants.GamecubeControllerTriggerRange);
-            if (_calibration != null)
-                leftTrigger = CalibrateTrigger(leftTrigger, _calibration.LeftTriggerMin, _calibration.LeftTriggerMax, Constants.GamecubeControllerTriggerRange);
-            float leftTriggerSensitivity = leftTrigger * _profile.LeftTriggerSensitivity;
+            int leftTrigger = applyDeadzone(state.triggerLeft, profile.LeftTriggerDeadzone, Constants.gamecubeControllerTriggerRange);
+            if (calibration != null)
+                leftTrigger = calibrateTrigger(leftTrigger, calibration.leftTriggerMin, calibration.leftTriggerMax, Constants.gamecubeControllerTriggerRange);
+            float leftTriggerSensitivity = leftTrigger * profile.LeftTriggerSensitivity;
             byte leftTriggerFinal = (byte)Math.Clamp(
                 leftTriggerSensitivity,
                 0,
-                Constants.GamecubeControllerTriggerRange
+                Constants.gamecubeControllerTriggerRange
             );
-            _controller.SetSliderValue(_profile.LeftTrigger, leftTriggerFinal);
+            controller.SetSliderValue(profile.LeftTrigger, leftTriggerFinal);
 
             // Right Trigger
-            int rightTrigger = ApplyDeadzone(state.RightTrigger, _profile.RightTriggerDeadzone, Constants.GamecubeControllerTriggerRange);
-            if (_calibration != null)
-                rightTrigger = CalibrateTrigger(rightTrigger, _calibration.RightTriggerMin, _calibration.RightTriggerMax, Constants.GamecubeControllerTriggerRange);
-            float rightTriggerSensitivity = rightTrigger * _profile.RightTriggerSensitivity;
+            int rightTrigger = applyDeadzone(state.triggerRight, profile.RightTriggerDeadzone, Constants.gamecubeControllerTriggerRange);
+            if (calibration != null)
+                rightTrigger = calibrateTrigger(rightTrigger, calibration.rightTriggerMin, calibration.rightTriggerMax, Constants.gamecubeControllerTriggerRange);
+            float rightTriggerSensitivity = rightTrigger * profile.RightTriggerSensitivity;
             byte rightTriggerFinal = (byte)Math.Clamp(
                 rightTriggerSensitivity,
                 0,
-                Constants.GamecubeControllerTriggerRange
+                Constants.gamecubeControllerTriggerRange
             );
-            _controller.SetSliderValue(_profile.RightTrigger, rightTriggerFinal);
+            controller.SetSliderValue(profile.RightTrigger, rightTriggerFinal);
 
-            if (_connected)
+            if (connected)
             {
-                _controller.SubmitReport();
+                controller.SubmitReport();
             }
         }
 
-        public void SetCalibration(GamecubeControllerCalibration calibration)
+        public void setCalibration(GamecubeControllerCalibration calibration)
         {
-            _calibration = calibration;
+            this.calibration = calibration;
+            App.debugOutput("changed" + calibration.leftStickXMin);
+            onCalibrationChanged(calibration);
         }
 
-        private int ApplyDeadzone(int value, double deadzone, int range)
+        private int applyDeadzone(int value, double deadzone, int range)
         {
             if (Math.Abs(value) < deadzone * range)
             {
@@ -168,7 +176,7 @@ namespace Cubelicator
             return value;
         }
 
-        private int CalibrateStick(int value, int resting, int min, int max, int targetRange)
+        private int calibrateStick(int value, int resting, int min, int max, int targetRange)
         {
             int centered = value - resting;
 
@@ -182,7 +190,7 @@ namespace Cubelicator
             }
         }
 
-        private int CalibrateTrigger(int value, int min, int max, int range)
+        private int calibrateTrigger(int value, int min, int max, int range)
         {
             value = Math.Clamp(value, min, max);
             return (int)((value - min) / (float)(max - min) * range);

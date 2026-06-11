@@ -1,15 +1,15 @@
 ﻿namespace Cubelicator
 {
-    internal struct GamecubeControllerState
+    public struct GamecubeControllerState
     {
-        public bool Connected;
-        public bool A, B, X, Y;
-        public bool Start, Z, LeftTriggerButton, RightTriggerButton;
-        public bool DpadUp, DpadDown, DpadLeft, DpadRight;
+        public bool connected;
+        public bool buttonA, buttonB, buttonX, buttonY;
+        public bool buttonStart, buttonZ, buttonLeftTrigger, buttonRightTrigger;
+        public bool buttonDPadUp, buttonDPadDown, buttonDPadLeft, buttonDPadRight;
 
-        public short LeftStickX, LeftStickY;
-        public short RightStickX, RightStickY;
+        public short stickLeftX, stickLeftY;
+        public short stickRightX, stickRightY;
 
-        public byte LeftTrigger, RightTrigger;
+        public byte triggerLeft, triggerRight;
     }
 }

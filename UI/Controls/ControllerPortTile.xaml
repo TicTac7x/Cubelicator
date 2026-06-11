@@ -35,7 +35,6 @@
                 Source="ms-appx:///Assets/NotCalibrated.svg"
                 Width="16"
                 Height="16"
-                ToolTipService.ToolTip="{x:Bind TooltipControllerIsNotCalibrated}"
                 Visibility="Collapsed"/>
 
             <Button
@@ -46,8 +45,8 @@
                 Grid.Row="0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                PointerEntered="DetailsButton_PointerEntered"
-                PointerExited="DetailsButton_PointerExited">
+                PointerEntered="detailsButtonPointerEntered"
+                PointerExited="detailsButtonPointerExited">
 
                 <controls:IconDetails
                     Width="16"

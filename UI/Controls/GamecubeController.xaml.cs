@@ -6,16 +6,15 @@ namespace Cubelicator.UI.Controls
 {
     public sealed partial class GamecubeController : UserControl
     {
-
         public GamecubeController()
         {
             InitializeComponent();
-            SetControllerColor(Colors.Indigo);
+            setControllerColor(Colors.indigo);
         }
 
-        private void SetControllerColor(string color)
+        private void setControllerColor(string color)
         {
-            var brush = StringToColor(color);
+            var brush = stringToColor(color);
             BaseCenter.Fill = brush;
             BaseLeftPalm.Fill = brush;
             BaseLeftPlate.Fill = brush;
@@ -23,7 +22,7 @@ namespace Cubelicator.UI.Controls
             BaseRightPlate.Fill = brush;
         }
 
-        private static SolidColorBrush StringToColor(string color)
+        private static SolidColorBrush stringToColor(string color)
         {
             color = color.TrimStart('#');
 

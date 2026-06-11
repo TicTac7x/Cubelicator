@@ -2,27 +2,27 @@
 {
     public class GamecubeControllerCalibration
     {
-        public int LeftStickXMin { get; set; }
-        public int LeftStickXMax { get; set; }
-        public int LeftStickXCenter { get; set; }
+        public int leftStickXMin { get; set; }
+        public int leftStickXMax { get; set; }
+        public int leftStickXCenter { get; set; }
 
-        public int LeftStickYMin { get; set; }
-        public int LeftStickYMax { get; set; }
-        public int LeftStickYCenter { get; set; }
+        public int leftStickYMin { get; set; }
+        public int leftStickYMax { get; set; }
+        public int leftStickYCenter { get; set; }
 
-        public int RightStickXMin { get; set; }
-        public int RightStickXMax { get; set; }
-        public int RightStickXCenter { get; set; }
+        public int rightStickXMin { get; set; }
+        public int rightStickXMax { get; set; }
+        public int rightStickXCenter { get; set; }
 
-        public int RightStickYMin { get; set; }
-        public int RightStickYMax { get; set; }
-        public int RightStickYCenter { get; set; }
+        public int rightStickYMin { get; set; }
+        public int rightStickYMax { get; set; }
+        public int rightStickYCenter { get; set; }
 
-        public int LeftTriggerMin { get; set; }
-        public int LeftTriggerMax { get; set; }
+        public int leftTriggerMin { get; set; }
+        public int leftTriggerMax { get; set; }
 
-        public int RightTriggerMin { get; set; }
-        public int RightTriggerMax { get; set; }
+        public int rightTriggerMin { get; set; }
+        public int rightTriggerMax { get; set; }
 
         public GamecubeControllerCalibration() { }
 
@@ -34,27 +34,27 @@
             int leftTriggerMin, int leftTriggerMax,
             int rightTriggerMin, int rightTriggerMax)
         {
-            LeftStickXMin = leftStickXMin;
-            LeftStickXMax = leftStickXMax;
-            LeftStickXCenter = leftStickXCenter;
+            this.leftStickXMin = leftStickXMin;
+            this.leftStickXMax = leftStickXMax;
+            this.leftStickXCenter = leftStickXCenter;
 
-            LeftStickYMin = leftStickYMin;
-            LeftStickYMax = leftStickYMax;
-            LeftStickYCenter = leftStickYCenter;
+            this.leftStickYMin = leftStickYMin;
+            this.leftStickYMax = leftStickYMax;
+            this.leftStickYCenter = leftStickYCenter;
 
-            RightStickXMin = rightStickXMin;
-            RightStickXMax = rightStickXMax;
-            RightStickXCenter = rightStickXCenter;
+            this.rightStickXMin = rightStickXMin;
+            this.rightStickXMax = rightStickXMax;
+            this.rightStickXCenter = rightStickXCenter;
 
-            RightStickYMin = rightStickYMin;
-            RightStickYMax = rightStickYMax;
-            RightStickYCenter = rightStickYCenter;
+            this.rightStickYMin = rightStickYMin;
+            this.rightStickYMax = rightStickYMax;
+            this.rightStickYCenter = rightStickYCenter;
 
-            LeftTriggerMin = leftTriggerMin;
-            LeftTriggerMax = leftTriggerMax;
+            this.leftTriggerMin = leftTriggerMin;
+            this.leftTriggerMax = leftTriggerMax;
 
-            RightTriggerMin = rightTriggerMin;
-            RightTriggerMax = rightTriggerMax;
+            this.rightTriggerMin = rightTriggerMin;
+            this.rightTriggerMax = rightTriggerMax;
         }
     }
 }

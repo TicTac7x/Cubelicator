@@ -5,40 +5,33 @@ namespace Cubelicator.UI.Windows;
 
 public sealed partial class MainWindow : Window
 {
-    private readonly ControllerPortTile[] _controllerPortTiles = new ControllerPortTile[4];
+    private readonly GamecubeAdapter gamecubeAdapter;
+    private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
 
-    public MainWindow()
+    public MainWindow(GamecubeAdapter gamecubeAdapter)
     {
+        this.gamecubeAdapter = gamecubeAdapter;
+
         InitializeComponent();
-        InitializeControllerPortTiles();
+        initializeControllerPortTiles();
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(TitleBar);
-        TitleBar.Title = Strings.AppName;
-        Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
-        this.Closed += MainWindow_Closed;
+        TitleBar.Title = Strings.appName;
+        Root.ActualThemeChanged += (_, _) => updateTitleBarTheme();
+        this.Closed += mainWindow_Closed;
     }
 
-    public void OnControllerConnectionChanged(int port, bool connected)
+    private void initializeControllerPortTiles()
     {
-        _controllerPortTiles[port - 1].SetControllerConnected(connected);
-    }
-
-    private void InitializeControllerPortTiles()
-    {
-        for (int i = 0; i < _controllerPortTiles.Length; i++)
+        for (int port = 1; port <= controllerPortTiles.Length; port++)
         {
-            var controllerPortTile = new ControllerPortTile(i + 1);
-            _controllerPortTiles[i] = controllerPortTile;
+            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.getPortController(port));
+            controllerPortTiles[port - 1] = controllerPortTile;
             ControllerPortTiles.Children.Add(controllerPortTile);
-
-            if (i == 0)
-            {
-                controllerPortTile.SetControllerConnected(true);
-            }
         }
     }
 
-    private void UpdateTitleBarTheme()
+    private void updateTitleBarTheme()
     {
         var titleBar = AppWindow.TitleBar;
 
@@ -50,14 +43,9 @@ public sealed partial class MainWindow : Window
             : Microsoft.UI.Colors.Black;
     }
 
-    private void MainWindow_Closed(object sender, WindowEventArgs e)
+    private void mainWindow_Closed(object sender, WindowEventArgs e)
     {
         e.Handled = true;
         AppWindow.Hide();
-    }
-
-    public void SetPortCalibration(int port, GamecubeControllerCalibration calibration)
-    {
-        _controllerPortTiles[port - 1].SetPortCalibration(calibration);
     }
 }

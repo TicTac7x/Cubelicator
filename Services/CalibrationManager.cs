@@ -4,31 +4,31 @@ namespace Cubelicator.Services
 {
     public class CalibrationManager
     {
-        public event Action<int, GamecubeControllerCalibration> OnCalibrationLoaded = delegate { };
+        public event Action<int, GamecubeControllerCalibration> onPortControllerCalibrationLoaded = delegate { };
 
-        private readonly string _basePath = Path.Combine(
+        private readonly string directoryCalibrations = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             "Cubelicator",
             "Calibrations");
 
         public CalibrationManager()
         {
-            Directory.CreateDirectory(_basePath);
+            Directory.CreateDirectory(directoryCalibrations);
         }
 
-        public void Start()
+        public void start()
         {
             for (int port = 1; port <= 4; port++)
             {
-                LoadCalibration(port);
+                loadCalibration(port);
             }
         }
 
-        private void LoadCalibration(int port)
+        private void loadCalibration(int port)
         {
             try
             {
-                var file = Path.Combine(_basePath, $"Port{port}.json");
+                var file = Path.Combine(directoryCalibrations, $"Port{port}.json");
 
                 if (!File.Exists(file)) return;
 
@@ -37,7 +37,7 @@ namespace Cubelicator.Services
 
                 if (calibration == null) return;
 
-                OnCalibrationLoaded.Invoke(port, calibration);
+                onPortControllerCalibrationLoaded.Invoke(port, calibration);
             }
             catch
             {

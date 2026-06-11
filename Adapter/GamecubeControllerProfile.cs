@@ -2,7 +2,7 @@
 
 namespace Cubelicator
 {
-    internal class GamecubeControllerProfile
+    public class GamecubeControllerProfile
     {
         public string Name { get; set; } = "Default";
 
@@ -14,7 +14,7 @@ namespace Cubelicator
         public Xbox360Button Z { get; set; } = Xbox360Button.Back;
         public Xbox360Button Start { get; set; } = Xbox360Button.Start;
 
-        // Dpad
+        // DPad
         public Xbox360Button DPadUp { get; set; } = Xbox360Button.Up;
         public Xbox360Button DPadDown { get; set; } = Xbox360Button.Down;
         public Xbox360Button DPadLeft { get; set; } = Xbox360Button.Left;
@@ -31,10 +31,6 @@ namespace Cubelicator
         public float RightStickDeadzone { get; set; } = 0f;
         public float LeftTriggerDeadzone { get; set; } = 0f;
         public float RightTriggerDeadzone { get; set; } = 0f;
-        //public float LeftStickDeadzone { get; set; } = 0.2f;
-        //public float RightStickDeadzone { get; set; } = 0.1f;
-        //public float LeftTriggerDeadzone { get; set; } = 0.15f;
-        //public float RightTriggerDeadzone { get; set; } = 0.20f;
 
         // Sensitivity
         public float LeftStickSensitivity { get; set; } = 1.6f;

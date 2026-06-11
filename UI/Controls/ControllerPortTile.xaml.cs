@@ -1,7 +1,5 @@
-﻿using Microsoft.UI.Input;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 
 namespace Cubelicator.UI.Controls
 {
@@ -9,22 +7,25 @@ namespace Cubelicator.UI.Controls
     {
         private readonly int port;
         private readonly Cubelicator.GamecubeController gamecubeController;
-        public ControllerPortTile(int port, Cubelicator.GamecubeController gamecubeController)
+        private readonly Settings settings;
+
+        public ControllerPortTile(int port, Cubelicator.GamecubeController gamecubeController, Settings settings)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
+            this.settings = settings;
 
             InitializeComponent();
             PortText.Text = PortText.Text + " " + port;
             ControllerText.Text = ControllerText.Text + " " + port;
-            ToolTipService.SetToolTip(IconNotCalibrated, Strings.tooltipPortIsNotCalibrated(port));
+            ToolTipService.SetToolTip(IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
 
-            setupEventListeners();
+            SetupEventListeners();
         }
 
-        private void setupEventListeners()
+        private void SetupEventListeners()
         {
-            gamecubeController.onConnectionChanged += (connected) =>
+            gamecubeController.OnConnectionChanged += (connected) =>
             {
                 var portVisible = connected ? Visibility.Collapsed : Visibility.Visible;
                 var controllerVisible = connected ? Visibility.Visible : Visibility.Collapsed;
@@ -38,7 +39,7 @@ namespace Cubelicator.UI.Controls
 
                     if (connected)
                     {
-                        var calibrated = gamecubeController.isCalibrated();
+                        var calibrated = gamecubeController.IsCalibrated();
                         IconCalibrated.Visibility = calibrated ? Visibility.Visible : Visibility.Collapsed;
                         IconNotCalibrated.Visibility = calibrated ? Visibility.Collapsed : Visibility.Visible;
                     }
@@ -50,9 +51,9 @@ namespace Cubelicator.UI.Controls
                 });
             };
 
-            gamecubeController.onCalibrationChanged += (calibration) =>
+            gamecubeController.OnCalibrationChanged += (calibration) =>
             {
-                if (!gamecubeController.isConnected()) return;
+                if (!gamecubeController.IsConnected()) return;
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -62,28 +63,75 @@ namespace Cubelicator.UI.Controls
                     ToolTipService.SetToolTip(
                         IconCalibrated,
                         $"""
-                        {Strings.tooltipPortIsCalibrated(port)}
+                        {Strings.TooltipPortIsCalibrated(port)}
 
-                        Left Stick X: {calibration.leftStickXMin} / {calibration.leftStickXCenter} / {calibration.leftStickXMax}
-                        Left Stick Y: {calibration.leftStickYMin} / {calibration.leftStickYCenter} / {calibration.leftStickYMax}
-                        Right Stick X: {calibration.rightStickXMin} / {calibration.rightStickXCenter} / {calibration.rightStickXMax}
-                        Right Stick Y: {calibration.rightStickYMin} / {calibration.rightStickYCenter} / {calibration.rightStickYMax}
-                        Left Trigger: {calibration.leftTriggerMin} / {calibration.leftTriggerMax}
-                        Right Trigger: {calibration.rightTriggerMin} / {calibration.rightTriggerMax}
+                        Left Stick X: {calibration.LeftStickXMin} / {calibration.LeftStickXCenter} / {calibration.LeftStickXMax}
+                        Left Stick Y: {calibration.LeftStickYMin} / {calibration.LeftStickYCenter} / {calibration.LeftStickYMax}
+                        Right Stick X: {calibration.RightStickXMin} / {calibration.RightStickXCenter} / {calibration.RightStickXMax}
+                        Right Stick Y: {calibration.RightStickYMin} / {calibration.RightStickYCenter} / {calibration.RightStickYMax}
+                        Left Trigger: {calibration.LeftTriggerMin} / {calibration.LeftTriggerMax}
+                        Right Trigger: {calibration.RightTriggerMin} / {calibration.RightTriggerMax}
                         """
                     );
                 });
             };
         }
 
-        private void detailsButtonPointerEntered(object sender, PointerRoutedEventArgs e)
+        private void OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)
         {
-            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+            System.Windows.MessageBox.Show("calibrate");
         }
 
-        private void detailsButtonPointerExited(object sender, PointerRoutedEventArgs e)
+        public void SetControllerColor(string color)
         {
-            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+            GamecubeController.SetControllerColor(color);
         }
+
+        private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MenuFlyoutItem item)
+                return;
+
+            string? colorName = item.Tag?.ToString();
+
+            string? colorValue = colorName switch
+            {
+                nameof(Colors.Indigo) => Colors.Indigo,
+                nameof(Colors.JetBlack) => Colors.JetBlack,
+                nameof(Colors.SpiceOrange) => Colors.SpiceOrange,
+                nameof(Colors.Platinum) => Colors.Platinum,
+                nameof(Colors.EmeraldBlue) => Colors.EmeraldBlue,
+                nameof(Colors.White) => Colors.White,
+                nameof(Colors.StarlightGold) => Colors.StarlightGold,
+                nameof(Colors.SymphonicGreen) => Colors.SymphonicGreen,
+                nameof(Colors.LuigiGreen) => Colors.LuigiGreen,
+                nameof(Colors.MarioRed) => Colors.MarioRed,
+                nameof(Colors.WarioYellow) => Colors.WarioYellow,
+                nameof(Colors.GundamChar) => Colors.GundamChar,
+                _ => null
+            };
+
+            if (colorValue != null)
+            {
+                switch (port)
+                {
+                    case 1:
+                        settings.Controller1Color = colorValue;
+                        break;
+                    case 2:
+                        settings.Controller2Color = colorValue;
+                        break;
+                    case 3:
+                        settings.Controller3Color = colorValue;
+                        break;
+                    case 4:
+                        settings.Controller4Color = colorValue;
+                        break;
+                }
+            }
+        }
+
+        public string MenuCalibrate => Strings.Calibrate;
+        public string MenuChangeColor => Strings.ChangeColor;
     }
 }

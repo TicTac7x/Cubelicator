@@ -2,18 +2,20 @@
 {
     internal static class Strings
     {
-        public const string appName = "Cubelicator";
-        public const string exit = "Exit";
-        public const string open = "Open";
-        public const string controller = "Controller";
-        public const string port = "Port";
-        public static string tooltipPortIsNotCalibrated(int port)
+        public const string AppName = "Cubelicator";
+        public const string Exit = "Exit";
+        public const string Open = "Open";
+        public const string Controller = "Controller";
+        public const string Port = "Port";
+        public static string TooltipPortIsNotCalibrated(int port)
         {
             return "Port " + port + " is not calibrated";
         }
-        public static string tooltipPortIsCalibrated(int port)
+        public static string TooltipPortIsCalibrated(int port)
         {
             return "Port " + port + " is calibrated";
         }
+        public const string Calibrate = "Calibrate";
+        public const string ChangeColor = "Change color";
     }
 }

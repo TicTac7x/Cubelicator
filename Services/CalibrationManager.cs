@@ -4,7 +4,7 @@ namespace Cubelicator.Services
 {
     public class CalibrationManager
     {
-        public event Action<int, GamecubeControllerCalibration> onPortControllerCalibrationLoaded = delegate { };
+        public event Action<int, GamecubeControllerCalibration> OnPortControllerCalibrationLoaded = delegate { };
 
         private readonly string directoryCalibrations = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -16,15 +16,15 @@ namespace Cubelicator.Services
             Directory.CreateDirectory(directoryCalibrations);
         }
 
-        public void start()
+        public void Start()
         {
             for (int port = 1; port <= 4; port++)
             {
-                loadCalibration(port);
+                LoadCalibration(port);
             }
         }
 
-        private void loadCalibration(int port)
+        private void LoadCalibration(int port)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Cubelicator.Services
 
                 if (calibration == null) return;
 
-                onPortControllerCalibrationLoaded.Invoke(port, calibration);
+                OnPortControllerCalibrationLoaded.Invoke(port, calibration);
             }
             catch
             {

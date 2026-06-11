@@ -44,9 +44,81 @@
                 Padding="5"
                 Grid.Row="0"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                PointerEntered="detailsButtonPointerEntered"
-                PointerExited="detailsButtonPointerExited">
+                VerticalAlignment="Top">
+
+                <Button.Flyout>
+                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
+
+                        <MenuFlyoutItem
+                            Text="Calibrate"
+                            Click="OnMenuItemClickCalibrate"/>
+
+                        <MenuFlyoutSubItem Text="Change Color">
+
+                            <MenuFlyoutItem
+                                Text="Indigo"
+                                Tag="Indigo"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Jet Black"
+                                Tag="JetBlack"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Spice Orange"
+                                Tag="SpiceOrange"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Platinum"
+                                Tag="Platinum"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Emerald Blue"
+                                Tag="EmeraldBlue"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="White"
+                                Tag="White"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Starlight Gold"
+                                Tag="StarlightGold"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Symphonic Green"
+                                Tag="SymphonicGreen"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Luigi Green"
+                                Tag="LuigiGreen"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Mario Red"
+                                Tag="MarioRed"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Wario Yellow"
+                                Tag="WarioYellow"
+                                Click="OnMenuItemChangeColor"/>
+
+                            <MenuFlyoutItem
+                                Text="Gundam Char"
+                                Tag="GundamChar"
+                                Click="OnMenuItemChangeColor"/>
+
+                        </MenuFlyoutSubItem>
+
+                    </MenuFlyout>
+                </Button.Flyout>
 
                 <controls:IconDetails
                     Width="16"
@@ -54,11 +126,11 @@
             </Button>
 
             <Grid x:Name="Controller" Grid.Row="0" Padding="20" Visibility="Collapsed">
-                <controls:GamecubeController />
+                <controls:GamecubeController x:Name="GamecubeController" />
             </Grid>
 
             <Grid x:Name="Port" Grid.Row="0" Width="60" Height="60" Visibility="Visible">
-                <controls:ControllerPort />
+                <controls:ControllerPort x:Name="ControllerPort" />
             </Grid>
 
             <TextBlock

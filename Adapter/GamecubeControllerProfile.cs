@@ -33,8 +33,8 @@ namespace Cubelicator
         public float RightTriggerDeadzone { get; set; } = 0f;
 
         // Sensitivity
-        public float LeftStickSensitivity { get; set; } = 1.6f;
-        public float RightStickSensitivity { get; set; } = 1.6f;
+        public float LeftStickSensitivity { get; set; } = 1f;
+        public float RightStickSensitivity { get; set; } = 1f;
         public float LeftTriggerSensitivity { get; set; } = 1f;
         public float RightTriggerSensitivity { get; set; } = 1f;
 

@@ -1,29 +1,29 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cubelicator;
+namespace Cubelicator.Services;
 
-public sealed class TrayIcon
+public class TrayIcon
 {
     private readonly NotifyIcon notifyIcon;
 
-    public TrayIcon(Action openMainWindow, Action exitApp)
+    public TrayIcon(Action OpenMainWindow, Action ExitApp)
     {
         var menu = new ContextMenuStrip();
 
-        menu.Items.Add(Strings.open, null, (_, _) => openMainWindow());
-        menu.Items.Add(Strings.exit, null, (_, _) => exitApp());
+        menu.Items.Add(Strings.Open, null, (_, _) => OpenMainWindow());
+        menu.Items.Add(Strings.Exit, null, (_, _) => ExitApp());
 
         notifyIcon = new NotifyIcon
         {
             Icon = SystemIcons.Application,
-            Text = Strings.appName,
+            Text = Strings.AppName,
             Visible = true,
             ContextMenuStrip = menu
         };
     }
 
-    public void stop()
+    public void Stop()
     {
         notifyIcon.Visible = false;
         notifyIcon.Dispose();

@@ -2,14 +2,14 @@
 {
     public struct GamecubeControllerState
     {
-        public bool connected;
-        public bool buttonA, buttonB, buttonX, buttonY;
-        public bool buttonStart, buttonZ, buttonLeftTrigger, buttonRightTrigger;
-        public bool buttonDPadUp, buttonDPadDown, buttonDPadLeft, buttonDPadRight;
+        public bool Connected;
+        public bool ButtonA, ButtonB, ButtonX, ButtonY;
+        public bool ButtonStart, ButtonZ, ButtonLeftShoulder, ButtonRightShoulder;
+        public bool ButtonDPadUp, ButtonDPadDown, ButtonDPadLeft, ButtonDPadRight;
 
-        public short stickLeftX, stickLeftY;
-        public short stickRightX, stickRightY;
+        public short StickLeftX, StickLeftY;
+        public short StickRightX, StickRightY;
 
-        public byte triggerLeft, triggerRight;
+        public byte TriggerLeft, TriggerRight;
     }
 }

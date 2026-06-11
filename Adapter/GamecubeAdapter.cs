@@ -7,7 +7,7 @@ namespace Cubelicator
 {
     public class GamecubeAdapter
     {
-        public event Action<int, bool> onControllerConnectionChanged = delegate { };
+        public event Action<int, bool> OnControllerConnectionChanged = delegate { };
 
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
@@ -25,16 +25,16 @@ namespace Cubelicator
         
         public GamecubeAdapter(CalibrationManager calibrationManager)
         {
-            initializeAdapter();
-            createControllers();
+            InitializeAdapter();
+            CreateControllers();
 
-            calibrationManager.onPortControllerCalibrationLoaded += (port, calibration) =>
+            calibrationManager.OnPortControllerCalibrationLoaded += (port, calibration) =>
             {
-                setPortControllerCalibration(port, calibration);
+                SetPortControllerCalibration(port, calibration);
             };
         }
 
-        public void start()
+        public void Start()
         {
             cts = new CancellationTokenSource();
             var token = cts.Token;
@@ -58,13 +58,13 @@ namespace Cubelicator
 
                     for (int port = 0; port < controllers.Length; port++)
                     {
-                        controllers[port].setState(decodeAdapterHexDataToControllerState(data, port));
+                        controllers[port].SetState(DecodeAdapterHexDataToControllerState(data, port));
                     }
                 }
             }, token);
         }
 
-        private void initializeAdapter()
+        private void InitializeAdapter()
         {
             var finder = new UsbDeviceFinder(DEVICE_VID, DEVICE_PID);
 
@@ -85,7 +85,7 @@ namespace Cubelicator
             usbWriter.Write([0x13], 5000, out int _);
         }
 
-        private void createControllers()
+        private void CreateControllers()
         {
             vigemClient = new ViGEmClient();
             for (int i = 0; i < controllers.Length; i++)
@@ -93,28 +93,28 @@ namespace Cubelicator
                 int port = i + 1;
                 var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile());
 
-                controller.onRumbleChanged += (bool rumble) =>
+                controller.OnRumbleChanged += (bool rumble) =>
                 {
-                    setControllerRumble(port, rumble);
+                    SetControllerRumble(port, rumble);
                 };
 
-                controller.onConnectionChanged += (bool connected) =>
+                controller.OnConnectionChanged += (bool connected) =>
                 {
-                    onControllerConnectionChanged(port, connected);
+                    OnControllerConnectionChanged(port, connected);
                 };
 
                 controllers[i] = controller;
             }
         }
 
-        private void setControllerRumble(int port, bool rumble)
+        private void SetControllerRumble(int port, bool rumble)
         {
             byte[] report = [ADAPTER_RUMBLE, 0, 0, 0, 0];
             report[port] = (byte) (rumble ? 1 : 0);
             usbWriter?.Write(report, 1000, out _);
         }
 
-        public async void stop()
+        public async void Stop()
         {
             try
             {
@@ -127,14 +127,14 @@ namespace Cubelicator
 
             foreach (var controller in controllers)
             {
-                controller?.disconnect();
+                controller?.Disconnect();
             }
             usbDevice?.Close();
 
             UsbDevice.Exit();
         }
 
-        private GamecubeControllerState decodeAdapterHexDataToControllerState(byte[] data, int port)
+        private GamecubeControllerState DecodeAdapterHexDataToControllerState(byte[] data, int port)
         {
             int offset = 1 + port * 9;
             byte status = data[offset];
@@ -144,39 +144,39 @@ namespace Cubelicator
 
             return new GamecubeControllerState
             {
-                connected = status == 0x10,
+                Connected = status == 0x10,
 
-                buttonA = (b1 & 1) != 0,
-                buttonB = (b1 & 2) != 0,
-                buttonX = (b1 & 4) != 0,
-                buttonY = (b1 & 8) != 0,
+                ButtonA = (b1 & 1) != 0,
+                ButtonB = (b1 & 2) != 0,
+                ButtonX = (b1 & 4) != 0,
+                ButtonY = (b1 & 8) != 0,
 
-                buttonStart = (b2 & 1) != 0,
-                buttonZ = (b2 & 2) != 0,
-                buttonRightTrigger = (b2 & 4) != 0,
-                buttonLeftTrigger = (b2 & 8) != 0,
+                ButtonStart = (b2 & 1) != 0,
+                ButtonZ = (b2 & 2) != 0,
+                ButtonRightShoulder = (b2 & 4) != 0,
+                ButtonLeftShoulder = (b2 & 8) != 0,
 
-                buttonDPadLeft = (b1 & 0x10) != 0,
-                buttonDPadRight = (b1 & 0x20) != 0,
-                buttonDPadDown = (b1 & 0x40) != 0,
-                buttonDPadUp = (b1 & 0x80) != 0,
+                ButtonDPadLeft = (b1 & 0x10) != 0,
+                ButtonDPadRight = (b1 & 0x20) != 0,
+                ButtonDPadDown = (b1 & 0x40) != 0,
+                ButtonDPadUp = (b1 & 0x80) != 0,
 
-                stickLeftX = (short)((data[offset + 3] - Constants.gamecubeControllerStickRange)),
-                stickLeftY = (short)((data[offset + 4] - Constants.gamecubeControllerStickRange)),
-                stickRightX = (short)((data[offset + 5] - Constants.gamecubeControllerStickRange)),
-                stickRightY = (short)((data[offset + 6] - Constants.gamecubeControllerStickRange)),
+                StickLeftX = (short)((data[offset + 3] - Constants.GamecubeControllerStickRange)),
+                StickLeftY = (short)((data[offset + 4] - Constants.GamecubeControllerStickRange)),
+                StickRightX = (short)((data[offset + 5] - Constants.GamecubeControllerStickRange)),
+                StickRightY = (short)((data[offset + 6] - Constants.GamecubeControllerStickRange)),
 
-                triggerLeft = data[offset + 7],
-                triggerRight = data[offset + 8]
+                TriggerLeft = data[offset + 7],
+                TriggerRight = data[offset + 8]
             };
         }
 
-        public void setPortControllerCalibration(int port, GamecubeControllerCalibration calibration)
+        public void SetPortControllerCalibration(int port, GamecubeControllerCalibration calibration)
         {
-            controllers[port - 1].setCalibration(calibration);
+            controllers[port - 1].SetCalibration(calibration);
         }
 
-        public GamecubeController getPortController(int port)
+        public GamecubeController GetPortController(int port)
         {
             return controllers[port - 1];
         }

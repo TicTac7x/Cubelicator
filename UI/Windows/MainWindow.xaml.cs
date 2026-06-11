@@ -5,33 +5,40 @@ namespace Cubelicator.UI.Windows;
 
 public sealed partial class MainWindow : Window
 {
+    private readonly Settings settings;
     private readonly GamecubeAdapter gamecubeAdapter;
     private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
 
-    public MainWindow(GamecubeAdapter gamecubeAdapter)
+    public MainWindow(GamecubeAdapter gamecubeAdapter, Settings settings)
     {
+        this.settings = settings;
         this.gamecubeAdapter = gamecubeAdapter;
 
         InitializeComponent();
-        initializeControllerPortTiles();
+        InitializeControllerPortTiles();
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(TitleBar);
-        TitleBar.Title = Strings.appName;
-        Root.ActualThemeChanged += (_, _) => updateTitleBarTheme();
-        this.Closed += mainWindow_Closed;
+        TitleBar.Title = Strings.AppName;
+        Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
+        this.Closed += OnClose;
+
+        settings.OnController1ColorChanged += (color) =>
+        {
+            controllerPortTiles[0].SetControllerColor(color);
+        };
     }
 
-    private void initializeControllerPortTiles()
+    private void InitializeControllerPortTiles()
     {
         for (int port = 1; port <= controllerPortTiles.Length; port++)
         {
-            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.getPortController(port));
+            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.GetPortController(port), settings);
             controllerPortTiles[port - 1] = controllerPortTile;
             ControllerPortTiles.Children.Add(controllerPortTile);
         }
     }
 
-    private void updateTitleBarTheme()
+    private void UpdateTitleBarTheme()
     {
         var titleBar = AppWindow.TitleBar;
 
@@ -43,7 +50,7 @@ public sealed partial class MainWindow : Window
             : Microsoft.UI.Colors.Black;
     }
 
-    private void mainWindow_Closed(object sender, WindowEventArgs e)
+    private void OnClose(object sender, WindowEventArgs e)
     {
         e.Handled = true;
         AppWindow.Hide();

@@ -2,59 +2,59 @@
 {
     public class GamecubeControllerCalibration
     {
-        public int leftStickXMin { get; set; }
-        public int leftStickXMax { get; set; }
-        public int leftStickXCenter { get; set; }
+        public int LeftStickXMin { get; set; }
+        public int LeftStickXMax { get; set; }
+        public int LeftStickXCenter { get; set; }
 
-        public int leftStickYMin { get; set; }
-        public int leftStickYMax { get; set; }
-        public int leftStickYCenter { get; set; }
+        public int LeftStickYMin { get; set; }
+        public int LeftStickYMax { get; set; }
+        public int LeftStickYCenter { get; set; }
 
-        public int rightStickXMin { get; set; }
-        public int rightStickXMax { get; set; }
-        public int rightStickXCenter { get; set; }
+        public int RightStickXMin { get; set; }
+        public int RightStickXMax { get; set; }
+        public int RightStickXCenter { get; set; }
 
-        public int rightStickYMin { get; set; }
-        public int rightStickYMax { get; set; }
-        public int rightStickYCenter { get; set; }
+        public int RightStickYMin { get; set; }
+        public int RightStickYMax { get; set; }
+        public int RightStickYCenter { get; set; }
 
-        public int leftTriggerMin { get; set; }
-        public int leftTriggerMax { get; set; }
+        public int LeftTriggerMin { get; set; }
+        public int LeftTriggerMax { get; set; }
 
-        public int rightTriggerMin { get; set; }
-        public int rightTriggerMax { get; set; }
+        public int RightTriggerMin { get; set; }
+        public int RightTriggerMax { get; set; }
 
         public GamecubeControllerCalibration() { }
 
         public GamecubeControllerCalibration(
-            int leftStickXMin, int leftStickXMax, int leftStickXCenter,
-            int leftStickYMin, int leftStickYMax, int leftStickYCenter,
-            int rightStickXMin, int rightStickXMax, int rightStickXCenter,
-            int rightStickYMin, int rightStickYMax, int rightStickYCenter,
-            int leftTriggerMin, int leftTriggerMax,
-            int rightTriggerMin, int rightTriggerMax)
+            int LeftStickXMin, int LeftStickXMax, int LeftStickXCenter,
+            int LeftStickYMin, int LeftStickYMax, int LeftStickYCenter,
+            int RightStickXMin, int RightStickXMax, int RightStickXCenter,
+            int RightStickYMin, int RightStickYMax, int RightStickYCenter,
+            int LeftTriggerMin, int LeftTriggerMax,
+            int RightTriggerMin, int RightTriggerMax)
         {
-            this.leftStickXMin = leftStickXMin;
-            this.leftStickXMax = leftStickXMax;
-            this.leftStickXCenter = leftStickXCenter;
+            this.LeftStickXMin = LeftStickXMin;
+            this.LeftStickXMax = LeftStickXMax;
+            this.LeftStickXCenter = LeftStickXCenter;
 
-            this.leftStickYMin = leftStickYMin;
-            this.leftStickYMax = leftStickYMax;
-            this.leftStickYCenter = leftStickYCenter;
+            this.LeftStickYMin = LeftStickYMin;
+            this.LeftStickYMax = LeftStickYMax;
+            this.LeftStickYCenter = LeftStickYCenter;
 
-            this.rightStickXMin = rightStickXMin;
-            this.rightStickXMax = rightStickXMax;
-            this.rightStickXCenter = rightStickXCenter;
+            this.RightStickXMin = RightStickXMin;
+            this.RightStickXMax = RightStickXMax;
+            this.RightStickXCenter = RightStickXCenter;
 
-            this.rightStickYMin = rightStickYMin;
-            this.rightStickYMax = rightStickYMax;
-            this.rightStickYCenter = rightStickYCenter;
+            this.RightStickYMin = RightStickYMin;
+            this.RightStickYMax = RightStickYMax;
+            this.RightStickYCenter = RightStickYCenter;
 
-            this.leftTriggerMin = leftTriggerMin;
-            this.leftTriggerMax = leftTriggerMax;
+            this.LeftTriggerMin = LeftTriggerMin;
+            this.LeftTriggerMax = LeftTriggerMax;
 
-            this.rightTriggerMin = rightTriggerMin;
-            this.rightTriggerMax = rightTriggerMax;
+            this.RightTriggerMin = RightTriggerMin;
+            this.RightTriggerMax = RightTriggerMax;
         }
     }
 }

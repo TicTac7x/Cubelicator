@@ -1,4 +1,5 @@
-﻿using Cubelicator.UI.Controls;
+﻿using Cubelicator.Services;
+using Cubelicator.UI.Controls;
 using Microsoft.UI.Xaml;
 
 namespace Cubelicator.UI.Windows;
@@ -8,11 +9,13 @@ public sealed partial class MainWindow : Window
     private readonly Settings settings;
     private readonly GamecubeAdapter gamecubeAdapter;
     private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
+    private readonly CalibrationManager calibrationManager;
 
-    public MainWindow(GamecubeAdapter gamecubeAdapter, Settings settings)
+    public MainWindow(GamecubeAdapter gamecubeAdapter, Settings settings, CalibrationManager calibrationManager)
     {
         this.settings = settings;
         this.gamecubeAdapter = gamecubeAdapter;
+        this.calibrationManager = calibrationManager;
 
         InitializeComponent();
         InitializeControllerPortTiles();
@@ -27,7 +30,7 @@ public sealed partial class MainWindow : Window
     {
         for (int port = 1; port <= controllerPortTiles.Length; port++)
         {
-            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.GetPortController(port), settings);
+            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.GetPortController(port), settings, calibrationManager);
             controllerPortTiles[port - 1] = controllerPortTile;
             ControllerPortTiles.Children.Add(controllerPortTile);
         }

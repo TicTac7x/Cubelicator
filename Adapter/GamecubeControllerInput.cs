@@ -1,4 +1,6 @@
-﻿internal enum GamecubeControllerInput
+﻿namespace Cubelicator
+{
+public enum GamecubeControllerInput
 {
     A,
     B,
@@ -19,4 +21,5 @@
 
     LeftStick,
     RightStick
+}
 }

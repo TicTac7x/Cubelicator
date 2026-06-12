@@ -1,6 +1,6 @@
 ﻿namespace Cubelicator
 {
-    public struct GamecubeControllerState
+    public class GamecubeControllerState
     {
         public bool Connected;
         public bool ButtonA, ButtonB, ButtonX, ButtonY;

@@ -22,7 +22,7 @@ public partial class App : Application
         settingsManager = new SettingsManager();
         gamecubeAdapter = new GamecubeAdapter(calibrationManager);
         trayIcon = new TrayIcon(OpenMainWindow, Exit);
-        mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings);
+        mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager);
 
         calibrationManager.Start();
         settingsManager.Start();

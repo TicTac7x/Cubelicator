@@ -12,6 +12,7 @@
 	<ItemGroup>
 	  <None Remove="ControllerView.xaml" />
 	  <None Remove="UI\Controls\ControllerPort.xaml" />
+	  <None Remove="UI\Windows\CalibrationWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Remove="UI\Views\GamecubeController.xaml" />
@@ -43,6 +44,9 @@
 	  <None Update="UI\Views\GamecubeController.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
+	  <Page Update="UI\Windows\CalibrationWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Cubelicator.Services;
+using Cubelicator.UI.Windows;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Cubelicator.UI.Controls
@@ -8,12 +10,14 @@ namespace Cubelicator.UI.Controls
         private readonly int port;
         private readonly Cubelicator.GamecubeController gamecubeController;
         private readonly Settings settings;
+        private readonly CalibrationManager calibrationManager;
 
-        public ControllerPortTile(int port, Cubelicator.GamecubeController gamecubeController, Settings settings)
+        public ControllerPortTile(int port, Cubelicator.GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
             this.settings = settings;
+            this.calibrationManager = calibrationManager;
 
             InitializeComponent();
             PortText.Text = PortText.Text + " " + port;
@@ -87,7 +91,8 @@ namespace Cubelicator.UI.Controls
 
         private void OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("calibrate");
+            var calibrationWindow = new CalibrationWindow(port, calibrationManager);
+            calibrationWindow.Activate();
         }
 
         public void SetControllerColor(string color)

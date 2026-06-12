@@ -27,4 +27,20 @@
         LeftShoulder,
         RightShoulder
     }
+
+    public enum ControllerColor
+    {
+        Indigo,
+        JetBlack,
+        SpiceOrange,
+        Platinum,
+        EmeraldBlue,
+        White,
+        StarlightGold,
+        SymphonicGreen,
+        LuigiGreen,
+        MarioRed,
+        WarioYellow,
+        GundamChar
+    }
 }

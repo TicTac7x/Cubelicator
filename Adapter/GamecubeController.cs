@@ -1,7 +1,6 @@
 ﻿using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
-using static System.Windows.Forms.AxHost;
 
 namespace Cubelicator
 {

@@ -8,18 +8,21 @@ namespace Cubelicator.UI.Controls
     public sealed partial class ControllerPortTile : UserControl
     {
         private readonly int port;
-        private readonly Cubelicator.GamecubeController gamecubeController;
+        private readonly GamecubeController gamecubeController;
         private readonly Settings settings;
         private readonly CalibrationManager calibrationManager;
+        private readonly GamecubeControllerView gamecubeControllerView;
 
-        public ControllerPortTile(int port, Cubelicator.GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager)
+        public ControllerPortTile(int port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
             this.settings = settings;
             this.calibrationManager = calibrationManager;
+            this.gamecubeControllerView = new GamecubeControllerView(gamecubeController);
 
             InitializeComponent();
+            ControllerRoot.Children.Add(gamecubeControllerView);
             PortText.Text = PortText.Text + " " + port;
             ControllerText.Text = ControllerText.Text + " " + port;
             ToolTipService.SetToolTip(IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
@@ -38,7 +41,7 @@ namespace Cubelicator.UI.Controls
                 {
                     Port.Visibility = portVisible;
                     PortText.Visibility = portVisible;
-                    Controller.Visibility = controllerVisible;
+                    ControllerRoot.Visibility = controllerVisible;
                     ControllerText.Visibility = controllerVisible;
 
                     if (connected)
@@ -97,7 +100,7 @@ namespace Cubelicator.UI.Controls
 
         public void SetControllerColor(string color)
         {
-            GamecubeController.SetControllerColor(color);
+            gamecubeControllerView.SetControllerColor(color);
         }
 
         private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)
@@ -105,46 +108,33 @@ namespace Cubelicator.UI.Controls
             if (sender is not MenuFlyoutItem item)
                 return;
 
-            string? colorName = item.Tag?.ToString();
+            if (item.Tag is not string colorName)
+                return;
 
-            string? colorValue = colorName switch
-            {
-                nameof(Colors.Indigo) => Colors.Indigo,
-                nameof(Colors.JetBlack) => Colors.JetBlack,
-                nameof(Colors.SpiceOrange) => Colors.SpiceOrange,
-                nameof(Colors.Platinum) => Colors.Platinum,
-                nameof(Colors.EmeraldBlue) => Colors.EmeraldBlue,
-                nameof(Colors.White) => Colors.White,
-                nameof(Colors.StarlightGold) => Colors.StarlightGold,
-                nameof(Colors.SymphonicGreen) => Colors.SymphonicGreen,
-                nameof(Colors.LuigiGreen) => Colors.LuigiGreen,
-                nameof(Colors.MarioRed) => Colors.MarioRed,
-                nameof(Colors.WarioYellow) => Colors.WarioYellow,
-                nameof(Colors.GundamChar) => Colors.GundamChar,
-                _ => null
-            };
+            if (!Enum.TryParse<ControllerColor>(colorName, out var colorEnum))
+                return;
 
-            if (colorValue != null)
+            if (!ControllerColors.Map.TryGetValue(colorEnum, out var colorValue))
+                return;
+
+            switch (port)
             {
-                switch (port)
-                {
-                    case 1:
-                        settings.Controller1Color = colorValue;
-                        break;
-                    case 2:
-                        settings.Controller2Color = colorValue;
-                        break;
-                    case 3:
-                        settings.Controller3Color = colorValue;
-                        break;
-                    case 4:
-                        settings.Controller4Color = colorValue;
-                        break;
-                }
+                case 1:
+                    settings.Controller1Color = colorValue;
+                    break;
+                case 2:
+                    settings.Controller2Color = colorValue;
+                    break;
+                case 3:
+                    settings.Controller3Color = colorValue;
+                    break;
+                case 4:
+                    settings.Controller4Color = colorValue;
+                    break;
             }
         }
 
-        public string MenuCalibrate => Strings.Calibrate;
-        public string MenuChangeColor => Strings.ChangeColor;
+        private string StringCalibrate => Strings.Calibrate;
+        private string StringChangeColor => Strings.ChangeColor;
     }
 }

@@ -48,7 +48,7 @@ public partial class App : Application
         System.Diagnostics.Debug.WriteLine(a);
     }
 
-    public static SolidColorBrush StringToColor(string color)
+    public static SolidColorBrush StringToSolidColorBrush(string color)
     {
         color = color.TrimStart('#');
 

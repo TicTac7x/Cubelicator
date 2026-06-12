@@ -50,10 +50,10 @@
                     <MenuFlyout Placement="BottomEdgeAlignedLeft">
 
                         <MenuFlyoutItem
-                            Text="Calibrate"
+                            Text="{x:Bind StringCalibrate}"
                             Click="OnMenuItemClickCalibrate"/>
 
-                        <MenuFlyoutSubItem Text="Change Color">
+                        <MenuFlyoutSubItem Text="{x:Bind StringChangeColor}">
 
                             <MenuFlyoutItem
                                 Text="Indigo"
@@ -125,9 +125,7 @@
                     Height="16"/>
             </Button>
 
-            <Grid x:Name="Controller" Grid.Row="0" Padding="20" Visibility="Collapsed">
-                <controls:GamecubeController x:Name="GamecubeController" />
-            </Grid>
+            <Grid x:Name="ControllerRoot" Grid.Row="0" Padding="20" Visibility="Collapsed"/>
 
             <Grid x:Name="Port" Grid.Row="0" Width="60" Height="60" Visibility="Visible">
                 <controls:ControllerPort x:Name="ControllerPort" />

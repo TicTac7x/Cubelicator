@@ -9,10 +9,10 @@
         public event Action<string> OnController4ColorChanged = delegate { };
         public event Action OnSettingsChanged = delegate { };
 
-        private string controller1Color = Colors.Indigo;
-        private string controller2Color = Colors.Indigo;
-        private string controller3Color = Colors.Indigo;
-        private string controller4Color = Colors.Indigo;
+        private string controller1Color = ControllerColors.Map[ControllerColor.Indigo];
+        private string controller2Color = ControllerColors.Map[ControllerColor.Indigo];
+        private string controller3Color = ControllerColors.Map[ControllerColor.Indigo];
+        private string controller4Color = ControllerColors.Map[ControllerColor.Indigo];
 
 
         public string Controller1Color

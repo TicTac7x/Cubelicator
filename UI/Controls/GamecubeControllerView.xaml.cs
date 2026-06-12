@@ -45,40 +45,40 @@ namespace Cubelicator.UI.Controls
                     switch (button)
                     {
                         case ControllerButton.A:
-                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonA);
+                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonA);
                             break;
                         case ControllerButton.B:
-                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonB);
+                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonB);
                             break;
                         case ControllerButton.X:
-                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonX);
+                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonX);
                             break;
                         case ControllerButton.Y:
-                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonY);
+                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonY);
                             break;
                         case ControllerButton.Z:
-                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonZ);
+                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonZ);
                             break;
                         case ControllerButton.Start:
-                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonStart);
+                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonStart);
                             break;
                         case ControllerButton.DPadUp:
-                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonDPadUp);
+                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadUp);
                             break;
                         case ControllerButton.DPadDown:
-                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonDPadDown);
+                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadDown);
                             break;
                         case ControllerButton.DPadLeft:
-                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonDPadLeft);
+                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadLeft);
                             break;
                         case ControllerButton.DPadRight:
-                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorButtonDPadRight);
+                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadRight);
                             break;
                         case ControllerButton.LeftShoulder:
-                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorLeftTrigger);
+                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorLeftTrigger);
                             break;
                         case ControllerButton.RightShoulder:
-                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? "00ff00" : ColorRightTrigger);
+                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorRightTrigger);
                             break;
                     }
                 });

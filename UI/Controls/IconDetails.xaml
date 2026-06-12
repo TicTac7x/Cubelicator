@@ -11,7 +11,7 @@
             Height="3"
             RadiusX="3"
             RadiusY="3"
-            Fill="{ThemeResource DeviceForeground}"
+            Fill="{x:Bind ColorDeviceForeground}"
             Canvas.Left="6"
             Canvas.Top="1" />
 
@@ -21,7 +21,7 @@
             Height="3"
             RadiusX="3"
             RadiusY="3"
-            Fill="{ThemeResource DeviceForeground}"
+            Fill="{x:Bind ColorDeviceForeground}"
             Canvas.Left="6"
             Canvas.Top="6" />
 
@@ -31,7 +31,7 @@
             Height="3"
             RadiusX="3"
             RadiusY="3"
-            Fill="{ThemeResource DeviceForeground}"
+            Fill="{x:Bind ColorDeviceForeground}"
             Canvas.Left="6"
             Canvas.Top="12" />
 

@@ -8,7 +8,7 @@
 
     <Border
         Padding="10"
-        Background="{ThemeResource DeviceBackground}"
+        Background="{x:Bind ColorDeviceBackground}"
         CornerRadius="10">
 
         <Grid>
@@ -137,7 +137,7 @@
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"
-                Foreground="{ThemeResource DeviceForeground}">
+                Foreground="{x:Bind ColorDeviceForeground}">
                 Port
             </TextBlock>
 
@@ -147,7 +147,7 @@
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"
-                Foreground="{ThemeResource DeviceForeground}"
+                Foreground="{x:Bind ColorDeviceForeground}"
                 Visibility="Collapsed">
                 Controller
             </TextBlock>

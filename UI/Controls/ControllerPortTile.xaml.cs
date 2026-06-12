@@ -136,5 +136,7 @@ namespace Cubelicator.UI.Controls
 
         private string StringCalibrate => Strings.Calibrate;
         private string StringChangeColor => Strings.ChangeColor;
+        private string ColorDeviceBackground = Colors.DeviceBackground;
+        private string ColorDeviceForeground = Colors.DeviceForeground;
     }
 }

@@ -53,4 +53,7 @@ public sealed partial class MainWindow : Window
         e.Handled = true;
         AppWindow.Hide();
     }
+
+    private string ColorAppBackground = Colors.AppBackground;
+    private string ColorDeviceBackground = Colors.DeviceBackground;
 }

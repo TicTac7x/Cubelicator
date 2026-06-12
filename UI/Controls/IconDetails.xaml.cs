@@ -8,5 +8,7 @@ namespace Cubelicator.UI.Controls
         {
             InitializeComponent();
         }
+
+        private string ColorDeviceForeground = Colors.DeviceForeground;
     }
 }

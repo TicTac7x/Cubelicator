@@ -4,13 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Cubelicator.UI.Controls">
 
-    <Grid x:Name="Root" Background="{ThemeResource AppBackground}">
+    <Grid x:Name="Root" Background="{x:Bind ColorAppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <TitleBar x:Name="TitleBar" Background="{ThemeResource DeviceBackground}">
+
+        <TitleBar x:Name="TitleBar" Background="{x:Bind ColorDeviceBackground}">
             <TitleBar.IconSource>
                 <FontIconSource Glyph="&#xF4AA;" />
             </TitleBar.IconSource>

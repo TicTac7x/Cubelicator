@@ -1,5 +1,13 @@
 ﻿namespace Cubelicator
 {
+    public static class Colors
+    {
+        public const string AppBackground = "#222222";
+        public const string DeviceBackground = "#111111";
+        public const string DeviceForeground = "LightGray";
+        public const string ButtonPressed = "#4897D2";
+    }
+
     public static class ControllerColors
     {
         public static readonly Dictionary<ControllerColor, string> Map = new()

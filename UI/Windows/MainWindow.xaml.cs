@@ -21,11 +21,6 @@ public sealed partial class MainWindow : Window
         TitleBar.Title = Strings.AppName;
         Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
         this.Closed += OnClose;
-
-        settings.OnController1ColorChanged += (color) =>
-        {
-            controllerPortTiles[0].SetControllerColor(color);
-        };
     }
 
     private void InitializeControllerPortTiles()

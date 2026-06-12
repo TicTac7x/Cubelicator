@@ -2,6 +2,7 @@
 {
     public class Settings
     {
+        public event Action<int, string> OnControllerColorChanged = delegate { };
         public event Action<string> OnController1ColorChanged = delegate { };
         public event Action<string> OnController2ColorChanged = delegate { };
         public event Action<string> OnController3ColorChanged = delegate { };
@@ -21,6 +22,7 @@
             {
                 controller1Color = value;
                 OnController1ColorChanged(value);
+                OnControllerColorChanged(1, value);
                 OnSettingsChanged();
             }
         }
@@ -32,6 +34,7 @@
             {
                 controller2Color = value;
                 OnController2ColorChanged(value);
+                OnControllerColorChanged(2, value);
                 OnSettingsChanged();
             }
         }
@@ -43,6 +46,7 @@
             {
                 controller3Color = value;
                 OnController3ColorChanged(value);
+                OnControllerColorChanged(3, value);
                 OnSettingsChanged();
             }
         }
@@ -54,6 +58,7 @@
             {
                 controller4Color = value;
                 OnController4ColorChanged(value);
+                OnControllerColorChanged(4, value);
                 OnSettingsChanged();
             }
         }

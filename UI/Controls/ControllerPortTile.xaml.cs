@@ -75,6 +75,14 @@ namespace Cubelicator.UI.Controls
                     );
                 });
             };
+
+            settings.OnControllerColorChanged += (port, color) =>
+            {
+                if (port == this.port)
+                {
+                    SetControllerColor(color);
+                }
+            };
         }
 
         private void OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)

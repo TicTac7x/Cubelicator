@@ -2,20 +2,31 @@
 {
     public class Settings
     {
-        public event Action<int, string> OnControllerColorChanged = delegate { };
-        public event Action<string> OnController1ColorChanged = delegate { };
-        public event Action<string> OnController2ColorChanged = delegate { };
-        public event Action<string> OnController3ColorChanged = delegate { };
-        public event Action<string> OnController4ColorChanged = delegate { };
+        public event Action<int, ControllerColor> OnControllerColorChanged = delegate { };
+        public event Action<ControllerColor> OnController1ColorChanged = delegate { };
+        public event Action<ControllerColor> OnController2ColorChanged = delegate { };
+        public event Action<ControllerColor> OnController3ColorChanged = delegate { };
+        public event Action<ControllerColor> OnController4ColorChanged = delegate { };
+
+        public event Action<string> OnController1ProfileChanged = delegate { };
+        public event Action<string> OnController2ProfileChanged = delegate { };
+        public event Action<string> OnController3ProfileChanged = delegate { };
+        public event Action<string> OnController4ProfileChanged = delegate { };
+
         public event Action OnSettingsChanged = delegate { };
 
-        private string controller1Color = ControllerColors.Map[ControllerColor.Indigo];
-        private string controller2Color = ControllerColors.Map[ControllerColor.Indigo];
-        private string controller3Color = ControllerColors.Map[ControllerColor.Indigo];
-        private string controller4Color = ControllerColors.Map[ControllerColor.Indigo];
+        private ControllerColor controller1Color = ControllerColor.Indigo;
+        private ControllerColor controller2Color = ControllerColor.Indigo;
+        private ControllerColor controller3Color = ControllerColor.Indigo;
+        private ControllerColor controller4Color = ControllerColor.Indigo;
+
+        private string controller1Profile = "Default";
+        private string controller2Profile = "Default";
+        private string controller3Profile = "Default";
+        private string controller4Profile = "Default";
 
 
-        public string Controller1Color
+        public ControllerColor Controller1Color
         {
             get => controller1Color;
             set
@@ -27,7 +38,7 @@
             }
         }
 
-        public string Controller2Color
+        public ControllerColor Controller2Color
         {
             get => controller2Color;
             set
@@ -39,7 +50,7 @@
             }
         }
 
-        public string Controller3Color
+        public ControllerColor Controller3Color
         {
             get => controller3Color;
             set
@@ -51,7 +62,7 @@
             }
         }
 
-        public string Controller4Color
+        public ControllerColor Controller4Color
         {
             get => controller4Color;
             set
@@ -59,6 +70,50 @@
                 controller4Color = value;
                 OnController4ColorChanged(value);
                 OnControllerColorChanged(4, value);
+                OnSettingsChanged();
+            }
+        }
+
+        public string Controller1Profile
+        {
+            get => controller1Profile;
+            set
+            {
+                controller1Profile = value;
+                OnController1ProfileChanged(value);
+                OnSettingsChanged();
+            }
+        }
+
+        public string Controller2Profile
+        {
+            get => controller2Profile;
+            set
+            {
+                controller2Profile = value;
+                OnController2ProfileChanged(value);
+                OnSettingsChanged();
+            }
+        }
+
+        public string Controller3Profile
+        {
+            get => controller3Profile;
+            set
+            {
+                controller3Profile = value;
+                OnController3ProfileChanged(value);
+                OnSettingsChanged();
+            }
+        }
+
+        public string Controller4Profile
+        {
+            get => controller4Profile;
+            set
+            {
+                controller4Profile = value;
+                OnController4ProfileChanged(value);
                 OnSettingsChanged();
             }
         }

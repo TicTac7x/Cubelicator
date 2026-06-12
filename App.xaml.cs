@@ -13,18 +13,21 @@ public partial class App : Application
     private readonly CalibrationManager calibrationManager;
     private readonly SettingsManager settingsManager;
     private readonly GamecubeAdapter gamecubeAdapter;
+    private readonly ProfileManager profileManager;
 
     public App()
     {
         InitializeComponent();
 
         calibrationManager = new CalibrationManager();
+        profileManager = new ProfileManager();
         settingsManager = new SettingsManager();
         gamecubeAdapter = new GamecubeAdapter(calibrationManager);
         trayIcon = new TrayIcon(OpenMainWindow, Exit);
         mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager);
 
         calibrationManager.Start();
+        profileManager.Start();
         settingsManager.Start();
         gamecubeAdapter.Start();
         mainWindow.Activate();

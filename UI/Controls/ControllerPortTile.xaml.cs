@@ -2,6 +2,7 @@
 using Cubelicator.UI.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Text.RegularExpressions;
 
 namespace Cubelicator.UI.Controls
 {
@@ -22,12 +23,39 @@ namespace Cubelicator.UI.Controls
             this.gamecubeControllerView = new GamecubeControllerView(gamecubeController);
 
             InitializeComponent();
-            ControllerRoot.Children.Add(gamecubeControllerView);
-            PortText.Text = PortText.Text + " " + port;
-            ControllerText.Text = ControllerText.Text + " " + port;
+            InitializeControllerPortTile();
+            SetupEventListeners();
+        }
+
+        void InitializeControllerPortTile()
+        {
+            // Port not calibrated tooltip.
             ToolTipService.SetToolTip(IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
 
-            SetupEventListeners();
+            // Populate list of controller colors.
+            foreach (var controllerColor in ControllerColors.Map.Keys)
+            {
+                var item = new MenuFlyoutItem
+                {
+                    Text = Regex.Replace(
+                    controllerColor.ToString(),
+                    "(\\B[A-Z])",
+                    " $1"),
+                    Tag = controllerColor.ToString()
+                };
+
+                item.Click += OnMenuItemChangeColor;
+
+                DynamicControllerColors.Items.Add(item);
+            }
+
+
+            // Gamecube controller view.
+            ControllerRoot.Children.Add(gamecubeControllerView);
+
+            // Controller and port texts.
+            PortText.Text = PortText.Text + " " + port;
+            ControllerText.Text = ControllerText.Text + " " + port;
         }
 
         private void SetupEventListeners()
@@ -43,6 +71,8 @@ namespace Cubelicator.UI.Controls
                     PortText.Visibility = portVisible;
                     ControllerRoot.Visibility = controllerVisible;
                     ControllerText.Visibility = controllerVisible;
+                    ProfileButton.Visibility = controllerVisible;
+                    DetailsButton.Visibility = controllerVisible;
 
                     if (connected)
                     {
@@ -83,11 +113,11 @@ namespace Cubelicator.UI.Controls
                 });
             };
 
-            settings.OnControllerColorChanged += (port, color) =>
+            settings.OnControllerColorChanged += (port, controllerColor) =>
             {
                 if (port == this.port)
                 {
-                    SetControllerColor(color);
+                    SetControllerColor(ControllerColors.Map[controllerColor]);
                 }
             };
         }
@@ -114,22 +144,19 @@ namespace Cubelicator.UI.Controls
             if (!Enum.TryParse<ControllerColor>(colorName, out var colorEnum))
                 return;
 
-            if (!ControllerColors.Map.TryGetValue(colorEnum, out var colorValue))
-                return;
-
             switch (port)
             {
                 case 1:
-                    settings.Controller1Color = colorValue;
+                    settings.Controller1Color = colorEnum;
                     break;
                 case 2:
-                    settings.Controller2Color = colorValue;
+                    settings.Controller2Color = colorEnum;
                     break;
                 case 3:
-                    settings.Controller3Color = colorValue;
+                    settings.Controller3Color = colorEnum;
                     break;
                 case 4:
-                    settings.Controller4Color = colorValue;
+                    settings.Controller4Color = colorEnum;
                     break;
             }
         }

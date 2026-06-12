@@ -16,6 +16,6 @@
             return "Port " + port + " is calibrated";
         }
         public const string Calibrate = "Calibrate";
-        public const string ChangeColor = "Change color";
+        public const string ChangeColor = "Change Color";
     }
 }

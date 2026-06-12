@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Cubelicator.Services
 {
@@ -26,7 +27,14 @@ namespace Cubelicator.Services
         {
             string json = JsonSerializer.Serialize(
                 Settings,
-                new JsonSerializerOptions { WriteIndented = true });
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Converters =
+                    {
+                new JsonStringEnumConverter()
+                    }
+                });
 
             File.WriteAllText(settingsFile, json);
         }
@@ -35,15 +43,23 @@ namespace Cubelicator.Services
         {
             try
             {
-                // Save default settings to file
                 if (!File.Exists(settingsFile))
                 {
-                    SaveSettings(this.Settings);
+                    Save();
                     return;
                 }
 
                 string json = File.ReadAllText(settingsFile);
-                var settings = JsonSerializer.Deserialize<Settings>(json);
+
+                var settings = JsonSerializer.Deserialize<Settings>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        Converters =
+                        {
+                    new JsonStringEnumConverter()
+                        }
+                    });
 
                 if (settings != null)
                 {
@@ -53,7 +69,9 @@ namespace Cubelicator.Services
                     Settings.Controller4Color = settings.Controller4Color;
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private void SaveSettings(Settings settings)

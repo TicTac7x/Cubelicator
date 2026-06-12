@@ -7,133 +7,117 @@
     Height="240">
 
     <Border
-        Padding="10"
+        Padding="5"
         Background="{x:Bind ColorDeviceBackground}"
         CornerRadius="10">
 
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Image
-                x:Name="IconCalibrated"
-                Grid.Row="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Source="ms-appx:///Assets/Calibrated.svg"
-                Width="16"
-                Height="16"
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Padding="7,0,0,0">
+                    <Image
+                        x:Name="IconCalibrated"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="ms-appx:///Assets/Calibrated.svg"
+                        Width="16"
+                        Height="16"
+                        Visibility="Collapsed"/>
+
+                    <Image
+                        x:Name="IconNotCalibrated"
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="ms-appx:///Assets/NotCalibrated.svg"
+                        Width="16"
+                        Height="16"
+                        Visibility="Collapsed"/>
+                </Grid>
+
+                <Button
+                    x:Name="ProfileButton"
+                    Grid.Column="1"
+                    Visibility="Collapsed">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <TextBlock
+                            x:Name="ProfileText"
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            Profile
+                        </TextBlock>
+
+                        <controls:IconDown />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    x:Name="DetailsButton"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="5"
+                    Margin="0,0,2,0"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+
+                    <Button.Flyout>
+                        <MenuFlyout
+                            Placement="BottomEdgeAlignedLeft">
+
+                            <MenuFlyoutItem
+                                Text="{x:Bind StringCalibrate}"
+                                Click="OnMenuItemClickCalibrate"/>
+
+                            <MenuFlyoutSubItem
+                                x:Name="DynamicControllerColors"
+                                Text="{x:Bind StringChangeColor}">
+                            </MenuFlyoutSubItem>
+
+                        </MenuFlyout>
+                    </Button.Flyout>
+
+                    <controls:IconDetails
+                        Width="16"
+                        Height="16"/>
+                </Button>
+            </Grid>
+
+            <Grid
+                x:Name="ControllerRoot"
+                Grid.Row="1"
+                Padding="20"
                 Visibility="Collapsed"/>
 
-            <Image
-                x:Name="IconNotCalibrated"
-                Grid.Row="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Source="ms-appx:///Assets/NotCalibrated.svg"
-                Width="16"
-                Height="16"
-                Visibility="Collapsed"/>
-
-            <Button
-                x:Name="DetailsButton"
-                Background="Transparent"
-                BorderThickness="0"
-                Padding="5"
-                Grid.Row="0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top">
-
-                <Button.Flyout>
-                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
-
-                        <MenuFlyoutItem
-                            Text="{x:Bind StringCalibrate}"
-                            Click="OnMenuItemClickCalibrate"/>
-
-                        <MenuFlyoutSubItem Text="{x:Bind StringChangeColor}">
-
-                            <MenuFlyoutItem
-                                Text="Indigo"
-                                Tag="Indigo"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Jet Black"
-                                Tag="JetBlack"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Spice Orange"
-                                Tag="SpiceOrange"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Platinum"
-                                Tag="Platinum"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Emerald Blue"
-                                Tag="EmeraldBlue"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="White"
-                                Tag="White"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Starlight Gold"
-                                Tag="StarlightGold"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Symphonic Green"
-                                Tag="SymphonicGreen"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Luigi Green"
-                                Tag="LuigiGreen"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Mario Red"
-                                Tag="MarioRed"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Wario Yellow"
-                                Tag="WarioYellow"
-                                Click="OnMenuItemChangeColor"/>
-
-                            <MenuFlyoutItem
-                                Text="Gundam Char"
-                                Tag="GundamChar"
-                                Click="OnMenuItemChangeColor"/>
-
-                        </MenuFlyoutSubItem>
-
-                    </MenuFlyout>
-                </Button.Flyout>
-
-                <controls:IconDetails
-                    Width="16"
-                    Height="16"/>
-            </Button>
-
-            <Grid x:Name="ControllerRoot" Grid.Row="0" Padding="20" Visibility="Collapsed"/>
-
-            <Grid x:Name="Port" Grid.Row="0" Width="60" Height="60" Visibility="Visible">
-                <controls:ControllerPort x:Name="ControllerPort" />
+            <Grid
+                x:Name="Port"
+                Grid.Row="1"
+                Width="60"
+                Height="60"
+                Visibility="Visible">
+                <controls:ControllerPort
+                    x:Name="ControllerPort" />
             </Grid>
 
             <TextBlock
                 x:Name="PortText"
-                Grid.Row="1"
+                Grid.Row="2"
+                Padding="0,0,0,5"
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"
@@ -143,7 +127,8 @@
 
             <TextBlock
                 x:Name="ControllerText"
-                Grid.Row="1"
+                Grid.Row="2"
+                Padding="0,0,0,5"
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"

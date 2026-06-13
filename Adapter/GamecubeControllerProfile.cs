@@ -7,24 +7,32 @@ namespace Cubelicator
         public string Name { get; set; } = "Default";
 
         // Buttons
-        public Xbox360Button A { get; set; } = Xbox360Button.A;
-        public Xbox360Button B { get; set; } = Xbox360Button.B;
-        public Xbox360Button X { get; set; } = Xbox360Button.X;
-        public Xbox360Button Y { get; set; } = Xbox360Button.Y;
-        public Xbox360Button Z { get; set; } = Xbox360Button.Back;
-        public Xbox360Button Start { get; set; } = Xbox360Button.Start;
+        public GamecubeControllerInput A { get; set; } = GamecubeControllerInput.A;
+        public GamecubeControllerInput B { get; set; } = GamecubeControllerInput.B;
+        public GamecubeControllerInput X { get; set; } = GamecubeControllerInput.X;
+        public GamecubeControllerInput Y { get; set; } = GamecubeControllerInput.Y;
+        public GamecubeControllerInput Z { get; set; } = GamecubeControllerInput.Z;
+        public GamecubeControllerInput Start { get; set; } = GamecubeControllerInput.Start;
+        public GamecubeControllerInput LeftShoulder { get; set; } = GamecubeControllerInput.LeftShoulder;
+        public GamecubeControllerInput RightShoulder { get; set; } = GamecubeControllerInput.RightShoulder;
 
         // DPad
-        public Xbox360Button DPadUp { get; set; } = Xbox360Button.Up;
-        public Xbox360Button DPadDown { get; set; } = Xbox360Button.Down;
-        public Xbox360Button DPadLeft { get; set; } = Xbox360Button.Left;
-        public Xbox360Button DPadRight { get; set; } = Xbox360Button.Right;
+        public GamecubeControllerInput DPadUp { get; set; } = GamecubeControllerInput.DPadUp;
+        public GamecubeControllerInput DPadDown { get; set; } = GamecubeControllerInput.DPadDown;
+        public GamecubeControllerInput DPadLeft { get; set; } = GamecubeControllerInput.DPadLeft;
+        public GamecubeControllerInput DPadRight { get; set; } = GamecubeControllerInput.DPadRight;
 
         // Triggers
-        public Xbox360Button LeftTriggerButton { get; set; } = Xbox360Button.LeftShoulder;
-        public Xbox360Button RightTriggerButton { get; set; } = Xbox360Button.RightShoulder;
-        public Xbox360Slider LeftTrigger { get; set; } = Xbox360Slider.LeftTrigger;
-        public Xbox360Slider RightTrigger { get; set; } = Xbox360Slider.RightTrigger;
+        public GamecubeControllerInput LeftTrigger { get; set; } = GamecubeControllerInput.LeftTrigger;
+        public GamecubeControllerInput LeftTriggerButton { get; set; } = GamecubeControllerInput.LeftShoulder;
+        public GamecubeControllerInput RightTrigger { get; set; } = GamecubeControllerInput.RightTrigger;
+        public GamecubeControllerInput RightTriggerButton { get; set; } = GamecubeControllerInput.RightShoulder;
+
+        // Sticks
+        public GamecubeControllerInput LeftStickX { get; set; } = GamecubeControllerInput.LeftStickX;
+        public GamecubeControllerInput LeftStickY { get; set; } = GamecubeControllerInput.LeftStickY;
+        public GamecubeControllerInput RightStickX { get; set; } = GamecubeControllerInput.RightStickX;
+        public GamecubeControllerInput RightStickY { get; set; } = GamecubeControllerInput.RightStickY;
 
         // Deadzones
         public float LeftStickDeadzone { get; set; } = 0f;

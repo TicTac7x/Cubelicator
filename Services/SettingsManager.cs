@@ -5,19 +5,23 @@ namespace Cubelicator.Services
 {
     public class SettingsManager
     {
-        public Settings Settings { get; private set; } = new Settings();
+        private readonly Settings settings;
 
         private readonly string settingsFile = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             "Cubelicator",
             "Settings.json");
 
-        public SettingsManager() { }
+        public Settings Settings { get => settings; }
+
+        public SettingsManager(ProfileManager profileManager) {
+            settings = new Settings(profileManager);
+        }
 
         public void Start()
         {
             LoadSettings();
-            Settings.OnSettingsChanged += () =>
+            settings.OnSettingsChanged += () =>
             {
                 Save();
             };
@@ -26,7 +30,7 @@ namespace Cubelicator.Services
         public void Save()
         {
             string json = JsonSerializer.Serialize(
-                Settings,
+                settings,
                 new JsonSerializerOptions
                 {
                     WriteIndented = true,
@@ -41,46 +45,40 @@ namespace Cubelicator.Services
 
         private void LoadSettings()
         {
-            try
+            if (!File.Exists(settingsFile))
             {
-                if (!File.Exists(settingsFile))
-                {
-                    Save();
-                    return;
-                }
-
-                string json = File.ReadAllText(settingsFile);
-
-                var settings = JsonSerializer.Deserialize<Settings>(
-                    json,
-                    new JsonSerializerOptions
-                    {
-                        Converters =
-                        {
-                    new JsonStringEnumConverter()
-                        }
-                    });
-
-                if (settings != null)
-                {
-                    Settings.Controller1Color = settings.Controller1Color;
-                    Settings.Controller2Color = settings.Controller2Color;
-                    Settings.Controller3Color = settings.Controller3Color;
-                    Settings.Controller4Color = settings.Controller4Color;
-                }
+                Save();
+                return;
             }
-            catch
-            {
-            }
-        }
 
-        private void SaveSettings(Settings settings)
-        {
-            string json = JsonSerializer.Serialize(
-                settings,
-                new JsonSerializerOptions { WriteIndented = true });
+            string json = File.ReadAllText(settingsFile);
 
-            File.WriteAllText(settingsFile, json);
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+
+            Settings.Controller1Color =
+                Enum.Parse<ControllerColor>(root.GetProperty("Controller1Color").GetString()!);
+
+            Settings.Controller2Color =
+                Enum.Parse<ControllerColor>(root.GetProperty("Controller2Color").GetString()!);
+
+            Settings.Controller3Color =
+                Enum.Parse<ControllerColor>(root.GetProperty("Controller3Color").GetString()!);
+
+            Settings.Controller4Color =
+                Enum.Parse<ControllerColor>(root.GetProperty("Controller4Color").GetString()!);
+
+            Settings.Controller1Profile =
+                root.GetProperty("Controller1Profile").GetString() ?? "Default";
+
+            Settings.Controller2Profile =
+                root.GetProperty("Controller2Profile").GetString() ?? "Default";
+
+            Settings.Controller3Profile =
+                root.GetProperty("Controller3Profile").GetString() ?? "Default";
+
+            Settings.Controller4Profile =
+                root.GetProperty("Controller4Profile").GetString() ?? "Default";
         }
     }
 }

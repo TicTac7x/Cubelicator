@@ -14,6 +14,8 @@ namespace Cubelicator
         private const int ADAPTER_CONNECTED = 0x21;
         private const int ADAPTER_RUMBLE = 0x11;
 
+        private readonly CalibrationManager calibrationManager;
+        private readonly Settings settings;
         private readonly GamecubeController[] controllers = new GamecubeController[4];
         private ViGEmClient? vigemClient;
         private UsbDevice? usbDevice;
@@ -22,15 +24,42 @@ namespace Cubelicator
         private CancellationTokenSource? cts;
         private Task? pollingLoopTask;
 
-        
-        public GamecubeAdapter(CalibrationManager calibrationManager)
+        public GamecubeAdapter(CalibrationManager calibrationManager, Settings settings)
         {
+            this.calibrationManager = calibrationManager;
+            this.settings = settings;
+
             InitializeAdapter();
             CreateControllers();
+            SetupListeners();
 
+            
+        }
+
+        private void SetupListeners()
+        {
             calibrationManager.OnPortControllerCalibrationLoaded += (port, calibration) =>
             {
                 SetPortControllerCalibration(port, calibration);
+            };
+
+            settings.OnControllerProfileChanged += (port, profile) =>
+            {
+                switch (port)
+                {
+                    case 1:
+                        controllers[0].SetProfile(profile);
+                        break;
+                    case 2:
+                        controllers[1].SetProfile(profile);
+                        break;
+                    case 3:
+                        controllers[2].SetProfile(profile);
+                        break;
+                    case 4:
+                        controllers[3].SetProfile(profile);
+                        break;
+                }
             };
         }
 

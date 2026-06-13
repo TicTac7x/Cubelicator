@@ -21,10 +21,10 @@ public partial class App : Application
 
         calibrationManager = new CalibrationManager();
         profileManager = new ProfileManager();
-        settingsManager = new SettingsManager();
-        gamecubeAdapter = new GamecubeAdapter(calibrationManager);
-        trayIcon = new TrayIcon(OpenMainWindow, Exit);
-        mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager);
+        settingsManager = new SettingsManager(profileManager);
+        gamecubeAdapter = new GamecubeAdapter(calibrationManager, settingsManager.Settings);
+        trayIcon = new TrayIcon(OpenMainWindow, ExitApp);
+        mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager, profileManager);
 
         calibrationManager.Start();
         profileManager.Start();
@@ -33,9 +33,9 @@ public partial class App : Application
         mainWindow.Activate();
     }
 
-    public new void Exit()
+    private void ExitApp()
     {
-        mainWindow.Close();
+        mainWindow.Exit();
         gamecubeAdapter.Stop();
         trayIcon.Stop();
         Current.Exit();

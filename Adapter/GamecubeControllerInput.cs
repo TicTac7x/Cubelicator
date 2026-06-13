@@ -1,25 +1,27 @@
 ﻿namespace Cubelicator
 {
-public enum GamecubeControllerInput
-{
-    A,
-    B,
-    X,
-    Y,
-    Z,
-    Start,
+    public enum GamecubeControllerInput
+    {
+        A,
+        B,
+        X,
+        Y,
+        Z,
+        Start,
 
-    DPadUp,
-    DPadDown,
-    DPadLeft,
-    DPadRight,
+        DPadUp,
+        DPadDown,
+        DPadLeft,
+        DPadRight,
 
-    LeftTrigger,
-    LeftTriggerButton,
-    RightTrigger,
-    RightTriggerButton,
+        LeftTrigger,
+        LeftShoulder,
+        RightTrigger,
+        RightShoulder,
 
-    LeftStick,
-    RightStick
-}
+        LeftStickX,
+        LeftStickY,
+        RightStickX,
+        RightStickY
+    }
 }

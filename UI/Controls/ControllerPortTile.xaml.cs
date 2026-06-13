@@ -12,14 +12,16 @@ namespace Cubelicator.UI.Controls
         private readonly GamecubeController gamecubeController;
         private readonly Settings settings;
         private readonly CalibrationManager calibrationManager;
+        private readonly ProfileManager profileManager;
         private readonly GamecubeControllerView gamecubeControllerView;
 
-        public ControllerPortTile(int port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager)
+        public ControllerPortTile(int port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
             this.settings = settings;
             this.calibrationManager = calibrationManager;
+            this.profileManager = profileManager;
             this.gamecubeControllerView = new GamecubeControllerView(gamecubeController);
 
             InitializeComponent();
@@ -113,11 +115,40 @@ namespace Cubelicator.UI.Controls
                 });
             };
 
+            settings.OnControllerProfileChanged += (int port, GamecubeControllerProfile profile) =>
+            {
+                if (port == this.port)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        ProfileText.Text = profile.Name;
+                    });
+                }
+            };
+
             settings.OnControllerColorChanged += (port, controllerColor) =>
             {
                 if (port == this.port)
                 {
                     SetControllerColor(ControllerColors.Map[controllerColor]);
+                }
+            };
+
+            profileManager.OnProfilesChanged += (profiles) =>
+            {
+                DynamicProfiles.Items.Clear();
+
+                foreach (var profile in profiles)
+                {
+                    var item = new MenuFlyoutItem
+                    {
+                        Text = profile.Name,
+                        Tag = profile.Name
+                    };
+
+                    item.Click += OnMenuItemChangeProfile;
+
+                    DynamicProfiles.Items.Add(item);
                 }
             };
         }
@@ -157,6 +188,31 @@ namespace Cubelicator.UI.Controls
                     break;
                 case 4:
                     settings.Controller4Color = colorEnum;
+                    break;
+            }
+        }
+
+        private void OnMenuItemChangeProfile(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MenuFlyoutItem item)
+                return;
+
+            if (item.Tag is not string profileName)
+                return;
+
+            switch (port)
+            {
+                case 1:
+                    settings.Controller1Profile = profileName;
+                    break;
+                case 2:
+                    settings.Controller2Profile = profileName;
+                    break;
+                case 3:
+                    settings.Controller3Profile = profileName;
+                    break;
+                case 4:
+                    settings.Controller4Profile = profileName;
                     break;
             }
         }

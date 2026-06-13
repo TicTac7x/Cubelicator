@@ -1,17 +1,29 @@
-﻿namespace Cubelicator
+﻿using Cubelicator.Services;
+using System.Text.Json.Serialization;
+
+
+
+namespace Cubelicator
 {
     public class Settings
     {
-        public event Action<int, ControllerColor> OnControllerColorChanged = delegate { };
+        public static int a = 1;
+
+        private readonly ProfileManager profileManager;
+
+        private readonly int id = a++;
+
         public event Action<ControllerColor> OnController1ColorChanged = delegate { };
         public event Action<ControllerColor> OnController2ColorChanged = delegate { };
         public event Action<ControllerColor> OnController3ColorChanged = delegate { };
         public event Action<ControllerColor> OnController4ColorChanged = delegate { };
+        public event Action<int, ControllerColor> OnControllerColorChanged = delegate { };
 
-        public event Action<string> OnController1ProfileChanged = delegate { };
-        public event Action<string> OnController2ProfileChanged = delegate { };
-        public event Action<string> OnController3ProfileChanged = delegate { };
-        public event Action<string> OnController4ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> OnController1ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> OnController2ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> OnController3ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> OnController4ProfileChanged = delegate { };
+        public event Action<int, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
 
         public event Action OnSettingsChanged = delegate { };
 
@@ -25,6 +37,10 @@
         private string controller3Profile = "Default";
         private string controller4Profile = "Default";
 
+        public Settings(ProfileManager profileManager)
+        {
+            this.profileManager = profileManager;
+        }
 
         public ControllerColor Controller1Color
         {
@@ -79,8 +95,10 @@
             get => controller1Profile;
             set
             {
+                var profile = profileManager.GetProfile(value);
                 controller1Profile = value;
-                OnController1ProfileChanged(value);
+                OnController1ProfileChanged(profile);
+                OnControllerProfileChanged(1, profile);
                 OnSettingsChanged();
             }
         }
@@ -90,8 +108,10 @@
             get => controller2Profile;
             set
             {
+                var profile = profileManager.GetProfile(value);
                 controller2Profile = value;
-                OnController2ProfileChanged(value);
+                OnController2ProfileChanged(profile);
+                OnControllerProfileChanged(2, profile);
                 OnSettingsChanged();
             }
         }
@@ -101,8 +121,10 @@
             get => controller3Profile;
             set
             {
+                var profile = profileManager.GetProfile(value);
                 controller3Profile = value;
-                OnController3ProfileChanged(value);
+                OnController3ProfileChanged(profile);
+                OnControllerProfileChanged(3, profile);
                 OnSettingsChanged();
             }
         }
@@ -112,8 +134,10 @@
             get => controller4Profile;
             set
             {
+                var profile = profileManager.GetProfile(value);
                 controller4Profile = value;
-                OnController4ProfileChanged(value);
+                OnController4ProfileChanged(profile);
+                OnControllerProfileChanged(4, profile);
                 OnSettingsChanged();
             }
         }

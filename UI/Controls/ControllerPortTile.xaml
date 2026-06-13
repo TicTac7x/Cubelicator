@@ -50,6 +50,11 @@
                     x:Name="ProfileButton"
                     Grid.Column="1"
                     Visibility="Collapsed">
+
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="DynamicProfiles" Placement="Bottom"/>
+                    </Button.Flyout>
+
                     <StackPanel
                         Orientation="Horizontal"
                         Spacing="5">

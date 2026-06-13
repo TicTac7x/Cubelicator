@@ -47,16 +47,16 @@ namespace Cubelicator
             {
                 switch (port)
                 {
-                    case 1:
+                    case AdapterPort.One:
                         controllers[0].Profile = profile;
                         break;
-                    case 2:
+                    case AdapterPort.Two:
                         controllers[1].Profile = profile;
                         break;
-                    case 3:
+                    case AdapterPort.Three:
                         controllers[2].Profile = profile;
                         break;
-                    case 4:
+                    case AdapterPort.Four:
                         controllers[3].Profile = profile;
                         break;
                 }

@@ -1,29 +1,20 @@
 ﻿using Cubelicator.Services;
-using System.Text.Json.Serialization;
-
-
 
 namespace Cubelicator
 {
     public class Settings
     {
-        public static int a = 1;
-
-        private readonly ProfileManager profileManager;
-
-        private readonly int id = a++;
-
         public event Action<ControllerColor> OnController1ColorChanged = delegate { };
         public event Action<ControllerColor> OnController2ColorChanged = delegate { };
         public event Action<ControllerColor> OnController3ColorChanged = delegate { };
         public event Action<ControllerColor> OnController4ColorChanged = delegate { };
-        public event Action<int, ControllerColor> OnControllerColorChanged = delegate { };
+        public event Action<AdapterPort, ControllerColor> OnControllerColorChanged = delegate { };
 
         public event Action<GamecubeControllerProfile> OnController1ProfileChanged = delegate { };
         public event Action<GamecubeControllerProfile> OnController2ProfileChanged = delegate { };
         public event Action<GamecubeControllerProfile> OnController3ProfileChanged = delegate { };
         public event Action<GamecubeControllerProfile> OnController4ProfileChanged = delegate { };
-        public event Action<int, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
+        public event Action<AdapterPort, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
 
         public event Action OnSettingsChanged = delegate { };
 
@@ -32,14 +23,47 @@ namespace Cubelicator
         private ControllerColor controller3Color = ControllerColor.Indigo;
         private ControllerColor controller4Color = ControllerColor.Indigo;
 
-        private string controller1Profile = "Default";
-        private string controller2Profile = "Default";
-        private string controller3Profile = "Default";
-        private string controller4Profile = "Default";
+        private GamecubeControllerProfile controller1Profile = new GamecubeControllerProfile();
+        private GamecubeControllerProfile controller2Profile = new GamecubeControllerProfile();
+        private GamecubeControllerProfile controller3Profile = new GamecubeControllerProfile();
+        private GamecubeControllerProfile controller4Profile = new GamecubeControllerProfile();
 
-        public Settings(ProfileManager profileManager)
+        public void SetControllerColor(AdapterPort port, ControllerColor color)
         {
-            this.profileManager = profileManager;
+            switch(port)
+            {
+                case AdapterPort.One:
+                    Controller1Color = color;
+                    break;
+                case AdapterPort.Two:
+                    Controller2Color = color;
+                    break;
+                case AdapterPort.Three:
+                    Controller3Color = color;
+                    break;
+                case AdapterPort.Four:
+                    Controller4Color = color;
+                    break;
+            }
+        }
+
+        public void SetControllerProfile(AdapterPort port, GamecubeControllerProfile profile)
+        {
+            switch (port)
+            {
+                case AdapterPort.One:
+                    Controller1Profile = profile;
+                    break;
+                case AdapterPort.Two:
+                    Controller2Profile = profile;
+                    break;
+                case AdapterPort.Three:
+                    Controller3Profile = profile;
+                    break;
+                case AdapterPort.Four:
+                    Controller4Profile = profile;
+                    break;
+            }
         }
 
         public ControllerColor Controller1Color
@@ -49,7 +73,7 @@ namespace Cubelicator
             {
                 controller1Color = value;
                 OnController1ColorChanged(value);
-                OnControllerColorChanged(1, value);
+                OnControllerColorChanged(AdapterPort.One, value);
                 OnSettingsChanged();
             }
         }
@@ -61,7 +85,7 @@ namespace Cubelicator
             {
                 controller2Color = value;
                 OnController2ColorChanged(value);
-                OnControllerColorChanged(2, value);
+                OnControllerColorChanged(AdapterPort.Two, value);
                 OnSettingsChanged();
             }
         }
@@ -73,7 +97,7 @@ namespace Cubelicator
             {
                 controller3Color = value;
                 OnController3ColorChanged(value);
-                OnControllerColorChanged(3, value);
+                OnControllerColorChanged(AdapterPort.Three, value);
                 OnSettingsChanged();
             }
         }
@@ -85,59 +109,55 @@ namespace Cubelicator
             {
                 controller4Color = value;
                 OnController4ColorChanged(value);
-                OnControllerColorChanged(4, value);
+                OnControllerColorChanged(AdapterPort.Four, value);
                 OnSettingsChanged();
             }
         }
 
-        public string Controller1Profile
+        public GamecubeControllerProfile Controller1Profile
         {
             get => controller1Profile;
             set
             {
-                var profile = profileManager.GetProfile(value);
                 controller1Profile = value;
-                OnController1ProfileChanged(profile);
-                OnControllerProfileChanged(1, profile);
+                OnController1ProfileChanged(value);
+                OnControllerProfileChanged(AdapterPort.One, value);
                 OnSettingsChanged();
             }
         }
 
-        public string Controller2Profile
+        public GamecubeControllerProfile Controller2Profile
         {
             get => controller2Profile;
             set
             {
-                var profile = profileManager.GetProfile(value);
                 controller2Profile = value;
-                OnController2ProfileChanged(profile);
-                OnControllerProfileChanged(2, profile);
+                OnController2ProfileChanged(value);
+                OnControllerProfileChanged(AdapterPort.Two, value);
                 OnSettingsChanged();
             }
         }
 
-        public string Controller3Profile
+        public GamecubeControllerProfile Controller3Profile
         {
             get => controller3Profile;
             set
             {
-                var profile = profileManager.GetProfile(value);
                 controller3Profile = value;
-                OnController3ProfileChanged(profile);
-                OnControllerProfileChanged(3, profile);
+                OnController3ProfileChanged(value);
+                OnControllerProfileChanged(AdapterPort.Three, value);
                 OnSettingsChanged();
             }
         }
 
-        public string Controller4Profile
+        public GamecubeControllerProfile Controller4Profile
         {
             get => controller4Profile;
             set
             {
-                var profile = profileManager.GetProfile(value);
                 controller4Profile = value;
-                OnController4ProfileChanged(profile);
-                OnControllerProfileChanged(4, profile);
+                OnController4ProfileChanged(value);
+                OnControllerProfileChanged(AdapterPort.Four, value);
                 OnSettingsChanged();
             }
         }

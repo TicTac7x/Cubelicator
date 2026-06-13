@@ -5,17 +5,17 @@ namespace Cubelicator.UI.Windows
 {
     public partial class CalibrationWindow : Window
     {
-        private readonly int _port;
-        private readonly CalibrationManager _calibrationManager;
+        private readonly AdapterPort port;
+        private readonly CalibrationManager calibrationManager;
 
         public CalibrationWindow(
-            int port,
+            AdapterPort port,
             CalibrationManager calibrationManager)
         {
             InitializeComponent();
 
-            _port = port;
-            _calibrationManager = calibrationManager;
+            this.port = port;
+            this.calibrationManager = calibrationManager;
 
             Title = $"Calibrate Port {port}";
         }

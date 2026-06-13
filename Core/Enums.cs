@@ -1,5 +1,13 @@
 ﻿namespace Cubelicator
 {
+    public enum AdapterPort
+    {
+        One,
+        Two,
+        Three,
+        Four
+    }
+
     public enum ControllerSide
     {
         Left,

@@ -68,7 +68,7 @@ namespace Cubelicator.Services
             OnProfilesChanged(profiles);
         }
 
-        public GamecubeControllerProfile GetProfile(string profileName)
+        public GamecubeControllerProfile? GetProfile(string profileName)
         {
             foreach (var profile in profiles)
             {
@@ -78,7 +78,7 @@ namespace Cubelicator.Services
                 }
             }
 
-            return new GamecubeControllerProfile();
+            return null;
         }
     }
 }

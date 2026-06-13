@@ -1,11 +1,13 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 namespace Cubelicator.Services
 {
     public class SettingsManager
     {
-        private readonly Settings settings;
+        private readonly ProfileManager profileManager;
+        private readonly Settings settings = new Settings();
 
         private readonly string settingsFile = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -15,7 +17,7 @@ namespace Cubelicator.Services
         public Settings Settings { get => settings; }
 
         public SettingsManager(ProfileManager profileManager) {
-            settings = new Settings(profileManager);
+            this.profileManager = profileManager;
         }
 
         public void Start()
@@ -29,16 +31,23 @@ namespace Cubelicator.Services
 
         public void Save()
         {
-            string json = JsonSerializer.Serialize(
-                settings,
-                new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Converters =
-                    {
-                new JsonStringEnumConverter()
-                    }
-                });
+            var jsonObject = new JsonObject
+            {
+                ["Controller1Color"] = settings.Controller1Color.ToString(),
+                ["Controller2Color"] = settings.Controller2Color.ToString(),
+                ["Controller3Color"] = settings.Controller3Color.ToString(),
+                ["Controller4Color"] = settings.Controller4Color.ToString(),
+
+                ["Controller1Profile"] = settings.Controller1Profile.Name,
+                ["Controller2Profile"] = settings.Controller2Profile.Name,
+                ["Controller3Profile"] = settings.Controller3Profile.Name,
+                ["Controller4Profile"] = settings.Controller4Profile.Name
+            };
+
+            string json = jsonObject.ToJsonString(new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
 
             File.WriteAllText(settingsFile, json);
         }
@@ -68,17 +77,29 @@ namespace Cubelicator.Services
             Settings.Controller4Color =
                 Enum.Parse<ControllerColor>(root.GetProperty("Controller4Color").GetString()!);
 
-            Settings.Controller1Profile =
-                root.GetProperty("Controller1Profile").GetString() ?? "Default";
+            var profile1 = profileManager.GetProfile(root.GetProperty("Controller1Profile").GetString() ?? "Default");
+            if (profile1 != null)
+            {
+                Settings.Controller1Profile = profile1;
+            }
 
-            Settings.Controller2Profile =
-                root.GetProperty("Controller2Profile").GetString() ?? "Default";
+            var profile2 = profileManager.GetProfile(root.GetProperty("Controller2Profile").GetString() ?? "Default");
+            if (profile2 != null)
+            {
+                Settings.Controller2Profile = profile2;
+            }
 
-            Settings.Controller3Profile =
-                root.GetProperty("Controller3Profile").GetString() ?? "Default";
+            var profile3 = profileManager.GetProfile(root.GetProperty("Controller3Profile").GetString() ?? "Default");
+            if (profile3 != null)
+            {
+                Settings.Controller3Profile = profile3;
+            }
 
-            Settings.Controller4Profile =
-                root.GetProperty("Controller4Profile").GetString() ?? "Default";
+            var profile4 = profileManager.GetProfile(root.GetProperty("Controller4Profile").GetString() ?? "Default");
+            if (profile4 != null)
+            {
+                Settings.Controller4Profile = profile4;
+            }
         }
     }
 }

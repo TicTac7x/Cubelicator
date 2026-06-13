@@ -8,14 +8,14 @@ namespace Cubelicator.UI.Controls
 {
     public sealed partial class ControllerPortTile : UserControl
     {
-        private readonly int port;
+        private readonly AdapterPort port;
         private readonly GamecubeController gamecubeController;
         private readonly Settings settings;
         private readonly CalibrationManager calibrationManager;
         private readonly ProfileManager profileManager;
         private readonly GamecubeControllerView gamecubeControllerView;
 
-        public ControllerPortTile(int port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
+        public ControllerPortTile(AdapterPort port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
@@ -183,21 +183,7 @@ namespace Cubelicator.UI.Controls
             if (!Enum.TryParse<ControllerColor>(colorName, out var colorEnum))
                 return;
 
-            switch (port)
-            {
-                case 1:
-                    settings.Controller1Color = colorEnum;
-                    break;
-                case 2:
-                    settings.Controller2Color = colorEnum;
-                    break;
-                case 3:
-                    settings.Controller3Color = colorEnum;
-                    break;
-                case 4:
-                    settings.Controller4Color = colorEnum;
-                    break;
-            }
+            settings.SetControllerColor(port, colorEnum);
         }
 
         private void OnMenuItemChangeProfile(object sender, RoutedEventArgs e)
@@ -208,21 +194,11 @@ namespace Cubelicator.UI.Controls
             if (item.Tag is not string profileName)
                 return;
 
-            switch (port)
-            {
-                case 1:
-                    settings.Controller1Profile = profileName;
-                    break;
-                case 2:
-                    settings.Controller2Profile = profileName;
-                    break;
-                case 3:
-                    settings.Controller3Profile = profileName;
-                    break;
-                case 4:
-                    settings.Controller4Profile = profileName;
-                    break;
-            }
+            var profile = profileManager.GetProfile(profileName);
+            if (profile == null)
+                return;
+
+            settings.SetControllerProfile(port, profile);
         }
 
         private string StringCalibrate => Strings.Calibrate;

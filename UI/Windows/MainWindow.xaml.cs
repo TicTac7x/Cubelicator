@@ -31,7 +31,7 @@ public sealed partial class MainWindow : Window
     {
         for (int port = 1; port <= controllerPortTiles.Length; port++)
         {
-            var controllerPortTile = new ControllerPortTile(port, gamecubeAdapter.GetPortController(port), settings, calibrationManager, profileManager);
+            var controllerPortTile = new ControllerPortTile(App.IntToAdapterPort(port), gamecubeAdapter.GetPortController(port), settings, calibrationManager, profileManager);
             controllerPortTiles[port - 1] = controllerPortTile;
             ControllerPortTiles.Children.Add(controllerPortTile);
         }

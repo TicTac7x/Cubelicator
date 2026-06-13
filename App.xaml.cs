@@ -61,4 +61,21 @@ public partial class App : Application
 
         return new SolidColorBrush(Color.FromArgb(255, r, g, b));
     }
+
+    public static AdapterPort IntToAdapterPort(int port)
+    {
+        switch (port)
+        {
+            case 1:
+                return AdapterPort.One;
+            case 2:
+                return AdapterPort.Two;
+            case 3:
+                return AdapterPort.Three;
+            case 4:
+                return AdapterPort.Four;
+            default:
+                throw new Exception("Invalid adapter port " + port);
+        }
+    }
 }

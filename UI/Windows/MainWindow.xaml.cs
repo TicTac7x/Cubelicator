@@ -11,26 +11,23 @@ public sealed partial class MainWindow : Window
     private readonly GamecubeAdapter gamecubeAdapter;
     private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
     private readonly CalibrationManager calibrationManager;
-    private readonly ProfileManager profileManager;
 
     public MainWindow(GamecubeAdapter gamecubeAdapter, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
     {
         this.settings = settings;
         this.gamecubeAdapter = gamecubeAdapter;
         this.calibrationManager = calibrationManager;
-        this.profileManager = profileManager;
 
         InitializeComponent();
-        InitializeControllerPortTiles();
+        InitializeControllerPortTiles(profileManager);
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(TitleBar);
         TitleBar.Title = Strings.AppName;
         Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
         this.Closed += OnClose;
-        this.profileManager = profileManager;
     }
 
-    private void InitializeControllerPortTiles()
+    private void InitializeControllerPortTiles(ProfileManager profileManager)
     {
         for (int port = 1; port <= controllerPortTiles.Length; port++)
         {

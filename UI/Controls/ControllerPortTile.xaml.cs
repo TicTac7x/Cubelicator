@@ -115,15 +115,17 @@ namespace Cubelicator.UI.Controls
                 });
             };
 
-            settings.OnControllerProfileChanged += (int port, GamecubeControllerProfile profile) =>
+            gamecubeController.OnProfileChanged += (profile) =>
             {
-                if (port == this.port)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    ProfileText.Text = profile.Name;
+
+                    foreach (var item in DynamicProfiles.Items)
                     {
-                        ProfileText.Text = profile.Name;
-                    });
-                }
+                        item.Visibility = item.Tag == profile.Name ? Visibility.Collapsed : Visibility.Visible;
+                    }
+                });
             };
 
             settings.OnControllerColorChanged += (port, controllerColor) =>
@@ -136,20 +138,26 @@ namespace Cubelicator.UI.Controls
 
             profileManager.OnProfilesChanged += (profiles) =>
             {
-                DynamicProfiles.Items.Clear();
-
-                foreach (var profile in profiles)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    var item = new MenuFlyoutItem
+                    DynamicProfiles.Items.Clear();
+
+                    foreach (var profile in profiles)
                     {
-                        Text = profile.Name,
-                        Tag = profile.Name
-                    };
 
-                    item.Click += OnMenuItemChangeProfile;
+                        var item = new MenuFlyoutItem
+                        {
+                            Text = profile.Name,
+                            Tag = profile.Name,
+                            Visibility = profile.Name == gamecubeController.Profile.Name ? Visibility.Collapsed : Visibility.Visible
+                        };
 
-                    DynamicProfiles.Items.Add(item);
-                }
+                        item.Click += OnMenuItemChangeProfile;
+
+                        DynamicProfiles.Items.Add(item);
+                    }
+                });
+                
             };
         }
 

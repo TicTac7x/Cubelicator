@@ -1,11 +1,13 @@
 ﻿using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Cubelicator
 {
     public class GamecubeController
     {
+        public event Action<GamecubeControllerProfile> OnProfileChanged = delegate { };
         public event Action<bool> OnConnectionChanged = delegate { };
         public event Action<bool> OnRumbleChanged = delegate { };
         public event Action<GamecubeControllerCalibration> OnCalibrationChanged = delegate { };
@@ -15,19 +17,25 @@ namespace Cubelicator
 
         private readonly IXbox360Controller controller;
         private GamecubeControllerProfile profile;
+        public GamecubeControllerProfile Profile
+        {
+            get => profile;
+            set
+            {
+                profile = value;
+                OnProfileChanged(value);
+            }
+        }
         private GamecubeControllerCalibration? calibration = null;
         private GamecubeControllerState _state = new GamecubeControllerState();
+
+        
 
         public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile)
         {
             this.profile = profile;
             controller = CreateController(vigem);
             controller.AutoSubmitReport = false;
-        }
-
-        public void SetProfile(GamecubeControllerProfile profile)
-        {
-            this.profile = profile;
         }
 
         private IXbox360Controller CreateController(ViGEmClient vigem)

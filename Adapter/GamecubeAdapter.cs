@@ -48,16 +48,16 @@ namespace Cubelicator
                 switch (port)
                 {
                     case 1:
-                        controllers[0].SetProfile(profile);
+                        controllers[0].Profile = profile;
                         break;
                     case 2:
-                        controllers[1].SetProfile(profile);
+                        controllers[1].Profile = profile;
                         break;
                     case 3:
-                        controllers[2].SetProfile(profile);
+                        controllers[2].Profile = profile;
                         break;
                     case 4:
-                        controllers[3].SetProfile(profile);
+                        controllers[3].Profile = profile;
                         break;
                 }
             };

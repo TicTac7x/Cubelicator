@@ -14,8 +14,9 @@ namespace Cubelicator.UI.Controls
         private readonly CalibrationManager calibrationManager;
         private readonly ProfileManager profileManager;
         private readonly GamecubeControllerView gamecubeControllerView;
+        private readonly ViewsManager viewsManager;
 
-        public ControllerPortTile(AdapterPort port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
+        public ControllerPortTile(AdapterPort port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager, ViewsManager viewsManager)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
@@ -23,6 +24,7 @@ namespace Cubelicator.UI.Controls
             this.calibrationManager = calibrationManager;
             this.profileManager = profileManager;
             this.gamecubeControllerView = new GamecubeControllerView(gamecubeController);
+            this.viewsManager = viewsManager;
 
             InitializeComponent();
             InitializeControllerPortTile();
@@ -167,11 +169,6 @@ namespace Cubelicator.UI.Controls
             calibrationWindow.Activate();
         }
 
-        public void SetControllerColor(string color)
-        {
-            gamecubeControllerView.SetControllerColor(color);
-        }
-
         private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)
         {
             if (sender is not MenuFlyoutItem item)
@@ -184,6 +181,11 @@ namespace Cubelicator.UI.Controls
                 return;
 
             settings.SetControllerColor(port, colorEnum);
+        }
+
+        private void OnMenuItemEdit(object sender, RoutedEventArgs e)
+        {
+            viewsManager.ShowControllerEditor(gamecubeController);
         }
 
         private void OnMenuItemChangeProfile(object sender, RoutedEventArgs e)
@@ -201,8 +203,14 @@ namespace Cubelicator.UI.Controls
             settings.SetControllerProfile(port, profile);
         }
 
+        public void SetControllerColor(string color)
+        {
+            gamecubeControllerView.SetControllerColor(color);
+        }
+
         private string StringCalibrate => Strings.Calibrate;
         private string StringChangeColor => Strings.ChangeColor;
+        private String StringEdit => Strings.Edit;
         private string ColorDeviceBackground = Colors.DeviceBackground;
         private string ColorDeviceForeground = Colors.DeviceForeground;
     }

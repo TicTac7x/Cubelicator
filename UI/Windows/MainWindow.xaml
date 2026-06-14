@@ -2,7 +2,7 @@
     x:Class="Cubelicator.UI.Windows.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Cubelicator.UI.Controls">
+    xmlns:views="using:Cubelicator.UI.Views">
 
     <Grid x:Name="Root" Background="{x:Bind ColorAppBackground}">
         <Grid.RowDefinitions>
@@ -16,14 +16,9 @@
             </TitleBar.IconSource>
         </TitleBar>
 
-        <StackPanel
-            x:Name="ControllerPortTiles"
-            Grid.Row="1"
-            Margin="20"
-            Spacing="30"
-            Orientation="Horizontal"
-            HorizontalAlignment="Center">
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid x:Name="DashboardRoot" />
+            <Grid x:Name="ControllerEditorRoot" Visibility="Collapsed" />
+        </Grid>
     </Grid>
-
 </Window>

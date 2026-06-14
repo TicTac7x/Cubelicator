@@ -17,5 +17,6 @@
         }
         public const string Calibrate = "Calibrate";
         public const string ChangeColor = "Change Color";
+        public const string Edit = "Edit";
     }
 }

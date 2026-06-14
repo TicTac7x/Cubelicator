@@ -1,0 +1,10 @@
+﻿<UserControl
+    x:Class="Cubelicator.UI.Views.ControllerEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Cubelicator.UI.Controls">
+
+    <Grid>
+        <Grid x:Name="ControllerRoot" />
+    </Grid>
+</UserControl>

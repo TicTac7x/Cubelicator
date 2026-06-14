@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 
 namespace Cubelicator.UI.Windows;
 
-public sealed partial class MainWindow : Window
+public partial class MainWindow : Window
 {
     private readonly ViewsManager viewsManager;
     private readonly Dashboard dashboard;

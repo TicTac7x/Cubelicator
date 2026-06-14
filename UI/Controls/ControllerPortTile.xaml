@@ -112,7 +112,9 @@
                 x:Name="ControllerRoot"
                 Grid.Row="1"
                 Padding="20"
-                Visibility="Collapsed"/>
+                Visibility="Collapsed"
+                Background="Transparent"
+                Tapped="OnMenuItemEdit"/>
 
             <Grid
                 x:Name="Port"

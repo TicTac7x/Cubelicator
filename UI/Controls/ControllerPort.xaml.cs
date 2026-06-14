@@ -2,7 +2,7 @@
 
 namespace Cubelicator.UI.Controls
 {
-    public sealed partial class ControllerPort : UserControl
+    public partial class ControllerPort : UserControl
     {
         public ControllerPort()
         {

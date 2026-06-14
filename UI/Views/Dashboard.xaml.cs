@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Cubelicator.UI.Views;
 
-public sealed partial class Dashboard : UserControl
+public partial class Dashboard : UserControl
 {
     private readonly ViewsManager viewsManager;
     private readonly ProfileManager profileManager;

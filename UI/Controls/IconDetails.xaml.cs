@@ -2,7 +2,7 @@
 
 namespace Cubelicator.UI.Controls
 {
-    public sealed partial class IconDetails : UserControl
+    public partial class IconDetails : UserControl
     {
         public IconDetails()
         {

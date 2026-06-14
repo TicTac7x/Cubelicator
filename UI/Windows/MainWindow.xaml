@@ -19,9 +19,11 @@
             <TitleBar.IconSource>
                 <FontIconSource Glyph="&#xF4AA;" />
             </TitleBar.IconSource>
-        </TitleBar>
 
-        <Grid x:Name="NavigatorRoot" Grid.Row="1" />
+            <Grid HorizontalAlignment="Stretch">
+            <Grid x:Name="NavigatorRoot" Grid.Row="1" HorizontalAlignment="Right" />
+            </Grid>
+        </TitleBar>
 
         <Grid Grid.Row="2">
             <Grid x:Name="DashboardRoot" />

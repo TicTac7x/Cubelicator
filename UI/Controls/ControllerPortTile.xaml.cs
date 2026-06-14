@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Cubelicator.UI.Controls
 {
-    public sealed partial class ControllerPortTile : UserControl
+    public partial class ControllerPortTile : UserControl
     {
         private readonly AdapterPort port;
         private readonly GamecubeController gamecubeController;

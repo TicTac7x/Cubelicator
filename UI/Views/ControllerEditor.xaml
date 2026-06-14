@@ -5,6 +5,20 @@
     xmlns:controls="using:Cubelicator.UI.Controls">
 
     <Grid>
-        <Grid x:Name="ControllerRoot" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1" Padding="0, 150">
+            <Grid x:Name="ControllerRoot" />
+        </Grid>
+
+        <Grid Grid.Column="2" Background="{x:Bind ColorButtonPressed}">
+            <StackPanel x:Name="RootMappedButtons">
+                
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

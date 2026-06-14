@@ -1,4 +1,8 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Input;
+using Windows.Foundation;
 
 namespace Cubelicator.UI.Controls
 {
@@ -44,40 +48,40 @@ namespace Cubelicator.UI.Controls
                 {
                     switch (button)
                     {
-                        case ControllerButton.A:
+                        case GamecubeControllerButton.A:
                             ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonA);
                             break;
-                        case ControllerButton.B:
+                        case GamecubeControllerButton.B:
                             ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonB);
                             break;
-                        case ControllerButton.X:
+                        case GamecubeControllerButton.X:
                             ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonX);
                             break;
-                        case ControllerButton.Y:
+                        case GamecubeControllerButton.Y:
                             ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonY);
                             break;
-                        case ControllerButton.Z:
+                        case GamecubeControllerButton.Z:
                             ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonZ);
                             break;
-                        case ControllerButton.Start:
+                        case GamecubeControllerButton.Start:
                             ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonStart);
                             break;
-                        case ControllerButton.DPadUp:
+                        case GamecubeControllerButton.DPadUp:
                             DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadUp);
                             break;
-                        case ControllerButton.DPadDown:
+                        case GamecubeControllerButton.DPadDown:
                             DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadDown);
                             break;
-                        case ControllerButton.DPadLeft:
+                        case GamecubeControllerButton.DPadLeft:
                             DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadLeft);
                             break;
-                        case ControllerButton.DPadRight:
+                        case GamecubeControllerButton.DPadRight:
                             DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadRight);
                             break;
-                        case ControllerButton.LeftShoulder:
+                        case GamecubeControllerButton.LeftShoulder:
                             LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorLeftTrigger);
                             break;
-                        case ControllerButton.RightShoulder:
+                        case GamecubeControllerButton.RightShoulder:
                             RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorRightTrigger);
                             break;
                     }
@@ -129,6 +133,47 @@ namespace Cubelicator.UI.Controls
                 });
                     
             };
+        }
+
+        private void OnClickButton(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element &&
+                element.Tag is GamecubeControllerButton gamecubeControllerButton)
+            {
+                var flyout = new MenuFlyout();
+
+                foreach (XboxControllerButton xboxControllerbutton in Enum.GetValues<XboxControllerButton>())
+                {
+                    var item = new MenuFlyoutItem
+                    {
+                        Text = xboxControllerbutton.ToString()
+                    };
+
+                    item.Click += (_, _) =>
+                    {
+                        gamecubeController.Profile.SetButton(gamecubeControllerButton, xboxControllerbutton);
+                    };
+
+                    flyout.Items.Add(item);
+                }
+
+                var centerBottomLocal = new Point(
+                    element.ActualWidth / 2,
+                    element.ActualHeight
+                );
+
+                var screenPoint = element
+                    .TransformToVisual(null)
+                    .TransformPoint(centerBottomLocal);
+
+                flyout.ShowAt(
+                    element,
+                    new FlyoutShowOptions
+                    {
+                        Placement = FlyoutPlacementMode.Bottom,
+                        Position = screenPoint
+                    });
+            }
         }
 
         private string ColorButtonA => ControllerInputColors.ButtonA;

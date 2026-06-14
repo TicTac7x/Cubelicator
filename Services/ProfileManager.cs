@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace Cubelicator.Services
 {
@@ -27,9 +28,11 @@ namespace Cubelicator.Services
                 return;
 
             var defaultProfile = new GamecubeControllerProfile();
+            SaveProfile(defaultProfile);
+        }
 
-            string filePath = Path.Combine(directoryProfiles, defaultProfile.Name + ".json");
-
+        private void SaveProfile(GamecubeControllerProfile profile)
+        {
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -38,10 +41,8 @@ namespace Cubelicator.Services
                     new JsonStringEnumConverter()
                 }
             };
-
-            string json = JsonSerializer.Serialize(defaultProfile, options);
-
-            File.WriteAllText(filePath, json);
+            string json = JsonSerializer.Serialize(profile, options);
+            File.WriteAllText(Path.Combine(directoryProfiles, profile.Name + ".json"), json);
         }
 
         public void Start()
@@ -61,6 +62,11 @@ namespace Cubelicator.Services
 
                 if (profile != null)
                 {
+                    profile.Name = Path.GetFileNameWithoutExtension(file);
+                    profile.OnChanged += () =>
+                    {
+                        SaveProfile(profile);
+                    };
                     profiles.Add(profile);
                 }
             }

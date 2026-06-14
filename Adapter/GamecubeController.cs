@@ -1,7 +1,6 @@
 ﻿using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Cubelicator
 {
@@ -11,7 +10,7 @@ namespace Cubelicator
         public event Action<bool> OnConnectionChanged = delegate { };
         public event Action<bool> OnRumbleChanged = delegate { };
         public event Action<GamecubeControllerCalibration> OnCalibrationChanged = delegate { };
-        public event Action<ControllerButton, bool> OnButtonChanged = delegate { };
+        public event Action<GamecubeControllerButton, bool> OnButtonChanged = delegate { };
         public event Action<ControllerSide, ControllerStickAxis, int> OnStickChanged = delegate { };
         public event Action<ControllerSide, int> OnTriggerChanged = delegate { };
 
@@ -86,18 +85,18 @@ namespace Cubelicator
             }
 
             // Buttons
-            HandleButton(ControllerButton.A, _state.ButtonA, state.ButtonA, profile.A);
-            HandleButton(ControllerButton.B, _state.ButtonB, state.ButtonB, profile.B);
-            HandleButton(ControllerButton.X, _state.ButtonX, state.ButtonX, profile.X);
-            HandleButton(ControllerButton.Y, _state.ButtonY, state.ButtonY, profile.Y);
-            HandleButton(ControllerButton.Z, _state.ButtonZ, state.ButtonZ, profile.Z);
-            HandleButton(ControllerButton.Start, _state.ButtonStart, state.ButtonStart, profile.Start);
-            HandleButton(ControllerButton.LeftShoulder, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, profile.LeftShoulder);
-            HandleButton(ControllerButton.RightShoulder, _state.ButtonRightShoulder, state.ButtonRightShoulder, profile.RightShoulder);
-            HandleButton(ControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, profile.DPadUp);
-            HandleButton(ControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, profile.DPadDown);
-            HandleButton(ControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, profile.DPadLeft);
-            HandleButton(ControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, profile.DPadRight);
+            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, profile.ButtonA);
+            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, profile.ButtonB);
+            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, profile.ButtonX);
+            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, profile.ButtonY);
+            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, profile.ButtonZ);
+            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, profile.ButtonStart);
+            HandleButton(GamecubeControllerButton.LeftShoulder, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, profile.ButtonLeftShoulder);
+            HandleButton(GamecubeControllerButton.RightShoulder, _state.ButtonRightShoulder, state.ButtonRightShoulder, profile.ButtonRightShoulder);
+            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, profile.ButtonDPadUp);
+            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, profile.ButtonDPadDown);
+            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, profile.ButtonDPadLeft);
+            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, profile.ButtonDPadRight);
 
             // Sticks
             // Left Stick X
@@ -111,7 +110,7 @@ namespace Cubelicator
                 calibration?.LeftStickXMax, 
                 profile.LeftStickDeadzone,
                 profile.LeftStickSensitivity,
-                profile.LeftStickX
+                profile.StickLeftX
             );
 
             // Left Stick Y
@@ -125,7 +124,7 @@ namespace Cubelicator
                 calibration?.LeftStickYMax,
                 profile.LeftStickDeadzone,
                 profile.LeftStickSensitivity,
-                profile.LeftStickY
+                profile.StickLeftY
             );
 
             // Right Stick X
@@ -139,7 +138,7 @@ namespace Cubelicator
                 calibration?.RightStickXMax,
                 profile.RightStickDeadzone,
                 profile.RightStickSensitivity,
-                profile.RightStickX
+                profile.StickRightX
             );
 
             // Right Stick Y
@@ -153,7 +152,7 @@ namespace Cubelicator
                 calibration?.RightStickYMax,
                 profile.RightStickDeadzone,
                 profile.RightStickSensitivity,
-                profile.RightStickY
+                profile.StickRightY
             );
 
             // Left Trigger
@@ -165,7 +164,7 @@ namespace Cubelicator
                 calibration?.LeftTriggerMax,
                 profile.LeftTriggerDeadzone,
                 profile.LeftTriggerSensitivity,
-                profile.LeftTrigger);
+                profile.TriggerLeft);
 
             // Right Trigger
             HandleTrigger(
@@ -176,7 +175,7 @@ namespace Cubelicator
                 calibration?.RightTriggerMax,
                 profile.RightTriggerDeadzone,
                 profile.RightTriggerSensitivity,
-                profile.RightTrigger);
+                profile.TriggerRight);
 
             if (state.Connected)
             {
@@ -241,10 +240,10 @@ namespace Cubelicator
         }
 
         private void HandleButton(
-            ControllerButton button, 
+            GamecubeControllerButton button, 
             bool oldValue, 
             bool newValue, 
-            GamecubeControllerInput mappedButton
+            XboxControllerButton mappedButton
         )
         {
             if (newValue != oldValue)
@@ -264,7 +263,7 @@ namespace Cubelicator
             int? calibrationMax, 
             float deadzone, 
             float sensitivity, 
-            GamecubeControllerInput mappedButton
+            XboxControllerStick mappedButton
         )
         {
             if (newValue != oldValue)
@@ -286,7 +285,7 @@ namespace Cubelicator
             int? calibrationMax,
             float deadzone,
             float sensitivity,
-            GamecubeControllerInput mappedTrigger
+            XboxControllerTrigger mappedTrigger
         )
         {
             if (newValue != oldValue)
@@ -314,48 +313,49 @@ namespace Cubelicator
             }
         }
 
-        private Xbox360Button? ToButton(GamecubeControllerInput input)
+        private Xbox360Button ToButton(XboxControllerButton input)
         {
             return input switch
             {
-                GamecubeControllerInput.A => Xbox360Button.A,
-                GamecubeControllerInput.B => Xbox360Button.B,
-                GamecubeControllerInput.X => Xbox360Button.X,
-                GamecubeControllerInput.Y => Xbox360Button.Y,
+                XboxControllerButton.A => Xbox360Button.A,
+                XboxControllerButton.B => Xbox360Button.B,
+                XboxControllerButton.X => Xbox360Button.X,
+                XboxControllerButton.Y => Xbox360Button.Y,
 
-                GamecubeControllerInput.Z => Xbox360Button.Back,
-                GamecubeControllerInput.Start => Xbox360Button.Start,
+                XboxControllerButton.Back => Xbox360Button.Back,
+                XboxControllerButton.Start => Xbox360Button.Start,
+                XboxControllerButton.Guide => Xbox360Button.Guide,
 
-                GamecubeControllerInput.DPadUp => Xbox360Button.Up,
-                GamecubeControllerInput.DPadDown => Xbox360Button.Down,
-                GamecubeControllerInput.DPadLeft => Xbox360Button.Left,
-                GamecubeControllerInput.DPadRight => Xbox360Button.Right,
+                XboxControllerButton.LeftThumb=> Xbox360Button.LeftThumb,
+                XboxControllerButton.RightThumb => Xbox360Button.RightThumb,
 
-                GamecubeControllerInput.LeftShoulder => Xbox360Button.LeftShoulder,
-                GamecubeControllerInput.RightShoulder => Xbox360Button.RightShoulder,
-                _ => null
+                XboxControllerButton.DPadUp => Xbox360Button.Up,
+                XboxControllerButton.DPadDown => Xbox360Button.Down,
+                XboxControllerButton.DPadLeft => Xbox360Button.Left,
+                XboxControllerButton.DPadRight => Xbox360Button.Right,
+
+                XboxControllerButton.LeftShoulder => Xbox360Button.LeftShoulder,
+                XboxControllerButton.RightShoulder => Xbox360Button.RightShoulder,
             };
         }
 
-        private Xbox360Slider? ToSlider(GamecubeControllerInput input)
+        private Xbox360Slider ToSlider(XboxControllerTrigger input)
         {
             return input switch
             {
-                GamecubeControllerInput.LeftTrigger => Xbox360Slider.LeftTrigger,
-                GamecubeControllerInput.RightTrigger => Xbox360Slider.RightTrigger,
-                _ => null
+                XboxControllerTrigger.Left=> Xbox360Slider.LeftTrigger,
+                XboxControllerTrigger.Right=> Xbox360Slider.RightTrigger,
             };
         }
 
-        private Xbox360Axis? ToAxis(GamecubeControllerInput input)
+        private Xbox360Axis ToAxis(XboxControllerStick input)
         {
             return input switch
             {
-                GamecubeControllerInput.LeftStickX => Xbox360Axis.LeftThumbX,
-                GamecubeControllerInput.LeftStickY => Xbox360Axis.LeftThumbY,
-                GamecubeControllerInput.RightStickX => Xbox360Axis.RightThumbX,
-                GamecubeControllerInput.RightStickY => Xbox360Axis.RightThumbY,
-                _ => null
+                XboxControllerStick.LeftX => Xbox360Axis.LeftThumbX,
+                XboxControllerStick.LeftY => Xbox360Axis.LeftThumbY,
+                XboxControllerStick.RightX => Xbox360Axis.RightThumbX,
+                XboxControllerStick.RightY => Xbox360Axis.RightThumbY,
             };
         }
     }

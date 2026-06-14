@@ -2,9 +2,9 @@
 
 namespace Cubelicator.UI.Controller
 {
-    public partial class ButtonY : UserControl
+    public partial class Y : UserControl
     {
-        public ButtonY()
+        public Y()
         {
             InitializeComponent();
         }

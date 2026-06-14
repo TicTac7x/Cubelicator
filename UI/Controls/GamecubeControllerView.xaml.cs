@@ -182,12 +182,12 @@ namespace Cubelicator.UI.Controls
         private string ColorButtonY => ControllerInputColors.ButtonY;
         private string ColorButtonZ => ControllerInputColors.ButtonZ;
         private string ColorButtonStart => ControllerInputColors.ButtonStart;
-        private string ColorButtonDPadUp => ControllerInputColors.ButtonDPadUp;
-        private string ColorButtonDPadDown => ControllerInputColors.ButtonDPadDown;
-        private string ColorButtonDPadLeft => ControllerInputColors.ButtonDPadLeft;
-        private string ColorButtonDPadRight => ControllerInputColors.ButtonDPadRight;
-        private string ColorLeftTrigger => ControllerInputColors.LeftTrigger;
-        private string ColorRightTrigger => ControllerInputColors.RightTrigger;
+        private string ColorButtonDPadUp => ControllerInputColors.ButtonDPad;
+        private string ColorButtonDPadDown => ControllerInputColors.ButtonDPad;
+        private string ColorButtonDPadLeft => ControllerInputColors.ButtonDPad;
+        private string ColorButtonDPadRight => ControllerInputColors.ButtonDPad;
+        private string ColorLeftTrigger => ControllerInputColors.Trigger;
+        private string ColorRightTrigger => ControllerInputColors.Trigger;
 
     }
 }

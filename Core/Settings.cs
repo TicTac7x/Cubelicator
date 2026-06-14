@@ -28,6 +28,17 @@ namespace Cubelicator
         private GamecubeControllerProfile controller3Profile = new GamecubeControllerProfile();
         private GamecubeControllerProfile controller4Profile = new GamecubeControllerProfile();
 
+        public ControllerColor GetControllerColor(AdapterPort port)
+        {
+            return port switch
+            {
+                AdapterPort.One => controller1Color,
+                AdapterPort.Two => controller2Color,
+                AdapterPort.Three => controller3Color,
+                AdapterPort.Four => controller4Color,
+            };
+        }
+
         public void SetControllerColor(AdapterPort port, ControllerColor color)
         {
             switch(port)

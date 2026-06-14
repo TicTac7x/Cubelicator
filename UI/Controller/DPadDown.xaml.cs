@@ -2,13 +2,13 @@
 
 namespace Cubelicator.UI.Controller
 {
-    public partial class A : UserControl
+    public partial class DPadDown : UserControl
     {
-        public A()
+        public DPadDown()
         {
             InitializeComponent();
         }
 
-        private string ColorButtonA => ControllerInputColors.ButtonA;
+        private string ColorButton => ControllerInputColors.ButtonDPad;
     }
 }

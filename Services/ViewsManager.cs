@@ -3,7 +3,7 @@
     public class ViewsManager
     {
         public event Action OnShowDashboard = delegate { };
-        public event Action<GamecubeController> OnShowControllerEditor = delegate { };
+        public event Action<AdapterPort, GamecubeController> OnShowControllerEditor = delegate { };
         public event Action<AppView> OnViewChanged = delegate { };
 
         public void ShowDashboard()
@@ -14,7 +14,7 @@
 
         public void ShowControllerEditor(AdapterPort port, GamecubeController gamecubeController)
         {
-            OnShowControllerEditor(gamecubeController);
+            OnShowControllerEditor(port, gamecubeController);
 
             switch (port)
             {

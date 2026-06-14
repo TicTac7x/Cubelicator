@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     {
         viewsManager = new ViewsManager();
         dashboard = new Dashboard(profileManager, calibrationManager, gamecubeAdapter, settings, viewsManager);
-        controllerEditor = new ControllerEditor(viewsManager);
+        controllerEditor = new ControllerEditor(viewsManager, settings);
         navigator = new Navigator(viewsManager, gamecubeAdapter);
 
         InitializeComponent();
@@ -33,7 +33,7 @@ public partial class MainWindow : Window
             ControllerEditorRoot.Visibility = Visibility.Collapsed;
         };
 
-        viewsManager.OnShowControllerEditor += (_) =>
+        viewsManager.OnShowControllerEditor += (_, _) =>
         {
             DashboardRoot.Visibility = Visibility.Collapsed;
             ControllerEditorRoot.Visibility = Visibility.Visible;

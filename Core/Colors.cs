@@ -45,11 +45,7 @@
         public const string ButtonY = ButtonX;
         public const string ButtonZ = "#4400CD";
         public const string ButtonStart = ButtonX;
-        public const string ButtonDPadUp = ButtonX;
-        public const string ButtonDPadDown = ButtonDPadUp;
-        public const string ButtonDPadLeft = ButtonDPadUp;
-        public const string ButtonDPadRight = ButtonDPadUp;
-        public const string LeftTrigger = ButtonX;
-        public const string RightTrigger = ButtonX;
+        public const string ButtonDPad = ButtonX;
+        public const string Trigger = ButtonX;
     }
 }

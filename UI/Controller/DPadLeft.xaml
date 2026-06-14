@@ -1,0 +1,20 @@
+<UserControl
+    x:Class="Cubelicator.UI.Controller.DPadLeft"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Viewbox Stretch="Uniform">
+        <Canvas Width="80" Height="80">
+            <Path
+                Data="M26.2915 55C24.4697 55 23 53.2448 23 51.0299L23 29C23 27 24.9429 25 26.8857 25L57 25L57 55L26.2915 55Z"
+                Fill="{x:Bind ColorButton}"
+                Stroke="Black"
+                StrokeThickness="2" />
+
+            <Path
+                Data="M27.0021 40.0688C27.0267 40.4918 27.292 40.8751 27.7071 41.0876L44.8723 49.8323C45.3113 50.056 45.8521 50.0559 46.291 49.8321C46.7299 49.6083 47.0002 49.1948 47 48.7475L47 31.2525C47.0002 30.8051 46.7299 30.3917 46.291 30.1679C45.8521 29.9441 45.3113 29.944 44.8723 30.1677L27.7071 38.9179C27.2456 39.154 26.9732 39.5987 27.0021 40.0688Z"
+                Fill="Black"
+                Opacity="0.4" />
+        </Canvas>
+    </Viewbox>
+</UserControl>

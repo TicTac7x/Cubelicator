@@ -11,7 +11,7 @@ namespace Cubelicator.UI.Controls
         {
             InitializeComponent();
 
-            var typeName = $"Cubelicator.UI.Controller.Button{gamecubeControllerButton}";
+            var typeName = $"Cubelicator.UI.Controller.{gamecubeControllerButton}";
             var type = Type.GetType(typeName);
             if (type == null)
             {

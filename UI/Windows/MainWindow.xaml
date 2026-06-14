@@ -7,16 +7,23 @@
     <Grid x:Name="Root" Background="{x:Bind ColorAppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TitleBar x:Name="TitleBar" Background="{x:Bind ColorDeviceBackground}">
+        <TitleBar
+            x:Name="TitleBar"
+            Grid.Row="0"
+            Background="{x:Bind ColorDeviceBackground}"
+            Padding="0">
             <TitleBar.IconSource>
                 <FontIconSource Glyph="&#xF4AA;" />
             </TitleBar.IconSource>
         </TitleBar>
 
-        <Grid Grid.Row="1">
+        <Grid x:Name="NavigatorRoot" Grid.Row="1" />
+
+        <Grid Grid.Row="2">
             <Grid x:Name="DashboardRoot" />
             <Grid x:Name="ControllerEditorRoot" Visibility="Collapsed" />
         </Grid>

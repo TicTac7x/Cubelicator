@@ -7,7 +7,7 @@ namespace Cubelicator
 {
     public class GamecubeAdapter
     {
-        public event Action<int, bool> OnControllerConnectionChanged = delegate { };
+        public event Action<AdapterPort, bool> OnControllerConnectionChanged = delegate { };
 
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
@@ -117,9 +117,11 @@ namespace Cubelicator
         private void CreateControllers()
         {
             vigemClient = new ViGEmClient();
+
             for (int i = 0; i < controllers.Length; i++)
             {
-                int port = i + 1;
+                AdapterPort port = (AdapterPort)(i + 1);
+
                 var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile());
 
                 controller.OnRumbleChanged += (bool rumble) =>
@@ -136,10 +138,12 @@ namespace Cubelicator
             }
         }
 
-        private void SetControllerRumble(int port, bool rumble)
+        private void SetControllerRumble(AdapterPort port, bool rumble)
         {
             byte[] report = [ADAPTER_RUMBLE, 0, 0, 0, 0];
-            report[port] = (byte) (rumble ? 1 : 0);
+
+            report[(int)port] = (byte)(rumble ? 1 : 0);
+
             usbWriter?.Write(report, 1000, out _);
         }
 
@@ -200,14 +204,20 @@ namespace Cubelicator
             };
         }
 
-        public void SetPortControllerCalibration(int port, GamecubeControllerCalibration calibration)
+        public void SetPortControllerCalibration(AdapterPort port, GamecubeControllerCalibration calibration)
         {
-            controllers[port - 1].SetCalibration(calibration);
+            GetPortController(port).SetCalibration(calibration);
         }
 
-        public GamecubeController GetPortController(int port)
+        public GamecubeController GetPortController(AdapterPort port)
         {
-            return controllers[port - 1];
+            return port switch
+            {
+                AdapterPort.One => controllers[0],
+                AdapterPort.Two => controllers[1],
+                AdapterPort.Three => controllers[2],
+                AdapterPort.Four => controllers[3],
+            };
         }
     }
 }

@@ -58,8 +58,8 @@ namespace Cubelicator.UI.Controls
             ControllerRoot.Children.Add(gamecubeControllerView);
 
             // Controller and port texts.
-            PortText.Text = PortText.Text + " " + port;
-            ControllerText.Text = ControllerText.Text + " " + port;
+            PortText.Text = PortText.Text + " " + (int) port;
+            ControllerText.Text = ControllerText.Text + " " + (int) port;
         }
 
         private void SetupEventListeners()
@@ -71,6 +71,7 @@ namespace Cubelicator.UI.Controls
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
+                    Root.Opacity = connected ? 1 : 0.4;
                     Port.Visibility = portVisible;
                     PortText.Visibility = portVisible;
                     ControllerRoot.Visibility = controllerVisible;
@@ -185,7 +186,7 @@ namespace Cubelicator.UI.Controls
 
         private void OnMenuItemEdit(object sender, RoutedEventArgs e)
         {
-            viewsManager.ShowControllerEditor(gamecubeController);
+            viewsManager.ShowControllerEditor(port, gamecubeController);
         }
 
         private void OnMenuItemChangeProfile(object sender, RoutedEventArgs e)

@@ -7,9 +7,11 @@
     Height="240">
 
     <Border
+        x:Name="Root"
         Padding="5"
         Background="{x:Bind ColorDeviceBackground}"
-        CornerRadius="10">
+        CornerRadius="10"
+        Opacity="0.5">
 
         <Grid>
             <Grid.RowDefinitions>

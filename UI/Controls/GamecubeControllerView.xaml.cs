@@ -49,40 +49,40 @@ namespace Cubelicator.UI.Controls
                     switch (button)
                     {
                         case GamecubeControllerButton.A:
-                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonA);
+                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonA);
                             break;
                         case GamecubeControllerButton.B:
-                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonB);
+                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonB);
                             break;
                         case GamecubeControllerButton.X:
-                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonX);
+                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonX);
                             break;
                         case GamecubeControllerButton.Y:
-                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonY);
+                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonY);
                             break;
                         case GamecubeControllerButton.Z:
-                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonZ);
+                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonZ);
                             break;
                         case GamecubeControllerButton.Start:
-                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonStart);
+                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonStart);
                             break;
                         case GamecubeControllerButton.DPadUp:
-                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadUp);
+                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadUp);
                             break;
                         case GamecubeControllerButton.DPadDown:
-                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadDown);
+                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadDown);
                             break;
                         case GamecubeControllerButton.DPadLeft:
-                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadLeft);
+                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadLeft);
                             break;
                         case GamecubeControllerButton.DPadRight:
-                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorButtonDPadRight);
+                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadRight);
                             break;
                         case GamecubeControllerButton.LeftShoulder:
-                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorLeftTrigger);
+                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorLeftTrigger);
                             break;
                         case GamecubeControllerButton.RightShoulder:
-                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ButtonPressed : ColorRightTrigger);
+                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorRightTrigger);
                             break;
                     }
                 });

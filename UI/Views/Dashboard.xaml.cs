@@ -27,10 +27,18 @@ public sealed partial class Dashboard : UserControl
 
     private void InitializeDashboard()
     {
-        for (int port = 1; port <= controllerPortTiles.Length; port++)
+        foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
         {
-            var controllerPortTile = new ControllerPortTile(App.IntToAdapterPort(port), gamecubeAdapter.GetPortController(port), settings, calibrationManager, profileManager, viewsManager);
-            controllerPortTiles[port - 1] = controllerPortTile;
+            int index = (int) port - 1;
+            var controllerPortTile = new ControllerPortTile(
+                port,
+                gamecubeAdapter.GetPortController(port),
+                settings,
+                calibrationManager,
+                profileManager,
+                viewsManager);
+
+            controllerPortTiles[index] = controllerPortTile;
             ControllerPortTiles.Children.Add(controllerPortTile);
         }
     }

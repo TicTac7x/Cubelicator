@@ -1,11 +1,20 @@
 ﻿namespace Cubelicator
 {
+    public enum AppView
+    {
+        Dashboard,
+        Controller1,
+        Controller2,
+        Controller3,
+        Controller4
+    }
+
     public enum AdapterPort
     {
-        One,
-        Two,
-        Three,
-        Four
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4
     }
 
     public enum ControllerSide

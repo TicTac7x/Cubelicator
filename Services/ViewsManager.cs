@@ -4,15 +4,33 @@
     {
         public event Action OnShowDashboard = delegate { };
         public event Action<GamecubeController> OnShowControllerEditor = delegate { };
+        public event Action<AppView> OnViewChanged = delegate { };
 
         public void ShowDashboard()
         {
             OnShowDashboard();
+            OnViewChanged(AppView.Dashboard);
         }
 
-        public void ShowControllerEditor(GamecubeController gamecubeController)
+        public void ShowControllerEditor(AdapterPort port, GamecubeController gamecubeController)
         {
             OnShowControllerEditor(gamecubeController);
+
+            switch (port)
+            {
+                case AdapterPort.One:
+                    OnViewChanged(AppView.Controller1);
+                    break;
+                case AdapterPort.Two:
+                    OnViewChanged(AppView.Controller2);
+                    break;
+                case AdapterPort.Three:
+                    OnViewChanged(AppView.Controller3);
+                    break;
+                case AdapterPort.Four:
+                    OnViewChanged(AppView.Controller4);
+                    break;
+            }
         }
     }
 }

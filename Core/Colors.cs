@@ -2,10 +2,20 @@
 {
     public static class Colors
     {
+        // Base backgrounds
         public const string AppBackground = "#222222";
         public const string DeviceBackground = "#111111";
-        public const string DeviceForeground = "LightGray";
-        public const string ButtonPressed = "#4897D2";
+
+        // Text / foreground
+        public const string DeviceForeground = "#D3D3D3";
+
+        // Controller interaction
+        public const string ControllerButtonPressed = "#4897D2";
+
+        // Navigation button states
+        public const string ButtonBackground = DeviceBackground;
+        public const string ButtonHoverBackground = "#313131";
+        public const string ButtonPressedBackground = "#1C1C1C";
     }
 
     public static class ControllerColors

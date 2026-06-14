@@ -1,7 +1,7 @@
 ﻿using Cubelicator.Services;
+using Cubelicator.UI.Controls;
 using Cubelicator.UI.Views;
 using Microsoft.UI.Xaml;
-using WinRT.Interop;
 
 namespace Cubelicator.UI.Windows;
 
@@ -10,6 +10,8 @@ public sealed partial class MainWindow : Window
     private readonly ViewsManager viewsManager;
     private readonly Dashboard dashboard;
     private readonly ControllerEditor controllerEditor;
+
+    private readonly Navigator navigator;
     private bool exitApp = false;
 
     public MainWindow(GamecubeAdapter gamecubeAdapter, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager)
@@ -17,9 +19,11 @@ public sealed partial class MainWindow : Window
         viewsManager = new ViewsManager();
         dashboard = new Dashboard(profileManager, calibrationManager, gamecubeAdapter, settings, viewsManager);
         controllerEditor = new ControllerEditor(viewsManager);
+        navigator = new Navigator(viewsManager, gamecubeAdapter);
 
         InitializeComponent();
         InitializeWindow();
+        NavigatorRoot.Children.Add(navigator);
         DashboardRoot.Children.Add(dashboard);
         ControllerEditorRoot.Children.Add(controllerEditor);
 

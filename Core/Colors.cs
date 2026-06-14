@@ -35,7 +35,7 @@
         public const string ButtonY = ButtonX;
         public const string ButtonZ = "#4400CD";
         public const string ButtonStart = ButtonX;
-        public const string ButtonDPadUp = "#A6A6A6";
+        public const string ButtonDPadUp = ButtonX;
         public const string ButtonDPadDown = ButtonDPadUp;
         public const string ButtonDPadLeft = ButtonDPadUp;
         public const string ButtonDPadRight = ButtonDPadUp;

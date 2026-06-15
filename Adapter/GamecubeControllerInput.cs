@@ -19,9 +19,7 @@
         RightTrigger,
         RightShoulder,
 
-        LeftStickX,
-        LeftStickY,
-        RightStickX,
-        RightStickY
+        LeftStick,
+        RightStick,
     }
 }

@@ -1,0 +1,23 @@
+<UserControl
+    x:Class="Cubelicator.UI.Controller.LeftTrigger"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Viewbox Stretch="Uniform">
+
+        <Canvas Width="83" Height="80">
+
+            <Path
+            Data="M1.28961 60C10.7857 23.0608 38.6409 13.2104 74.093 24.2921C109.545 35.3739 2.55575 60 1.28961 60Z"
+            Fill="#DCDCDC"
+            Stroke="Black"
+            StrokeThickness="2" />
+
+            <Path
+            Data="M32.2944 38.9067V30.2273V25.5624H33.9087V37.3367H37.9446V38.9067H32.2944Z"
+            Fill="Black"
+            Opacity="0.4" />
+
+        </Canvas>
+    </Viewbox>
+</UserControl>

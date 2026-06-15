@@ -9,11 +9,11 @@
         public const string Port = "Port";
         public static string TooltipPortIsNotCalibrated(AdapterPort port)
         {
-            return "Port " + port.ToString() + " is not calibrated";
+            return $"Port {(int) port} is not calibrated";
         }
         public static string TooltipPortIsCalibrated(AdapterPort port)
         {
-            return "Port " + port.ToString() + " is calibrated";
+            return $"Port {(int) port} is calibrated";
         }
         public const string Calibrate = "Calibrate";
         public const string ChangeColor = "Change Color";

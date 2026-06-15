@@ -53,8 +53,8 @@
             <Image
                 x:Name="XboxButton"
                 Grid.Column="1"
-                Width="32"
-                Height="32" />
+                Width="40"
+                Height="40" />
         </StackPanel>
     </Grid>
 </UserControl>

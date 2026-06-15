@@ -15,10 +15,16 @@
             <Grid x:Name="ControllerRoot" />
         </Grid>
 
-        <Grid Grid.Column="2" Background="{x:Bind ColorButtonPressed}">
-            <StackPanel x:Name="RootMappedButtons">
-                
-            </StackPanel>
+        <Grid Grid.Column="2" Background="{x:Bind ColorButtonPressed}"
+              BorderThickness="1,0,0,0" BorderBrush="{x:Bind ColorDeviceBackground}">
+            <ScrollViewer
+                VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Disabled">
+
+                <StackPanel
+                    x:Name="RootMappedButtons"
+                    Orientation="Vertical" />
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

@@ -45,6 +45,12 @@
         RightShoulder
     }
 
+    public enum GamecubeControllerStick
+    {
+        Left,
+        Right,
+    }
+
     public enum XboxControllerButton
     {
         A,
@@ -66,6 +72,9 @@
 
         LeftShoulder,
         RightShoulder,
+
+        LeftTrigger,
+        RightTrigger,
     }
 
     public enum XboxControllerTrigger

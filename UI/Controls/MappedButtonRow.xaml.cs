@@ -7,7 +7,7 @@ namespace Cubelicator.UI.Controls
 {
     public partial class MappedButtonRow : UserControl
     {
-        public MappedButtonRow(GamecubeControllerButton gamecubeControllerButton, XboxControllerButton xboxControllerButton)
+        public MappedButtonRow(GamecubeControllerInput gamecubeControllerButton, XboxControllerButton xboxControllerButton)
         {
             InitializeComponent();
 
@@ -27,6 +27,7 @@ namespace Cubelicator.UI.Controls
             GamecubeButtonName.Text = gamecubeControllerButton.ToString();
 
             XboxButtonName.Text = xboxControllerButton.ToString();
+            var a = $"ms-appx:///Assets/XboxButton{xboxControllerButton}.svg";
             XboxButton.Source = new SvgImageSource(new Uri($"ms-appx:///Assets/XboxButton{xboxControllerButton}.svg"));
         }
 

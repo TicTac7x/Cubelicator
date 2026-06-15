@@ -10,30 +10,28 @@ namespace Cubelicator
         public string Name { get; set; } = "Default";
 
         // Buttons
-        public XboxControllerButton ButtonA { get; private set; } = XboxControllerButton.A;
-        public XboxControllerButton ButtonB { get; private set; } = XboxControllerButton.B;
-        public XboxControllerButton ButtonX { get; private set; } = XboxControllerButton.X;
-        public XboxControllerButton ButtonY { get; private set; } = XboxControllerButton.Y;
-        public XboxControllerButton ButtonZ { get; private set; } = XboxControllerButton.Back;
-        public XboxControllerButton ButtonStart { get; private set; } = XboxControllerButton.Start;
-        public XboxControllerButton ButtonLeftShoulder { get; private set; } = XboxControllerButton.LeftShoulder;
-        public XboxControllerButton ButtonRightShoulder { get; private set; } = XboxControllerButton.RightShoulder;
+        public XboxControllerButton A { get; private set; } = XboxControllerButton.A;
+        public XboxControllerButton B { get; private set; } = XboxControllerButton.B;
+        public XboxControllerButton X { get; private set; } = XboxControllerButton.X;
+        public XboxControllerButton Y { get; private set; } = XboxControllerButton.Y;
+        public XboxControllerButton Z { get; private set; } = XboxControllerButton.Back;
+        public XboxControllerButton Start { get; private set; } = XboxControllerButton.Start;
+        public XboxControllerButton LeftBumper { get; private set; } = XboxControllerButton.LeftBumper;
+        public XboxControllerButton RightBumper { get; private set; } = XboxControllerButton.RightBumper;
 
         // DPad
-        public XboxControllerButton ButtonDPadUp { get; private set; } = XboxControllerButton.DPadUp;
-        public XboxControllerButton ButtonDPadDown { get; private set; } = XboxControllerButton.DPadDown;
-        public XboxControllerButton ButtonDPadLeft { get; private set; } = XboxControllerButton.DPadLeft;
-        public XboxControllerButton ButtonDPadRight { get; private set; } = XboxControllerButton.DPadRight;
+        public XboxControllerButton DPadUp { get; private set; } = XboxControllerButton.DPadUp;
+        public XboxControllerButton DPadDown { get; private set; } = XboxControllerButton.DPadDown;
+        public XboxControllerButton DPadLeft { get; private set; } = XboxControllerButton.DPadLeft;
+        public XboxControllerButton DPadRight { get; private set; } = XboxControllerButton.DPadRight;
 
         // Triggers
-        public XboxControllerTrigger TriggerLeft { get; private set; } = XboxControllerTrigger.Left;
-        public XboxControllerTrigger TriggerRight { get; private set; } = XboxControllerTrigger.Right;
+        public XboxControllerTrigger LeftTrigger { get; private set; } = XboxControllerTrigger.LeftTrigger;
+        public XboxControllerTrigger RightTrigger { get; private set; } = XboxControllerTrigger.RightTrigger;
 
         // Sticks
-        public XboxControllerStick StickLeftX { get; private set; } = XboxControllerStick.LeftX;
-        public XboxControllerStick StickLeftY { get; private set; } = XboxControllerStick.LeftY;
-        public XboxControllerStick StickRightX { get; private set; } = XboxControllerStick.RightX;
-        public XboxControllerStick StickRightY { get; private set; } = XboxControllerStick.RightY;
+        public XboxControllerStick LeftStick { get; private set; } = XboxControllerStick.LeftStick;
+        public XboxControllerStick RightStick { get; private set; } = XboxControllerStick.RightStick;
 
         // Deadzones
         public float LeftStickDeadzone { get; private set; } = 0f;
@@ -47,58 +45,91 @@ namespace Cubelicator
         public float LeftTriggerSensitivity { get; private set; } = 1f;
         public float RightTriggerSensitivity { get; private set; } = 1f;
 
-        public void SetButton(GamecubeControllerButton gamecubeControllerButton, XboxControllerButton xboxControllerButton)
+        public void SetButton(GamecubeControllerButton button, XboxControllerButton xboxControllerButton)
         {
-            switch (gamecubeControllerButton)
+            switch (button)
             {
                 case GamecubeControllerButton.A:
-                    ButtonA = xboxControllerButton;
+                    A = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.B:
-                    ButtonB = xboxControllerButton;
+                    B = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.X:
-                    ButtonX = xboxControllerButton;
+                    X = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.Y:
-                    ButtonY = xboxControllerButton;
+                    Y = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.Z:
-                    ButtonZ = xboxControllerButton;
+                    Z = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.Start:
-                    ButtonStart = xboxControllerButton;
+                    Start = xboxControllerButton;
                     break;
 
-                case GamecubeControllerButton.LeftShoulder:
-                    ButtonLeftShoulder = xboxControllerButton;
+                case GamecubeControllerButton.LeftBumper:
+                    LeftBumper = xboxControllerButton;
                     break;
 
-                case GamecubeControllerButton.RightShoulder:
-                    ButtonRightShoulder = xboxControllerButton;
+                case GamecubeControllerButton.RightBumper:
+                    RightBumper = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.DPadUp:
-                    ButtonDPadUp = xboxControllerButton;
+                    DPadUp = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.DPadDown:
-                    ButtonDPadDown = xboxControllerButton;
+                    DPadDown = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.DPadLeft:
-                    ButtonDPadLeft = xboxControllerButton;
+                    DPadLeft = xboxControllerButton;
                     break;
 
                 case GamecubeControllerButton.DPadRight:
-                    ButtonDPadRight = xboxControllerButton;
+                    DPadRight = xboxControllerButton;
                     break;
             }
+
+            OnChanged();
+        }
+
+        public void SetStick(GamecubeControllerStick stick, XboxControllerStick xboxControllerStick)
+        {
+            switch (stick)
+            {
+                case GamecubeControllerStick.LeftStick:
+                    LeftStick = xboxControllerStick;
+                    break;
+
+                case GamecubeControllerStick.RightStick:
+                    RightStick = xboxControllerStick;
+                    break;
+            }
+
+            OnChanged();
+        }
+
+        public void SetTrigger(GamecubeControllerTrigger trigger, XboxControllerTrigger xboxControllerTrigger)
+        {
+            switch (trigger)
+            {
+                case GamecubeControllerTrigger.LeftTrigger:
+                    LeftTrigger = xboxControllerTrigger;
+                    break;
+
+                case GamecubeControllerTrigger.RightTrigger:
+                    RightTrigger = xboxControllerTrigger;
+                    break;
+            }
+
             OnChanged();
         }
     }

@@ -85,18 +85,18 @@ namespace Cubelicator
             }
 
             // Buttons
-            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, profile.ButtonA);
-            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, profile.ButtonB);
-            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, profile.ButtonX);
-            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, profile.ButtonY);
-            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, profile.ButtonZ);
-            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, profile.ButtonStart);
-            HandleButton(GamecubeControllerButton.LeftShoulder, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, profile.ButtonLeftShoulder);
-            HandleButton(GamecubeControllerButton.RightShoulder, _state.ButtonRightShoulder, state.ButtonRightShoulder, profile.ButtonRightShoulder);
-            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, profile.ButtonDPadUp);
-            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, profile.ButtonDPadDown);
-            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, profile.ButtonDPadLeft);
-            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, profile.ButtonDPadRight);
+            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, profile.A);
+            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, profile.B);
+            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, profile.X);
+            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, profile.Y);
+            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, profile.Z);
+            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, profile.Start);
+            HandleButton(GamecubeControllerButton.LeftBumper, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, profile.LeftBumper);
+            HandleButton(GamecubeControllerButton.RightBumper, _state.ButtonRightShoulder, state.ButtonRightShoulder, profile.RightBumper);
+            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, profile.DPadUp);
+            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, profile.DPadDown);
+            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, profile.DPadLeft);
+            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, profile.DPadRight);
 
             // Sticks
             // Left Stick X
@@ -110,7 +110,7 @@ namespace Cubelicator
                 calibration?.LeftStickXMax, 
                 profile.LeftStickDeadzone,
                 profile.LeftStickSensitivity,
-                profile.StickLeftX
+                profile.LeftStick
             );
 
             // Left Stick Y
@@ -124,7 +124,7 @@ namespace Cubelicator
                 calibration?.LeftStickYMax,
                 profile.LeftStickDeadzone,
                 profile.LeftStickSensitivity,
-                profile.StickLeftY
+                profile.LeftStick
             );
 
             // Right Stick X
@@ -138,7 +138,7 @@ namespace Cubelicator
                 calibration?.RightStickXMax,
                 profile.RightStickDeadzone,
                 profile.RightStickSensitivity,
-                profile.StickRightX
+                profile.RightStick
             );
 
             // Right Stick Y
@@ -152,7 +152,7 @@ namespace Cubelicator
                 calibration?.RightStickYMax,
                 profile.RightStickDeadzone,
                 profile.RightStickSensitivity,
-                profile.StickRightY
+                profile.RightStick
             );
 
             // Left Trigger
@@ -164,7 +164,7 @@ namespace Cubelicator
                 calibration?.LeftTriggerMax,
                 profile.LeftTriggerDeadzone,
                 profile.LeftTriggerSensitivity,
-                profile.TriggerLeft);
+                profile.LeftTrigger);
 
             // Right Trigger
             HandleTrigger(
@@ -175,7 +175,7 @@ namespace Cubelicator
                 calibration?.RightTriggerMax,
                 profile.RightTriggerDeadzone,
                 profile.RightTriggerSensitivity,
-                profile.TriggerRight);
+                profile.RightTrigger);
 
             if (state.Connected)
             {
@@ -272,7 +272,7 @@ namespace Cubelicator
                 int stickCalibrate = CalibrateStick(stickDeadzone, calibrationCenter, calibrationMin, calibrationMax, Constants.GamecubeControllerStickRange);
                 float stickSensitivity = stickCalibrate * sensitivity;
                 short stickFinal = (short) Math.Clamp(stickSensitivity * Constants.XboxControllerAxisMultiplier, -Constants.XboxControllerAxisRange, Constants.XboxControllerAxisRange);
-                controller.SetAxisValue(ToAxis(mappedButton), stickFinal);
+                controller.SetAxisValue(ToAxis(mappedButton, axis), stickFinal);
                 OnStickChanged(side, axis, newValue);
             }
         }
@@ -326,16 +326,16 @@ namespace Cubelicator
                 XboxControllerButton.Start => Xbox360Button.Start,
                 XboxControllerButton.Guide => Xbox360Button.Guide,
 
-                XboxControllerButton.LeftThumb=> Xbox360Button.LeftThumb,
-                XboxControllerButton.RightThumb => Xbox360Button.RightThumb,
+                XboxControllerButton.LeftStickDown=> Xbox360Button.LeftThumb,
+                XboxControllerButton.RightStickDown => Xbox360Button.RightThumb,
 
                 XboxControllerButton.DPadUp => Xbox360Button.Up,
                 XboxControllerButton.DPadDown => Xbox360Button.Down,
                 XboxControllerButton.DPadLeft => Xbox360Button.Left,
                 XboxControllerButton.DPadRight => Xbox360Button.Right,
 
-                XboxControllerButton.LeftShoulder => Xbox360Button.LeftShoulder,
-                XboxControllerButton.RightShoulder => Xbox360Button.RightShoulder,
+                XboxControllerButton.LeftBumper => Xbox360Button.LeftShoulder,
+                XboxControllerButton.RightBumper => Xbox360Button.RightShoulder,
             };
         }
 
@@ -343,19 +343,17 @@ namespace Cubelicator
         {
             return input switch
             {
-                XboxControllerTrigger.Left=> Xbox360Slider.LeftTrigger,
-                XboxControllerTrigger.Right=> Xbox360Slider.RightTrigger,
+                XboxControllerTrigger.LeftTrigger=> Xbox360Slider.LeftTrigger,
+                XboxControllerTrigger.RightTrigger=> Xbox360Slider.RightTrigger,
             };
         }
 
-        private Xbox360Axis ToAxis(XboxControllerStick input)
+        private Xbox360Axis ToAxis(XboxControllerStick input, ControllerStickAxis axis)
         {
             return input switch
             {
-                XboxControllerStick.LeftX => Xbox360Axis.LeftThumbX,
-                XboxControllerStick.LeftY => Xbox360Axis.LeftThumbY,
-                XboxControllerStick.RightX => Xbox360Axis.RightThumbX,
-                XboxControllerStick.RightY => Xbox360Axis.RightThumbY,
+                XboxControllerStick.LeftStick => axis == ControllerStickAxis.X ? Xbox360Axis.LeftThumbX : Xbox360Axis.LeftThumbY,
+                XboxControllerStick.RightStick => axis == ControllerStickAxis.X ? Xbox360Axis.RightThumbX : Xbox360Axis.RightThumbY,
             };
         }
     }

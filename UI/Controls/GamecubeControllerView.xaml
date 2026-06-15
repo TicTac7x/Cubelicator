@@ -16,7 +16,7 @@
                     Fill="{x:Bind ColorLeftTrigger}"
                     Stroke="Black"
                     StrokeThickness="2"
-                    Tag="{x:Bind local:GamecubeControllerButton.LeftShoulder}"
+                    Tag="{x:Bind local:GamecubeControllerButton.LeftBumper}"
                     Tapped="OnClickButton" />
 
                 <Path
@@ -34,7 +34,7 @@
                     Fill="{x:Bind ColorRightTrigger}"
                     Stroke="Black"
                     StrokeThickness="2"
-                    Tag="{x:Bind local:GamecubeControllerButton.RightShoulder}"
+                    Tag="{x:Bind local:GamecubeControllerButton.RightBumper}"
                     Tapped="OnClickButton" />
 
                 <Path

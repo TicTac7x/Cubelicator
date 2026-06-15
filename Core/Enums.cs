@@ -29,6 +29,11 @@
         Y
     }
 
+    public abstract record GamecubeControllerInput;
+    public record GamecubeControllerButtonInput(GamecubeControllerButton value) : GamecubeControllerInput;
+    public record GamecubeControllerStickInput(GamecubeControllerStick value) : GamecubeControllerInput;
+    public record GamecubeControllerTriggerInput(GamecubeControllerTrigger value) : GamecubeControllerInput;
+
     public enum GamecubeControllerButton
     {
         A,
@@ -37,19 +42,32 @@
         Y,
         Z,
         Start,
+
         DPadUp,
         DPadDown,
         DPadLeft,
         DPadRight,
-        LeftShoulder,
-        RightShoulder
+
+        LeftBumper,
+        RightBumper
+    }
+
+    public enum GamecubeControllerTrigger
+    {
+        LeftTrigger,
+        RightTrigger,
     }
 
     public enum GamecubeControllerStick
     {
-        Left,
-        Right,
+        LeftStick,
+        RightStick,
     }
+
+    public abstract record XboxControllerInput;
+    public record XboxControllerButtonInput(XboxControllerButton value) : XboxControllerInput;
+    public record XboxControllerStickInput(XboxControllerStick value) : XboxControllerInput;
+    public record XboxControllerTriggerInput(XboxControllerTrigger value) : XboxControllerInput;
 
     public enum XboxControllerButton
     {
@@ -61,34 +79,30 @@
         Back,
         Start,
         Guide,
+        Upload,
 
-        LeftThumb,
-        RightThumb,
+        LeftStickDown,
+        RightStickDown,
 
         DPadUp,
         DPadDown,
         DPadLeft,
         DPadRight,
 
-        LeftShoulder,
-        RightShoulder,
-
-        LeftTrigger,
-        RightTrigger,
+        LeftBumper,
+        RightBumper,
     }
 
     public enum XboxControllerTrigger
     {
-        Left,
-        Right,
+        LeftTrigger,
+        RightTrigger,
     }
 
     public enum XboxControllerStick
     {
-        LeftX,
-        LeftY,
-        RightX,
-        RightY,
+        LeftStick,
+        RightStick,
     }
 
     public enum ControllerColor

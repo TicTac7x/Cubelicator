@@ -29,7 +29,9 @@ public partial class ControllerEditor : UserControl
             this.gamecubeController = gamecubeController;
 
             var controllerView = new GamecubeControllerView(gamecubeController);
-            controllerView.SetControllerColor(ControllerColors.Map[settings.GetControllerColor(port)]);
+            controllerView.SetControllerColor(
+                ControllerColors.Map[settings.GetControllerColor(port)]
+            );
             ControllerRoot.Children.Add(controllerView);
 
             InitializeMappedButtons();
@@ -39,26 +41,122 @@ public partial class ControllerEditor : UserControl
     private void InitializeMappedButtons()
     {
         RootMappedButtons.Children.Clear();
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.A, gamecubeController.Profile.ButtonA));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.B, gamecubeController.Profile.ButtonB));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.X, gamecubeController.Profile.ButtonX));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.Y, gamecubeController.Profile.ButtonY));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.Z, gamecubeController.Profile.ButtonZ));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.Start, gamecubeController.Profile.ButtonStart));
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.A),
+                new XboxControllerButtonInput(gamecubeController.Profile.A)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.B),
+                new XboxControllerButtonInput(gamecubeController.Profile.B)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.X),
+                new XboxControllerButtonInput(gamecubeController.Profile.X)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.Y),
+                new XboxControllerButtonInput(gamecubeController.Profile.Y)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.Z),
+                new XboxControllerButtonInput(gamecubeController.Profile.Z)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.Start),
+                new XboxControllerButtonInput(gamecubeController.Profile.Start)
+            )
+        );
 
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.DPadUp, gamecubeController.Profile.ButtonDPadUp));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.DPadDown, gamecubeController.Profile.ButtonDPadDown));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.DPadLeft, gamecubeController.Profile.ButtonDPadLeft));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.DPadRight, gamecubeController.Profile.ButtonDPadRight));
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.DPadUp),
+                new XboxControllerButtonInput(gamecubeController.Profile.DPadUp)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.DPadDown),
+                new XboxControllerButtonInput(gamecubeController.Profile.DPadDown)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.DPadLeft),
+                new XboxControllerButtonInput(gamecubeController.Profile.DPadLeft)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.DPadRight),
+                new XboxControllerButtonInput(gamecubeController.Profile.DPadRight)
+            )
+        );
 
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.LeftStick, XboxControllerButton.LeftThumb));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.RightStick, XboxControllerButton.RightThumb));
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerStickInput(GamecubeControllerStick.LeftStick),
+                new XboxControllerStickInput(gamecubeController.Profile.LeftStick)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerStickInput(GamecubeControllerStick.RightStick),
+                new XboxControllerStickInput(gamecubeController.Profile.RightStick)
+            )
+        );
 
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.LeftTrigger, XboxControllerButton.LeftTrigger));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.RightTrigger, XboxControllerButton.RightTrigger));
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerTriggerInput(GamecubeControllerTrigger.LeftTrigger),
+                new XboxControllerTriggerInput(gamecubeController.Profile.LeftTrigger)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerTriggerInput(GamecubeControllerTrigger.RightTrigger),
+                new XboxControllerTriggerInput(gamecubeController.Profile.RightTrigger)
+            )
+        );
 
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.LeftShoulder, XboxControllerButton.LeftShoulder));
-        RootMappedButtons.Children.Add(new MappedButtonRow(GamecubeControllerInput.RightShoulder, XboxControllerButton.RightShoulder));
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.LeftBumper),
+                new XboxControllerButtonInput(gamecubeController.Profile.LeftBumper)
+            )
+        );
+        RootMappedButtons.Children.Add(
+            new MappedButtonRow(
+                gamecubeController.Profile,
+                new GamecubeControllerButtonInput(GamecubeControllerButton.RightBumper),
+                new XboxControllerButtonInput(gamecubeController.Profile.RightBumper)
+            )
+        );
     }
 
     private string ColorButtonPressed => Colors.ButtonPressedBackground;

@@ -5,56 +5,81 @@
     xmlns:buttons="using:Cubelicator.UI.Controller">
 
     <Grid
-        Padding="20,10"
-        Background="{x:Bind ColorRowBackground}"
-        PointerEntered="OnPointerEntered"
-        PointerExited="OnPointerExited">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        x:Name="Root"
+        Background="{x:Bind ColorRowBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <StackPanel
+        <Grid
+            Grid.Row="0"
+            Padding="20,10"
+            Background="Transparent"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerReleased="OnPointerReleased">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
             Grid.Column="0"
             HorizontalAlignment="Left"
             Orientation="Horizontal"
             Spacing="10">
-            <Grid
+                <Grid
                 x:Name="GamecubeButton"
                 Width="40"
                 Height="40" />
-            <TextBlock
+                <TextBlock
                 x:Name="GamecubeButtonName"
                 VerticalAlignment="Center"
                 Visibility="Collapsed" />
-        </StackPanel>
+            </StackPanel>
 
-        <Image
+            <Image
             Grid.Column="1"
             Width="24"
             Height="24"
             Margin="20,0">
-            <Image.Source>
-                <SvgImageSource UriSource="ms-appx:///Assets/IconMapped.svg" />
-            </Image.Source>
-        </Image>
+                <Image.Source>
+                    <SvgImageSource UriSource="ms-appx:///Assets/IconMapped.svg" />
+                </Image.Source>
+            </Image>
 
-        <StackPanel
+            <StackPanel
             Grid.Column="2"
             HorizontalAlignment="Right"
             Orientation="Horizontal"
             Spacing="10">
-            <TextBlock
+                <TextBlock
                 x:Name="XboxButtonName"
                 VerticalAlignment="Center"
                 Visibility="Collapsed" />
 
-            <Image
+                <Image
                 x:Name="XboxButton"
                 Grid.Column="1"
                 Width="40"
                 Height="40" />
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="ExpandablePanel" Grid.Row="1" Visibility="Collapsed" Padding="10" Background="{x:Bind ColorExpandableBackground}">
+            <Grid x:Name="ExpandablePanelButton" Visibility="Collapsed">
+                <TextBlock VerticalAlignment="Center">
+                    Mapped Button:
+                </TextBlock>
+
+                <Button x:Name="MappedButton" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="RootMappableButtons" Placement="BottomEdgeAlignedRight" />
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

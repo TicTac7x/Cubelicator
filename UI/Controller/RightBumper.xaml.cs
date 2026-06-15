@@ -2,9 +2,9 @@
 
 namespace Cubelicator.UI.Controller
 {
-    public partial class RightShoulder : UserControl
+    public partial class RightBumper : UserControl
     {
-        public RightShoulder()
+        public RightBumper()
         {
             InitializeComponent();
         }

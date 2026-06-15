@@ -78,10 +78,10 @@ namespace Cubelicator.UI.Controls
                         case GamecubeControllerButton.DPadRight:
                             DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadRight);
                             break;
-                        case GamecubeControllerButton.LeftShoulder:
+                        case GamecubeControllerButton.LeftBumper:
                             LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorLeftTrigger);
                             break;
-                        case GamecubeControllerButton.RightShoulder:
+                        case GamecubeControllerButton.RightBumper:
                             RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorRightTrigger);
                             break;
                     }

@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="Cubelicator.UI.Controller.RightShoulder"
+    x:Class="Cubelicator.UI.Controller.LeftBumper"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -8,7 +8,7 @@
         <Canvas Width="83" Height="80">
 
             <Path
-            Data="M50.5443 38.0455C62.0283 42.5842 76.5082 44.6014 81.0019 55.6962C79.9545 55.6962 6.45377 38.6505 1.38773 26.4465C-1.8506 20.9754 15.3616 26.3898 50.5443 38.0455Z"
+            Data="M31.9629 37.6176C20.4789 41.9889 5.99911 43.9317 1.50537 54.6173C2.5528 54.6173 76.0535 38.2003 81.1195 26.4464C84.3579 21.177 67.1457 26.3918 31.9629 37.6176Z"
             Fill="#DCDCDC"
             Stroke="Black"
             StrokeThickness="2" />

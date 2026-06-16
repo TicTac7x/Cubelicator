@@ -14,7 +14,7 @@
 
         <Grid
             Grid.Row="0"
-            Padding="20,10"
+            Padding="10,10,20,10"
             Background="Transparent"
             PointerEntered="OnPointerEntered"
             PointerExited="OnPointerExited"
@@ -68,9 +68,15 @@
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="ExpandablePanel" Grid.Row="1" Visibility="Collapsed" Padding="10" Background="{x:Bind ColorExpandableBackground}">
-            <Grid x:Name="ExpandablePanelButton" Visibility="Collapsed">
-                <TextBlock VerticalAlignment="Center">
+        <Grid x:Name="ExpandablePanel" Grid.Row="1" Visibility="Collapsed" Padding="10,10,20,10" Background="{x:Bind ColorExpandableBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left">
                     Mapped Button:
                 </TextBlock>
 
@@ -79,6 +85,70 @@
                         <MenuFlyout x:Name="RootMappableButtons" Placement="BottomEdgeAlignedRight" />
                     </Button.Flyout>
                 </Button>
+            </Grid>
+
+            <Grid
+                x:Name="SensitivityPanel"
+                Grid.Row="1"
+                ColumnSpacing="10"
+                Margin="0,10,0,0"
+                Visibility="Collapsed">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="Sensitivity" />
+
+                <Slider x:Name="SensitivitySlider"
+                    Grid.Column="1"
+                    Minimum="0"
+                    Maximum="2"
+                    SmallChange="0.1"
+                    StepFrequency="0.1"
+                    ValueChanged="OnSensitivityChanged" />
+
+                <TextBlock x:Name="SensitivityValue"
+                   Grid.Column="2"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Text="1.00" />
+            </Grid>
+
+            <Grid
+                x:Name="DeadzonePanel"
+                Grid.Row="2"
+                ColumnSpacing="10"
+                Margin="0,10,0,0"
+                Visibility="Collapsed">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Text="Deadzone" />
+
+                <Slider x:Name="DeadzoneSlider"
+                    Grid.Column="1"
+                    Minimum="0"
+                    Maximum="2"
+                    SmallChange="0.1"
+                    StepFrequency="0.1"
+                    ValueChanged="OnDeadzoneChanged"/>
+
+                <TextBlock x:Name="DeadzoneValue"
+                   Grid.Column="2"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Text="1.00" />
             </Grid>
         </Grid>
     </Grid>

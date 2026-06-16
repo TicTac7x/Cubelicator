@@ -132,5 +132,45 @@ namespace Cubelicator
 
             OnChanged();
         }
+
+        public void SetSensitivity(GamecubeControllerStick stick, float sensitivity)
+        {
+            if (stick == GamecubeControllerStick.LeftStick)
+                LeftStickSensitivity = sensitivity;
+            else
+                RightStickSensitivity = sensitivity;
+
+            OnChanged();
+        }
+
+        public void SetSensitivity(GamecubeControllerTrigger trigger, float sensitivity)
+        {
+            if (trigger == GamecubeControllerTrigger.LeftTrigger)
+                LeftTriggerSensitivity = sensitivity;
+            else
+                RightTriggerSensitivity = sensitivity;
+
+            OnChanged();
+        }
+
+        public void SetDeadzone(GamecubeControllerStick stick, float sensitivity)
+        {
+            if (stick == GamecubeControllerStick.LeftStick)
+                LeftStickDeadzone = sensitivity;
+            else
+                RightStickDeadzone = sensitivity;
+
+            OnChanged();
+        }
+
+        public void SetDeadzone(GamecubeControllerTrigger trigger, float deadzone)
+        {
+            if (trigger == GamecubeControllerTrigger.LeftTrigger)
+                LeftTriggerDeadzone = deadzone;
+            else
+                RightTriggerDeadzone = deadzone;
+
+            OnChanged();
+        }
     }
 }

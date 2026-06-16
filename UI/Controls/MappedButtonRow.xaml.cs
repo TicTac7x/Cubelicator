@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 
@@ -7,7 +8,7 @@ namespace Cubelicator.UI.Controls
 {
     public partial class MappedButtonRow : UserControl
     {
-
+        public event Action<bool> OnExpandedChanged = delegate { };
         private readonly GamecubeControllerInput gamecubeControllerInput;
         private XboxControllerInput xboxControllerInput;
         private readonly GamecubeControllerProfile profile;
@@ -54,6 +55,7 @@ namespace Cubelicator.UI.Controls
             isExpanded = visible;
             ExpandablePanel.Visibility = isExpanded ? Visibility.Visible : Visibility.Collapsed;
             Root.Background = App.StringToSolidColorBrush(isExpanded ? Colors.ButtonHoverBackground : Colors.ButtonPressedBackground);
+            OnExpandedChanged(isExpanded);
         }
 
         private void SetXboxControllerButton(XboxControllerInput xboxControllerInput)
@@ -95,7 +97,6 @@ namespace Cubelicator.UI.Controls
                     };
                     RootMappableButtons.Items.Add(menuItem);
                 }
-                ExpandablePanelButton.Visibility = Visibility.Visible;
             }
 
             if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
@@ -118,7 +119,15 @@ namespace Cubelicator.UI.Controls
                     };
                     RootMappableButtons.Items.Add(menuItem);
                 }
-                ExpandablePanelButton.Visibility = Visibility.Visible;
+
+                SensitivityPanel.Visibility = Visibility.Visible;
+                DeadzonePanel.Visibility = Visibility.Visible;
+
+                float sensitivity = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? profile.LeftTriggerSensitivity : profile.RightTriggerSensitivity;
+                float deadzone = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? profile.LeftTriggerDeadzone : profile.RightTriggerDeadzone;
+
+                SetSensitivity(sensitivity);
+                SetDeadzone(deadzone);
             }
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
@@ -141,7 +150,64 @@ namespace Cubelicator.UI.Controls
                     };
                     RootMappableButtons.Items.Add(menuItem);
                 }
-                ExpandablePanelButton.Visibility = Visibility.Visible;
+
+                SensitivityPanel.Visibility = Visibility.Visible;
+                DeadzonePanel.Visibility = Visibility.Visible;
+
+                float sensitivity = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? profile.LeftStickSensitivity : profile.RightStickSensitivity;
+                float deadzone = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? profile.LeftStickDeadzone: profile.RightStickDeadzone;
+
+                SetSensitivity(sensitivity);
+                SetDeadzone(deadzone);
+            }
+        }
+
+        private void SetSensitivity(float sensitivity)
+        {
+            SensitivityValue.Text = sensitivity.ToString("0.00").Replace(",", ".");
+            SensitivitySlider.Value = sensitivity;
+        }
+
+        private void SetDeadzone(float deadzone)
+        {
+            DeadzoneValue.Text = deadzone.ToString("0.00").Replace(",", ".");
+            DeadzoneSlider.Value = deadzone;
+        }
+
+        private void OnSensitivityChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            float sensitivity = (float) e.NewValue;
+
+            if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
+            {
+                profile.SetSensitivity(gamecubeControllerStick.value, sensitivity);
+            } else if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
+            {
+                profile.SetSensitivity(gamecubeControllerTrigger.value, sensitivity);
+            }
+
+            if (SensitivityValue != null)
+            {
+                SetSensitivity(sensitivity);
+            }
+        }
+
+        private void OnDeadzoneChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            float deadzone = (float)e.NewValue;
+
+            if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
+            {
+                profile.SetDeadzone(gamecubeControllerStick.value, deadzone);
+            }
+            else if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
+            {
+                profile.SetDeadzone(gamecubeControllerTrigger.value, deadzone);
+            }
+
+            if (DeadzoneValue != null)
+            {
+                SetDeadzone(deadzone);
             }
         }
 

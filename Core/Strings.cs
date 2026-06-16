@@ -18,5 +18,9 @@
         public const string Calibrate = "Calibrate";
         public const string ChangeColor = "Change Color";
         public const string Edit = "Edit";
+
+        public const string ProfileSelector_New = "New";
+        public const string ProfileSelector_Rename = "Rename";
+        public const string ProfileSelector_Delete = "Delete";
     }
 }

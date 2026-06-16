@@ -22,7 +22,7 @@ public partial class App : Application
         calibrationManager = new CalibrationManager();
         profileManager = new ProfileManager();
         settingsManager = new SettingsManager(profileManager);
-        gamecubeAdapter = new GamecubeAdapter(calibrationManager, settingsManager.Settings);
+        gamecubeAdapter = new GamecubeAdapter(calibrationManager, settingsManager.Settings, profileManager);
         trayIcon = new TrayIcon(OpenMainWindow, ExitApp);
         mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager, profileManager);
 

@@ -1,7 +1,5 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.Design.AxImporter;
 
 namespace Cubelicator.Services
 {
@@ -64,10 +62,7 @@ namespace Cubelicator.Services
                 if (profile != null)
                 {
                     profile.Name = Path.GetFileNameWithoutExtension(file);
-                    profile.OnChanged += () =>
-                    {
-                        SaveProfile(profile);
-                    };
+                    SetupProfileEvents(profile);
                     profiles.Add(profile);
                 }
             }
@@ -105,18 +100,54 @@ namespace Cubelicator.Services
             {
                 Name = name
             };
-
-            profile.OnChanged += () =>
-            {
-                SaveProfile(profile);
-            };
-
+            SetupProfileEvents(profile);
             profiles.Add(profile);
 
             SaveProfile(profile);
             OnProfilesChanged(profiles);
 
             return profile;
+        }
+
+        private void SetupProfileEvents(GamecubeControllerProfile profile)
+        {
+            profile.OnChanged += () =>
+            {
+                SaveProfile(profile);
+            };
+
+            profile.OnNameChanged += (oldName, newName) =>
+            {
+                string oldPath = Path.Combine(directoryProfiles, oldName + ".json");
+
+                if (File.Exists(oldPath))
+                {
+                    File.Delete(oldPath);
+                }
+            };
+
+            profile.OnDelete += () =>
+            {
+                if (profiles.Count <= 1) return;
+                DeleteProfile(profile);
+            };
+        }
+
+        private void DeleteProfile(GamecubeControllerProfile profile)
+        {
+            if (!profiles.Contains(profile))
+                return;
+
+            profiles.Remove(profile);
+
+            string path = Path.Combine(directoryProfiles, profile.Name + ".json");
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            OnProfilesChanged(profiles);
         }
     }
 }

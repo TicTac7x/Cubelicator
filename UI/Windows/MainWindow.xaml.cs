@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     {
         viewsManager = new ViewsManager();
         dashboard = new Dashboard(profileManager, calibrationManager, gamecubeAdapter, settings, viewsManager);
-        controllerEditor = new ControllerEditor(profileManager, viewsManager, settings);
+        controllerEditor = new ControllerEditor(AdapterPort.One, gamecubeAdapter.GetPortController(AdapterPort.One), profileManager, viewsManager, settings);
         navigator = new Navigator(viewsManager, gamecubeAdapter);
 
         InitializeComponent();

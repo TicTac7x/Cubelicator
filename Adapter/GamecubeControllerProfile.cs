@@ -4,10 +4,26 @@ namespace Cubelicator
 {
     public class GamecubeControllerProfile
     {
+        public event Action OnDelete = delegate { };
+        public event Action<string, string> OnNameChanged = delegate { };
         public event Action OnChanged = delegate { };
+        private string name = "Default";
 
         [JsonIgnore]
-        public string Name { get; set; } = "Default";
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (value == name) return;
+
+                var oldName = name;
+                name = value;
+                
+                OnNameChanged(name, value);
+                OnChanged();
+            }
+        }
 
         // Buttons
         public XboxControllerButton A { get; private set; } = XboxControllerButton.A;
@@ -171,6 +187,11 @@ namespace Cubelicator
                 RightTriggerDeadzone = deadzone;
 
             OnChanged();
+        }
+
+        public void Delete()
+        {
+            OnDelete();
         }
     }
 }

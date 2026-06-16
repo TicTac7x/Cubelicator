@@ -16,6 +16,7 @@ namespace Cubelicator
         private const int ADAPTER_RUMBLE = 0x11;
 
         private readonly CalibrationManager calibrationManager;
+        private readonly ProfileManager profileManager;
         private readonly Settings settings;
         private readonly GamecubeController[] controllers = new GamecubeController[4];
         private ViGEmClient? vigemClient;
@@ -25,9 +26,10 @@ namespace Cubelicator
         private CancellationTokenSource? cts;
         private Task? pollingLoopTask;
 
-        public GamecubeAdapter(CalibrationManager calibrationManager, Settings settings)
+        public GamecubeAdapter(CalibrationManager calibrationManager, Settings settings, ProfileManager profileManager)
         {
             this.calibrationManager = calibrationManager;
+            this.profileManager = profileManager;
             this.settings = settings;
 
             InitializeAdapter();
@@ -131,7 +133,7 @@ namespace Cubelicator
             {
                 AdapterPort port = (AdapterPort)(i + 1);
 
-                var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile());
+                var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile(), profileManager);
 
                 controller.OnRumbleChanged += (bool rumble) =>
                 {

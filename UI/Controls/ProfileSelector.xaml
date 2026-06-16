@@ -2,35 +2,56 @@
     x:Class="Cubelicator.UI.Controls.ProfileSelector"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Cubelicator.UI.Controls">
+    xmlns:controls="using:Cubelicator.UI.Controls"
+    xmlns:core="using:Cubelicator">
 
 	<StackPanel Orientation="Horizontal" Spacing="10">
 		<TextBlock x:Name="ProfileText" Visibility="Collapsed" VerticalAlignment="Center">Profile:</TextBlock>
 		
-		<Button VerticalAlignment="Center">
+		<Button x:Name="Element_SelectedProfile" VerticalAlignment="Center" MinWidth="100">
 			<Button.Flyout>
 				<MenuFlyout x:Name="RootProfiles" Placement="Bottom"/>
 			</Button.Flyout>
 
-			<StackPanel
+            <StackPanel
 				Orientation="Horizontal"
 				Spacing="5">
-				<TextBlock
-					x:Name="SelectedProfile"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center" />
+                <Grid>
+                    <TextBlock
+						x:Name="SelectedProfileText"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center" />
+                </Grid>
 
-				<controls:IconDown />
-			</StackPanel>
-		</Button>
+                <controls:IconDown />
+            </StackPanel>
+        </Button>
 
-		<Button x:Name="ProfileManagerButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0">
+        <TextBox
+			x:Name="SelectedProfileEdit"
+            MinWidth="100"
+			Visibility="Collapsed"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			KeyDown="OnRenameKeyDown"
+			LostFocus="OnRenameLostFocus"/>
+
+        <Button x:Name="ProfileManagerButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0">
 			<Button.Flyout>
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
 					<MenuFlyoutItem
-                        Text="New"
+                        Text="{x:Bind core:Strings.ProfileSelector_New}"
                         Click="OnNewProfile"/>
-				</MenuFlyout>
+
+					<MenuFlyoutItem
+						Text="{x:Bind core:Strings.ProfileSelector_Rename}"
+						Click="OnRenameProfile"/>
+
+                    <MenuFlyoutItem
+                        x:Name="Element_DeleteProfile"
+						Text="{x:Bind core:Strings.ProfileSelector_Delete}"
+						Click="OnDeleteProfile"/>
+                </MenuFlyout>
 			</Button.Flyout>
 			
 			<controls:IconDetails/>

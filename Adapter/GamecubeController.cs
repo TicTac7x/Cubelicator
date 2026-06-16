@@ -1,4 +1,5 @@
-﻿using Nefarius.ViGEm.Client;
+﻿using Cubelicator.Services;
+using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
 
@@ -14,16 +15,27 @@ namespace Cubelicator
         public event Action<ControllerSide, ControllerStickAxis, int> OnStickChanged = delegate { };
         public event Action<ControllerSide, int> OnTriggerChanged = delegate { };
 
+        private readonly ProfileManager profileManager;
         private readonly IXbox360Controller controller;
-        private GamecubeControllerProfile profile;
+        private GamecubeControllerProfile _profile;
         public GamecubeControllerProfile Profile
         {
-            get => profile;
+            get => _profile;
             set
             {
-                if (value != profile)
+                if (value != _profile)
                 {
-                    profile = value;
+                    _profile = value;
+                    _profile.OnDelete += () =>
+                    {
+                        foreach (var profile in profileManager.Profiles)
+                        {
+                            if (profile != value)
+                            {
+                                Profile = profile;
+                            }
+                        }
+                    };
                     OnProfileChanged(value);
                 }
             }
@@ -31,11 +43,10 @@ namespace Cubelicator
         private GamecubeControllerCalibration? calibration = null;
         private GamecubeControllerState _state = new GamecubeControllerState();
 
-        
-
-        public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile)
+        public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile, ProfileManager profileManager)
         {
-            this.profile = profile;
+            this.profileManager = profileManager;
+            Profile = profile;
             controller = CreateController(vigem);
             controller.AutoSubmitReport = false;
         }
@@ -88,18 +99,18 @@ namespace Cubelicator
             }
 
             // Buttons
-            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, profile.A);
-            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, profile.B);
-            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, profile.X);
-            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, profile.Y);
-            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, profile.Z);
-            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, profile.Start);
-            HandleButton(GamecubeControllerButton.LeftBumper, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, profile.LeftBumper);
-            HandleButton(GamecubeControllerButton.RightBumper, _state.ButtonRightShoulder, state.ButtonRightShoulder, profile.RightBumper);
-            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, profile.DPadUp);
-            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, profile.DPadDown);
-            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, profile.DPadLeft);
-            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, profile.DPadRight);
+            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, Profile.A);
+            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, Profile.B);
+            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, Profile.X);
+            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, Profile.Y);
+            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, Profile.Z);
+            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, Profile.Start);
+            HandleButton(GamecubeControllerButton.LeftBumper, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, Profile.LeftBumper);
+            HandleButton(GamecubeControllerButton.RightBumper, _state.ButtonRightShoulder, state.ButtonRightShoulder, Profile.RightBumper);
+            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, Profile.DPadUp);
+            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, Profile.DPadDown);
+            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, Profile.DPadLeft);
+            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, Profile.DPadRight);
 
             // Sticks
             // Left Stick X
@@ -111,9 +122,9 @@ namespace Cubelicator
                 calibration?.LeftStickXMin, 
                 calibration?.LeftStickXCenter, 
                 calibration?.LeftStickXMax, 
-                profile.LeftStickDeadzone,
-                profile.LeftStickSensitivity,
-                profile.LeftStick
+                Profile.LeftStickDeadzone,
+                Profile.LeftStickSensitivity,
+                Profile.LeftStick
             );
 
             // Left Stick Y
@@ -125,9 +136,9 @@ namespace Cubelicator
                 calibration?.LeftStickYMin,
                 calibration?.LeftStickYCenter,
                 calibration?.LeftStickYMax,
-                profile.LeftStickDeadzone,
-                profile.LeftStickSensitivity,
-                profile.LeftStick
+                Profile.LeftStickDeadzone,
+                Profile.LeftStickSensitivity,
+                Profile.LeftStick
             );
 
             // Right Stick X
@@ -139,9 +150,9 @@ namespace Cubelicator
                 calibration?.RightStickXMin,
                 calibration?.RightStickXCenter,
                 calibration?.RightStickXMax,
-                profile.RightStickDeadzone,
-                profile.RightStickSensitivity,
-                profile.RightStick
+                Profile.RightStickDeadzone,
+                Profile.RightStickSensitivity,
+                Profile.RightStick
             );
 
             // Right Stick Y
@@ -153,9 +164,9 @@ namespace Cubelicator
                 calibration?.RightStickYMin,
                 calibration?.RightStickYCenter,
                 calibration?.RightStickYMax,
-                profile.RightStickDeadzone,
-                profile.RightStickSensitivity,
-                profile.RightStick
+                Profile.RightStickDeadzone,
+                Profile.RightStickSensitivity,
+                Profile.RightStick
             );
 
             // Left Trigger
@@ -165,9 +176,9 @@ namespace Cubelicator
                 state.TriggerLeft,
                 calibration?.LeftTriggerMin,
                 calibration?.LeftTriggerMax,
-                profile.LeftTriggerDeadzone,
-                profile.LeftTriggerSensitivity,
-                profile.LeftTrigger);
+                Profile.LeftTriggerDeadzone,
+                Profile.LeftTriggerSensitivity,
+                Profile.LeftTrigger);
 
             // Right Trigger
             HandleTrigger(
@@ -176,9 +187,9 @@ namespace Cubelicator
                 state.TriggerRight,
                 calibration?.RightTriggerMin,
                 calibration?.RightTriggerMax,
-                profile.RightTriggerDeadzone,
-                profile.RightTriggerSensitivity,
-                profile.RightTrigger);
+                Profile.RightTriggerDeadzone,
+                Profile.RightTriggerSensitivity,
+                Profile.RightTrigger);
 
             if (state.Connected)
             {

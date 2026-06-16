@@ -6,20 +6,24 @@ namespace Cubelicator.UI.Views;
 
 public partial class ControllerEditor : UserControl
 {
+    private readonly AdapterPort port;
+    private readonly GamecubeController gamecubeController;
     private readonly ProfileManager profileManager;
     private readonly ViewsManager viewsManager;
     private readonly Settings settings;
 
     private readonly List<MappedButtonRow> mappedRows = new List<MappedButtonRow>();
 
-    public ControllerEditor(ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
+    public ControllerEditor(AdapterPort port, GamecubeController controller, ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
     {
+        this.port = port;
+        this.gamecubeController = gamecubeController;
         this.profileManager = profileManager;
         this.viewsManager = viewsManager;
         this.settings = settings;
 
         InitializeComponent();
-        InitializeEventListeners();
+        InitializeEvents();
     }
 
     private void InitializeUI(AdapterPort port, GamecubeController gamecubeController)
@@ -37,7 +41,7 @@ public partial class ControllerEditor : UserControl
         InitializeMappedButtons(gamecubeController);
     }
 
-    private void InitializeEventListeners()
+    private void InitializeEvents()
     {
         viewsManager.OnShowControllerEditor += (port, gamecubeController) =>
         {

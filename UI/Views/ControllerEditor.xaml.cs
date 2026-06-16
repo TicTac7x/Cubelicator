@@ -6,14 +6,15 @@ namespace Cubelicator.UI.Views;
 
 public partial class ControllerEditor : UserControl
 {
+    private readonly ProfileManager profileManager;
     private readonly ViewsManager viewsManager;
     private readonly Settings settings;
 
-    private GamecubeController gamecubeController;
     private readonly List<MappedButtonRow> mappedRows = new List<MappedButtonRow>();
 
-    public ControllerEditor(ViewsManager viewsManager, Settings settings)
+    public ControllerEditor(ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
     {
+        this.profileManager = profileManager;
         this.viewsManager = viewsManager;
         this.settings = settings;
 
@@ -21,25 +22,30 @@ public partial class ControllerEditor : UserControl
         InitializeEventListeners();
     }
 
+    private void InitializeUI(AdapterPort port, GamecubeController gamecubeController)
+    {
+        RootProfileSelector.Children.Clear();
+        RootProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, true));
+
+        ControllerRoot.Children.Clear();
+        var controllerView = new GamecubeControllerView(gamecubeController);
+        controllerView.SetControllerColor(
+            ControllerColors.Map[settings.GetControllerColor(port)]
+        );
+        ControllerRoot.Children.Add(controllerView);
+
+        InitializeMappedButtons(gamecubeController);
+    }
+
     private void InitializeEventListeners()
     {
         viewsManager.OnShowControllerEditor += (port, gamecubeController) =>
         {
-            ControllerRoot.Children.Clear();
-
-            this.gamecubeController = gamecubeController;
-
-            var controllerView = new GamecubeControllerView(gamecubeController);
-            controllerView.SetControllerColor(
-                ControllerColors.Map[settings.GetControllerColor(port)]
-            );
-            ControllerRoot.Children.Add(controllerView);
-
-            InitializeMappedButtons();
+            InitializeUI(port, gamecubeController);
         };
     }
 
-    private void InitializeMappedButtons()
+    private void InitializeMappedButtons(GamecubeController gamecubeController)
     {
         RootMappedButtons.Children.Clear();
         mappedRows.Clear();

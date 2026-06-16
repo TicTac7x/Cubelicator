@@ -48,29 +48,7 @@
                         Visibility="Collapsed"/>
                 </Grid>
 
-                <Button
-                    x:Name="ProfileButton"
-                    Grid.Column="1"
-                    Visibility="Collapsed">
-
-                    <Button.Flyout>
-                        <MenuFlyout x:Name="DynamicProfiles" Placement="Bottom"/>
-                    </Button.Flyout>
-
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Spacing="5">
-                        <TextBlock
-                            x:Name="ProfileText"
-                            Grid.Row="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                            Profile
-                        </TextBlock>
-
-                        <controls:IconDown />
-                    </StackPanel>
-                </Button>
+                <Grid x:Name="RootProfileSelector" Grid.Column="1" Visibility="Collapsed" />
 
                 <Button
                     x:Name="DetailsButton"

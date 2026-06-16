@@ -21,8 +21,11 @@ namespace Cubelicator
             get => profile;
             set
             {
-                profile = value;
-                OnProfileChanged(value);
+                if (value != profile)
+                {
+                    profile = value;
+                    OnProfileChanged(value);
+                }
             }
         }
         private GamecubeControllerCalibration? calibration = null;

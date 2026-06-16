@@ -60,6 +60,8 @@ namespace Cubelicator.UI.Controls
             // Controller and port texts.
             PortText.Text = PortText.Text + " " + (int) port;
             ControllerText.Text = ControllerText.Text + " " + (int) port;
+
+            RootProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, false));
         }
 
         private void SetupEventListeners()
@@ -76,7 +78,7 @@ namespace Cubelicator.UI.Controls
                     PortText.Visibility = portVisible;
                     ControllerRoot.Visibility = controllerVisible;
                     ControllerText.Visibility = controllerVisible;
-                    ProfileButton.Visibility = controllerVisible;
+                    RootProfileSelector.Visibility = controllerVisible;
                     DetailsButton.Visibility = controllerVisible;
 
                     if (connected)
@@ -118,49 +120,12 @@ namespace Cubelicator.UI.Controls
                 });
             };
 
-            gamecubeController.OnProfileChanged += (profile) =>
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    ProfileText.Text = profile.Name;
-
-                    foreach (var item in DynamicProfiles.Items)
-                    {
-                        item.Visibility = item.Tag == profile.Name ? Visibility.Collapsed : Visibility.Visible;
-                    }
-                });
-            };
-
             settings.OnControllerColorChanged += (port, controllerColor) =>
             {
                 if (port == this.port)
                 {
                     SetControllerColor(ControllerColors.Map[controllerColor]);
                 }
-            };
-
-            profileManager.OnProfilesChanged += (profiles) =>
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    DynamicProfiles.Items.Clear();
-
-                    foreach (var profile in profiles)
-                    {
-
-                        var item = new MenuFlyoutItem
-                        {
-                            Text = profile.Name,
-                            Tag = profile.Name,
-                            Visibility = profile.Name == gamecubeController.Profile.Name ? Visibility.Collapsed : Visibility.Visible
-                        };
-
-                        item.Click += OnMenuItemChangeProfile;
-
-                        DynamicProfiles.Items.Add(item);
-                    }
-                });
-                
             };
         }
 

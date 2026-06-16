@@ -8,6 +8,7 @@ namespace Cubelicator
     public class GamecubeAdapter
     {
         public event Action<AdapterPort, bool> OnControllerConnectionChanged = delegate { };
+        public event Action<AdapterPort, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
 
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
@@ -61,6 +62,14 @@ namespace Cubelicator
                         break;
                 }
             };
+
+            foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
+            {
+                GetPortController(port).OnProfileChanged += (profile) =>
+                {
+                    OnControllerProfileChanged(port, profile);
+                };
+            }
         }
 
         public void Start()

@@ -26,11 +26,21 @@ public partial class App : Application
         trayIcon = new TrayIcon(OpenMainWindow, ExitApp);
         mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager, profileManager);
 
+        SetupEvents();
+
         calibrationManager.Start();
         profileManager.Start();
         settingsManager.Start();
         gamecubeAdapter.Start();
         mainWindow.Activate();
+    }
+
+    private void SetupEvents()
+    {
+        gamecubeAdapter.OnControllerProfileChanged += (port, profile) =>
+        {
+            settingsManager.Settings.SetControllerProfile(port, profile);
+        };
     }
 
     private void ExitApp()

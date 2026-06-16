@@ -6,16 +6,21 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="1" Padding="0, 150">
-            <Grid x:Name="ControllerRoot" />
+        <Grid Grid.Column="0" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="RootProfileSelector" Grid.Row="0" HorizontalAlignment="Center" Padding="10"/>
+            <Grid x:Name="ControllerRoot" Grid.Row="1" Padding="0,100" />
         </Grid>
 
-        <Grid Grid.Column="2" Background="{x:Bind ColorButtonPressed}"
+        <Grid Grid.Column="1" Background="{x:Bind ColorButtonPressed}"
               BorderThickness="1,0,0,0" BorderBrush="{x:Bind ColorDeviceBackground}">
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto"

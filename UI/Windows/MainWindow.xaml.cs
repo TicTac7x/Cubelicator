@@ -77,13 +77,18 @@ public partial class MainWindow : Window
 
     private void OnClose(object sender, WindowEventArgs e)
     {
-            AppWindow.Hide();
-            e.Handled = !exitApp;
+        Hide();
+        e.Handled = !exitApp;
     }
 
     public void Exit()
     {
         exitApp = true;
         Close();
+    }
+
+    public void Hide()
+    {
+        AppWindow.Hide();
     }
 }

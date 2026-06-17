@@ -21,7 +21,7 @@ public partial class App : Application
         profileManager = new ProfileManager();
         settingsManager = new SettingsManager(profileManager);
         gamecubeAdapter = new GamecubeAdapter(calibrationManager, settingsManager.Settings, profileManager);
-        trayIcon = new TrayIcon(OpenMainWindow, ExitApp);
+        trayIcon = new TrayIcon(OpenMainWindow, HideMainWindow, ExitApp);
         mainWindow = new MainWindow(gamecubeAdapter, settingsManager.Settings, calibrationManager, profileManager);
 
         SetupEvents();
@@ -52,6 +52,11 @@ public partial class App : Application
     private void OpenMainWindow()
     {
         mainWindow.Activate();
+    }
+
+    private void HideMainWindow()
+    {
+        mainWindow.Hide();
     }
 
     public static void DebugOutput(object a)

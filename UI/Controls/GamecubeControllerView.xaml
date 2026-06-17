@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Cubelicator="using:Cubelicator">
 
-    <Viewbox Stretch="Uniform">
+    <Viewbox Stretch="Uniform" MaxHeight="400">
         <Canvas Width="685" Height="489">
             <Canvas x:Name="LeftTrigger">
                 <Path

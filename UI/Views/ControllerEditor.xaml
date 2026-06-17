@@ -10,7 +10,7 @@
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" VerticalAlignment="Top">
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
@@ -25,7 +25,7 @@
                     HorizontalAlignment="Center"/>
             </Grid>
 
-            <Grid x:Name="Element_Controller" Grid.Row="1" Padding="0,100" />
+            <Grid x:Name="Element_Controller" Grid.Row="1" Padding="0,100" VerticalAlignment="Center" />
         </Grid>
 
         <Grid Grid.Column="1" Background="{x:Bind Cubelicator:Colors.ButtonPressedBackground}"

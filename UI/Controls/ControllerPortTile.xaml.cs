@@ -57,7 +57,7 @@ namespace Cubelicator
             Element_PortText.Text = Element_PortText.Text + " " + (int) port;
             Element_ControllerText.Text = Element_ControllerText.Text + " " + (int) port;
 
-            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, false));
+            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, viewsManager, profileManager, gamecubeController, false));
         }
 
         private void SetupEventListeners()

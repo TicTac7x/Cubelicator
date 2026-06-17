@@ -30,7 +30,7 @@ namespace Cubelicator
             Element_CalibrationIcon.Children.Add(new CalibrationIcon(port, gamecubeController));
 
             Element_ProfileSelector.Children.Clear();
-            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, true));
+            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, viewsManager, profileManager, gamecubeController, true));
 
             Element_Controller.Children.Clear();
             var controllerView = new GamecubeControllerView(port, gamecubeController, settings);

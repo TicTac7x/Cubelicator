@@ -32,33 +32,38 @@
 			Visibility="Collapsed"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
-			KeyDown="OnRenameKeyDown"
-			LostFocus="OnRenameLostFocus"/>
+			KeyDown="Input_KeyDown"
+			LostFocus="Input_LostFocus"/>
 
         <Button x:Name="Element_ProfileManagerButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0">
 			<Button.Flyout>
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
 					<MenuFlyoutItem
                         Text="{x:Bind Cubelicator:Strings.ProfileSelector_New}"
-                        Click="OnNewProfile"/>
+                        Click="Click_NewProfile"/>
 
 					<MenuFlyoutItem
 						Text="{x:Bind Cubelicator:Strings.ProfileSelector_Rename}"
-						Click="OnRenameProfile"/>
+						Click="Click_RenameProfile"/>
 
                     <MenuFlyoutItem
                         x:Name="Element_DeleteProfile"
 						Text="{x:Bind Cubelicator:Strings.ProfileSelector_Delete}"
-						Click="OnDeleteProfile"/>
+						Click="Click_DeleteProfile"/>
 
                     <MenuFlyoutItem
 						x:Name="Element_ToggleRumble"
 						Text="{x:Bind Cubelicator:Strings.ProfileSelector_DisableRumble}"
-						Click="OnToggleRumble"/>
+						Click="Click_ToggleRumble"/>
 
                     <MenuFlyoutSubItem
 						x:Name="Element_ChangeColor"
 						Text="{x:Bind Cubelicator:Strings.ChangeColor}"/>
+
+                    <MenuFlyoutItem
+						x:Name="Element_Calibrate"
+						Text="{x:Bind Cubelicator:Strings.Calibrate}"
+						Click="Click_Calibrate"/>
                 </MenuFlyout>
 			</Button.Flyout>
 

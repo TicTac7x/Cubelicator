@@ -1,6 +1,4 @@
-﻿using Cubelicator.Services;
-
-namespace Cubelicator
+﻿namespace Cubelicator
 {
     public class Settings
     {

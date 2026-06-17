@@ -1,11 +1,8 @@
 <UserControl
-    x:Class="Cubelicator.UI.Controls.GamecubeControllerView"
+    x:Class="Cubelicator.GamecubeControllerView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Cubelicator"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:Cubelicator="using:Cubelicator">
 
     <Viewbox Stretch="Uniform">
         <Canvas Width="685" Height="489">
@@ -13,10 +10,10 @@
                 <Path
                     x:Name="LeftTriggerBase"
                     Data="M75 77C86.8701 30.826 121.689 18.5129 166.004 32.3651C210.319 46.2173 76.5827 77 75 77Z"
-                    Fill="{x:Bind ColorLeftTrigger}"
+                    Fill="{x:Bind Cubelicator:ControllerInputColors.Trigger}"
                     Stroke="Black"
                     StrokeThickness="2"
-                    Tag="{x:Bind local:GamecubeControllerButton.LeftBumper}"
+                    Tag="{x:Bind Cubelicator:GamecubeControllerButton.LeftBumper}"
                     Tapped="OnClickButton" />
 
                 <Path
@@ -31,10 +28,10 @@
                 <Path
                     x:Name="RightTriggerBase"
                     Data="M612 77C600.13 30.826 565.311 18.5129 520.996 32.3651C476.681 46.2173 610.417 77 612 77Z"
-                    Fill="{x:Bind ColorRightTrigger}"
+                    Fill="{x:Bind Cubelicator:ControllerInputColors.Trigger}"
                     Stroke="Black"
                     StrokeThickness="2"
-                    Tag="{x:Bind local:GamecubeControllerButton.RightBumper}"
+                    Tag="{x:Bind Cubelicator:GamecubeControllerButton.RightBumper}"
                     Tapped="OnClickButton" />
 
                 <Path
@@ -48,9 +45,9 @@
             <Path
                 x:Name="ButtonZ"
                 Data="M502.083 34.8037C504.144 30.7373 508.3 30.9589 519.073 31.3531C547.572 32.3958 592.28 51.8398 604.123 61.2377C611.968 67.4621 612.796 71.6381 609.6 79.8595L502.083 34.8037Z"
-                Fill="{x:Bind ColorButtonZ}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonZ}"
                 Stroke="Black"
-                Tag="{x:Bind local:GamecubeControllerButton.Z}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.Z}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -194,10 +191,10 @@
             <Path
                 x:Name="ButtonA"
                 Data="M516 182C515.999 187.253 517.033 192.454 519.043 197.307C521.052 202.16 523.999 206.569 527.713 210.284C531.428 213.998 535.837 216.945 540.691 218.955C545.544 220.965 550.747 222 556 222C561.253 222 566.456 220.965 571.309 218.955C576.163 216.945 580.572 213.998 584.287 210.284C588.001 206.569 590.948 202.16 592.957 197.307C594.967 192.454 596.001 187.253 596 182C596.001 176.747 594.967 171.546 592.957 166.693C590.948 161.84 588.001 157.431 584.287 153.716C580.572 150.002 576.163 147.055 571.309 145.045C566.456 143.035 561.253 142 556 142C550.747 142 545.544 143.035 540.691 145.045C535.837 147.055 531.428 150.002 527.713 153.716C523.999 157.431 521.052 161.84 519.043 166.693C517.033 171.546 515.999 176.747 516 182Z"
-                Fill="{x:Bind ColorButtonA}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonA}"
                 Stroke="Black"
                 StrokeThickness="2"
-                Tag="{x:Bind local:GamecubeControllerButton.A}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.A}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -210,10 +207,10 @@
             <Path
                 x:Name="ButtonB"
                 Data="M466.989 225C466.989 227.626 467.506 230.227 468.511 232.653C469.516 235.08 470.99 237.285 472.847 239.142C474.705 240.999 476.911 242.472 479.338 243.478C481.765 244.483 484.367 245 486.995 245C489.622 245 492.224 244.483 494.651 243.478C497.079 242.472 499.284 240.999 501.142 239.142C503 237.285 504.473 235.08 505.478 232.653C506.483 230.227 507 227.626 507 225C507 222.374 506.483 219.773 505.478 217.347C504.473 214.92 503 212.715 501.142 210.858C499.284 209.001 497.079 207.528 494.651 206.522C492.224 205.517 489.622 205 486.995 205C484.367 205 481.765 205.517 479.338 206.522C476.911 207.528 474.705 209.001 472.847 210.858C470.99 212.715 469.516 214.92 468.511 217.347C467.506 219.773 466.989 222.374 466.989 225Z"
-                Fill="{x:Bind ColorButtonB}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonB}"
                 Stroke="Black"
                 StrokeThickness="2"
-                Tag="{x:Bind local:GamecubeControllerButton.B}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.B}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -226,10 +223,10 @@
             <Path
                 x:Name="ButtonX"
                 Data="M621.912 186.345C622.732 203.558 644.453 201.028 649.009 185.681C653.565 170.334 649.432 145.82 636.558 134.699C623.684 123.578 604.894 134.156 611.291 146.116C617.689 158.076 621.091 169.132 621.912 186.345Z"
-                Fill="{x:Bind ColorButtonX}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonX}"
                 Stroke="Black"
                 StrokeThickness="2"
-                Tag="{x:Bind local:GamecubeControllerButton.X}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.X}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -242,10 +239,10 @@
             <Path
                 x:Name="ButtonY"
                 Data="M563.303 119.116C580.526 118.567 578.339 96.8093 563.066 92.0117C547.792 87.2142 523.217 90.9595 511.894 103.657C500.571 116.354 510.851 135.309 522.911 129.1C534.97 122.892 546.079 119.665 563.303 119.116Z"
-                Fill="{x:Bind ColorButtonY}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonY}"
                 Stroke="Black"
                 StrokeThickness="2"
-                Tag="{x:Bind local:GamecubeControllerButton.Y}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.Y}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -258,10 +255,10 @@
             <Path
                 x:Name="ButtonStart"
                 Data="M360.373 189.686C360.373 193.847 358.72 197.836 355.778 200.778C352.836 203.72 348.847 205.373 344.686 205.373C340.526 205.373 336.536 203.72 333.594 200.778C330.653 197.836 329 193.847 329 189.686C329 185.526 330.653 181.536 333.594 178.594C336.536 175.653 340.526 174 344.686 174C348.847 174 352.836 175.653 355.778 178.594C358.72 181.536 360.373 185.526 360.373 189.686Z"
-                Fill="{x:Bind ColorButtonStart}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonStart}"
                 Stroke="Black"
                 StrokeThickness="2"
-                Tag="{x:Bind local:GamecubeControllerButton.Start}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.Start}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -300,7 +297,7 @@
                 Canvas.Top="324"
                 Width="30"
                 Height="30"
-                Fill="{x:Bind ColorButtonDPadLeft}" />
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonDPad}" />
 
             <Path
                 x:Name="DPadCenterCircle"
@@ -311,8 +308,8 @@
             <Path
                 x:Name="DPadUp"
                 Data="M215 295.292C215 293.47 216.755 292 218.97 292H241C243 292 245 293.943 245 295.886V326H215V295.292Z"
-                Fill="{x:Bind ColorButtonDPadUp}"
-                Tag="{x:Bind local:GamecubeControllerButton.DPadUp}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonDPad}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.DPadUp}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -325,8 +322,8 @@
             <Path
                 x:Name="DPadLeft"
                 Data="M186.292 354C184.47 354 183 352.245 183 350.03L183 328C183 326 184.943 324 186.886 324L217 324L217 354L186.292 354Z"
-                Fill="{x:Bind ColorButtonDPadLeft}"
-                Tag="{x:Bind local:GamecubeControllerButton.DPadLeft}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonDPad}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.DPadLeft}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -339,8 +336,8 @@
             <Path
                 x:Name="DPadDown"
                 Data="M245 382.708C245 384.53 243.245 386 241.03 386L219 386C217 386 215 384.057 215 382.114L215 352L245 352L245 382.708Z"
-                Fill="{x:Bind ColorButtonDPadDown}"
-                Tag="{x:Bind local:GamecubeControllerButton.DPadDown}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonDPad}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.DPadDown}"
                 Tapped="OnClickButton" />
 
             <Path
@@ -353,8 +350,8 @@
             <Path
                 x:Name="DPadRight"
                 Data="M273.708 324C275.53 324 277 325.755 277 327.97L277 350C277 352 275.057 354 273.114 354L243 354L243 324L273.708 324Z"
-                Fill="{x:Bind ColorButtonDPadRight}"
-                Tag="{x:Bind local:GamecubeControllerButton.DPadRight}"
+                Fill="{x:Bind Cubelicator:ControllerInputColors.ButtonDPad}"
+                Tag="{x:Bind Cubelicator:GamecubeControllerButton.DPadRight}"
                 Tapped="OnClickButton" />
 
             <Path

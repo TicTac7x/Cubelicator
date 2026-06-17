@@ -1,6 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-using Cubelicator.UI.Windows;
-using Cubelicator.Services;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 

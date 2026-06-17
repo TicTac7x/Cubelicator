@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class IconDown : UserControl
     {
@@ -8,7 +8,5 @@ namespace Cubelicator.UI.Controls
         {
             InitializeComponent();
         }
-
-        private string ColorDeviceForeground = Colors.DeviceForeground;
     }
 }

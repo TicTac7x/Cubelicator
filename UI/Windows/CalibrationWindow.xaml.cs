@@ -1,7 +1,6 @@
-﻿using Cubelicator.Services;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 
-namespace Cubelicator.UI.Windows
+namespace Cubelicator
 {
     public partial class CalibrationWindow : Window
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class ControllerPort : UserControl
     {

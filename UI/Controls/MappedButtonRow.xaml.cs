@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class MappedButtonRow : UserControl
     {
@@ -26,13 +26,13 @@ namespace Cubelicator.UI.Controls
             var typeName = gamecubeControllerInput switch
             {
                 GamecubeControllerButtonInput button =>
-                    $"Cubelicator.UI.Controller.{button.value}",
+                    $"Cubelicator.{button.value}",
 
                 GamecubeControllerStickInput stick =>
-                    $"Cubelicator.UI.Controller.{stick.value}",
+                    $"Cubelicator.{stick.value}",
 
                 GamecubeControllerTriggerInput trigger =>
-                    $"Cubelicator.UI.Controller.{trigger.value}"
+                    $"Cubelicator.{trigger.value}"
             };
             var type = Type.GetType(typeName);
             if (type == null)
@@ -220,7 +220,7 @@ namespace Cubelicator.UI.Controls
         {
             if (!isExpanded)
             {
-            Root.Background = App.StringToSolidColorBrush(ColorRowBackground);
+            Root.Background = App.StringToSolidColorBrush(Colors.ButtonPressedBackground);
             }
         }
 
@@ -228,9 +228,5 @@ namespace Cubelicator.UI.Controls
         {
             SetExpandablePanelVisibility(!isExpanded);
         }
-
-        // Bindings
-        private string ColorRowBackground = Colors.ButtonPressedBackground;
-        private string ColorExpandableBackground = Colors.ButtonHoverBackground;
     }
 }

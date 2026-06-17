@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Cubelicator.UI.Controller
+namespace Cubelicator
 {
     public partial class DPadUp : UserControl
     {
@@ -8,7 +8,5 @@ namespace Cubelicator.UI.Controller
         {
             InitializeComponent();
         }
-
-        private string ColorButton => ControllerInputColors.ButtonDPad;
     }
 }

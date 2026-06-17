@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Windows.Foundation;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class GamecubeControllerView : UserControl
     {
@@ -49,40 +49,40 @@ namespace Cubelicator.UI.Controls
                     switch (button)
                     {
                         case GamecubeControllerButton.A:
-                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonA);
+                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonA);
                             break;
                         case GamecubeControllerButton.B:
-                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonB);
+                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonB);
                             break;
                         case GamecubeControllerButton.X:
-                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonX);
+                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonX);
                             break;
                         case GamecubeControllerButton.Y:
-                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonY);
+                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonY);
                             break;
                         case GamecubeControllerButton.Z:
-                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonZ);
+                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonZ);
                             break;
                         case GamecubeControllerButton.Start:
-                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonStart);
+                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonStart);
                             break;
                         case GamecubeControllerButton.DPadUp:
-                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadUp);
+                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadDown:
-                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadDown);
+                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadLeft:
-                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadLeft);
+                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadRight:
-                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorButtonDPadRight);
+                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.LeftBumper:
-                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorLeftTrigger);
+                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
                             break;
                         case GamecubeControllerButton.RightBumper:
-                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ColorRightTrigger);
+                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
                             break;
                     }
                 });
@@ -175,19 +175,5 @@ namespace Cubelicator.UI.Controls
                     });
             }
         }
-
-        private string ColorButtonA => ControllerInputColors.ButtonA;
-        private string ColorButtonB => ControllerInputColors.ButtonB;
-        private string ColorButtonX => ControllerInputColors.ButtonX;
-        private string ColorButtonY => ControllerInputColors.ButtonY;
-        private string ColorButtonZ => ControllerInputColors.ButtonZ;
-        private string ColorButtonStart => ControllerInputColors.ButtonStart;
-        private string ColorButtonDPadUp => ControllerInputColors.ButtonDPad;
-        private string ColorButtonDPadDown => ControllerInputColors.ButtonDPad;
-        private string ColorButtonDPadLeft => ControllerInputColors.ButtonDPad;
-        private string ColorButtonDPadRight => ControllerInputColors.ButtonDPad;
-        private string ColorLeftTrigger => ControllerInputColors.Trigger;
-        private string ColorRightTrigger => ControllerInputColors.Trigger;
-
     }
 }

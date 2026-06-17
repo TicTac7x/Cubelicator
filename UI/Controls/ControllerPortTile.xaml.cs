@@ -1,10 +1,8 @@
-﻿using Cubelicator.Services;
-using Cubelicator.UI.Windows;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Text.RegularExpressions;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class ControllerPortTile : UserControl
     {
@@ -173,11 +171,5 @@ namespace Cubelicator.UI.Controls
         {
             gamecubeControllerView.SetControllerColor(color);
         }
-
-        private string StringCalibrate => Strings.Calibrate;
-        private string StringChangeColor => Strings.ChangeColor;
-        private String StringEdit => Strings.Edit;
-        private string ColorDeviceBackground = Colors.DeviceBackground;
-        private string ColorDeviceForeground = Colors.DeviceForeground;
     }
 }

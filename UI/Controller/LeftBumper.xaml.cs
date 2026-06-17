@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Cubelicator.UI.Controller
+namespace Cubelicator
 {
     public partial class LeftBumper : UserControl
     {

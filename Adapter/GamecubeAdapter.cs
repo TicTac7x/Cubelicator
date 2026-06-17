@@ -1,5 +1,4 @@
-﻿using Cubelicator.Services;
-using LibUsbDotNet;
+﻿using LibUsbDotNet;
 using LibUsbDotNet.Main;
 using Nefarius.ViGEm.Client;
 

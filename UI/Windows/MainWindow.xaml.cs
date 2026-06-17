@@ -1,9 +1,6 @@
-﻿using Cubelicator.Services;
-using Cubelicator.UI.Controls;
-using Cubelicator.UI.Views;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 
-namespace Cubelicator.UI.Windows;
+namespace Cubelicator;
 
 public partial class MainWindow : Window
 {
@@ -72,7 +69,4 @@ public partial class MainWindow : Window
         exitApp = true;
         Close();
     }
-
-    private string ColorAppBackground = Colors.AppBackground;
-    private string ColorDeviceBackground = Colors.DeviceBackground;
 }

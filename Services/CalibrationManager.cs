@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Cubelicator.Services
+namespace Cubelicator
 {
     public class CalibrationManager
     {

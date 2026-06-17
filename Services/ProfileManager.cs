@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Cubelicator.Services
+namespace Cubelicator
 {
     public class ProfileManager
     {

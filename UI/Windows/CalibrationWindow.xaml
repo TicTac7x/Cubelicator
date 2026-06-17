@@ -1,5 +1,5 @@
 <Window
-    x:Class="Cubelicator.UI.Windows.CalibrationWindow"
+    x:Class="Cubelicator.CalibrationWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Cubelicator.UI.Controls">

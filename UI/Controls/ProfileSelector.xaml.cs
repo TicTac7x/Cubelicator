@@ -1,10 +1,9 @@
-﻿using Cubelicator.Services;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Windows.System;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class ProfileSelector : UserControl
     {

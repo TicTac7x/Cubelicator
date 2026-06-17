@@ -1,47 +1,44 @@
-﻿using Cubelicator.Services;
-using Cubelicator.UI.Controls;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Cubelicator.UI.Views;
-
-public partial class Dashboard : UserControl
+namespace Cubelicator
 {
-    private readonly ViewsManager viewsManager;
-    private readonly ProfileManager profileManager;
-    private readonly CalibrationManager calibrationManager;
-    private readonly GamecubeAdapter gamecubeAdapter;
-    private readonly Settings settings;
-
-    private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
-    public Dashboard(ProfileManager profileManager, CalibrationManager calibrationManager, GamecubeAdapter gamecubeAdapter, Settings settings, ViewsManager viewsManager)
+    public partial class Dashboard : UserControl
     {
-        this.viewsManager = viewsManager;
-        this.profileManager = profileManager;
-        this.calibrationManager = calibrationManager;
-        this.gamecubeAdapter = gamecubeAdapter;
-        this.settings = settings;
+        private readonly ViewsManager viewsManager;
+        private readonly ProfileManager profileManager;
+        private readonly CalibrationManager calibrationManager;
+        private readonly GamecubeAdapter gamecubeAdapter;
+        private readonly Settings settings;
 
-        InitializeComponent();
-        InitializeDashboard();
-    }
-
-    private void InitializeDashboard()
-    {
-        foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
+        private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
+        public Dashboard(ProfileManager profileManager, CalibrationManager calibrationManager, GamecubeAdapter gamecubeAdapter, Settings settings, ViewsManager viewsManager)
         {
-            int index = (int) port - 1;
-            var controllerPortTile = new ControllerPortTile(
-                port,
-                gamecubeAdapter.GetPortController(port),
-                settings,
-                calibrationManager,
-                profileManager,
-                viewsManager);
+            this.viewsManager = viewsManager;
+            this.profileManager = profileManager;
+            this.calibrationManager = calibrationManager;
+            this.gamecubeAdapter = gamecubeAdapter;
+            this.settings = settings;
 
-            controllerPortTiles[index] = controllerPortTile;
-            ControllerPortTiles.Children.Add(controllerPortTile);
+            InitializeComponent();
+            InitializeDashboard();
+        }
+
+        private void InitializeDashboard()
+        {
+            foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
+            {
+                int index = (int)port - 1;
+                var controllerPortTile = new ControllerPortTile(
+                    port,
+                    gamecubeAdapter.GetPortController(port),
+                    settings,
+                    calibrationManager,
+                    profileManager,
+                    viewsManager);
+
+                controllerPortTiles[index] = controllerPortTile;
+                ControllerPortTiles.Children.Add(controllerPortTile);
+            }
         }
     }
-
-    private String ColorAppBackground => Colors.AppBackground;
 }

@@ -1,15 +1,15 @@
 <UserControl
-    x:Class="Cubelicator.UI.Controls.ControllerPortTile"
+    x:Class="Cubelicator.ControllerPortTile"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Cubelicator.UI.Controls"
+    xmlns:Cubelicator="using:Cubelicator"
     Width="320"
     Height="240">
 
     <Border
         x:Name="Root"
         Padding="5"
-        Background="{x:Bind ColorDeviceBackground}"
+        Background="{x:Bind Cubelicator:Colors.DeviceBackground}"
         CornerRadius="10"
         Opacity="0.5">
 
@@ -66,21 +66,21 @@
                             Placement="BottomEdgeAlignedLeft">
 
                             <MenuFlyoutItem
-                                Text="{x:Bind StringCalibrate}"
+                                Text="{x:Bind Cubelicator:Strings.Calibrate}"
                                 Click="OnMenuItemClickCalibrate"/>
 
                             <MenuFlyoutSubItem
                                 x:Name="DynamicControllerColors"
-                                Text="{x:Bind StringChangeColor}"/>
+                                Text="{x:Bind Cubelicator:Strings.ChangeColor}"/>
 
                             <MenuFlyoutItem
-                                Text="{x:Bind StringEdit}"
+                                Text="{x:Bind Cubelicator:Strings.Edit}"
                                 Click="OnMenuItemEdit"/>
 
                         </MenuFlyout>
                     </Button.Flyout>
 
-                    <controls:IconDetails
+                    <Cubelicator:IconDetails
                         Width="16"
                         Height="16"/>
                 </Button>
@@ -100,7 +100,7 @@
                 Width="60"
                 Height="60"
                 Visibility="Visible">
-                <controls:ControllerPort
+                <Cubelicator:ControllerPort
                     x:Name="ControllerPort" />
             </Grid>
 
@@ -111,7 +111,7 @@
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"
-                Foreground="{x:Bind ColorDeviceForeground}">
+                Foreground="{x:Bind Cubelicator:Colors.DeviceForeground}">
                 Port
             </TextBlock>
 
@@ -122,7 +122,7 @@
                 HorizontalAlignment="Center"
                 FontSize="14"
                 FontWeight="Bold"
-                Foreground="{x:Bind ColorDeviceForeground}"
+                Foreground="{x:Bind Cubelicator:Colors.DeviceForeground}"
                 Visibility="Collapsed">
                 Controller
             </TextBlock>

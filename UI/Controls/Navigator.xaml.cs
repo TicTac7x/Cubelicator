@@ -1,10 +1,9 @@
-﻿using Cubelicator.Services;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 
-namespace Cubelicator.UI.Controls
+namespace Cubelicator
 {
     public partial class Navigator: UserControl
     {
@@ -65,57 +64,40 @@ namespace Cubelicator.UI.Controls
             if (sender is not Border border)
                 return;
 
-            if (border.Tag is not NavButton nav)
+            if (border.Tag is not AppView view)
                 return;
 
-            switch (nav)
+            switch (view)
             {
-                case NavButton.Dashboard:
+                case AppView.Dashboard:
                     viewsManager.ShowDashboard();
                     break;
 
-                case NavButton.Controller1:
+                case AppView.Controller1:
                     viewsManager.ShowControllerEditor(
                         AdapterPort.One,
                         gamecubeAdapter.GetPortController(AdapterPort.One));
                     break;
 
-                case NavButton.Controller2:
+                case AppView.Controller2:
                     viewsManager.ShowControllerEditor(
                         AdapterPort.Two,
                         gamecubeAdapter.GetPortController(AdapterPort.Two));
                     break;
 
-                case NavButton.Controller3:
+                case AppView.Controller3:
                     viewsManager.ShowControllerEditor(
                         AdapterPort.Three,
                         gamecubeAdapter.GetPortController(AdapterPort.Three));
                     break;
 
-                case NavButton.Controller4:
+                case AppView.Controller4:
                     viewsManager.ShowControllerEditor(
                         AdapterPort.Four,
                         gamecubeAdapter.GetPortController(AdapterPort.Four));
                     break;
             }
         }
-
-        private NavButton NavButtonDashboard => NavButton.Dashboard;
-        private NavButton NavButtonController1=> NavButton.Controller1;
-        private NavButton NavButtonController2 => NavButton.Controller2;
-        private NavButton NavButtonController3 => NavButton.Controller3;
-        private NavButton NavButtonController4 => NavButton.Controller4;
-
-        private enum NavButton
-        {
-            Dashboard,
-            Controller1,
-            Controller2,
-            Controller3,
-            Controller4
-        }
-
-        private string ColorDeviceBackground => Colors.DeviceBackground;
 
         private Border? _active;
 

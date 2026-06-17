@@ -1,7 +1,8 @@
 <UserControl
-    x:Class="Cubelicator.UI.Controller.RightBumper"
+    x:Class="Cubelicator.RightBumper"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Cubelicator="using:Cubelicator">
 
     <Viewbox Stretch="Uniform">
 

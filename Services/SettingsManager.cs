@@ -2,7 +2,7 @@
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
-namespace Cubelicator.Services
+namespace Cubelicator
 {
     public class SettingsManager
     {

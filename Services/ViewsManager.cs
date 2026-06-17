@@ -1,4 +1,4 @@
-﻿namespace Cubelicator.Services
+﻿namespace Cubelicator
 {
     public class ViewsManager
     {

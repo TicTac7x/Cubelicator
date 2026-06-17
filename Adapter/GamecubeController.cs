@@ -1,5 +1,4 @@
-﻿using Cubelicator.Services;
-using Nefarius.ViGEm.Client;
+﻿using Nefarius.ViGEm.Client;
 using Nefarius.ViGEm.Client.Targets;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
 

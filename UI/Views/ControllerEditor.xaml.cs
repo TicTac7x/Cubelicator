@@ -12,7 +12,7 @@ namespace Cubelicator
 
         private readonly List<MappedButtonRow> mappedRows = new List<MappedButtonRow>();
 
-        public ControllerEditor(AdapterPort port, GamecubeController controller, ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
+        public ControllerEditor(AdapterPort port, GamecubeController gamecubeController, ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
@@ -26,6 +26,9 @@ namespace Cubelicator
 
         private void InitializeUI(AdapterPort port, GamecubeController gamecubeController)
         {
+            Element_CalibrationIcon.Children.Clear();
+            Element_CalibrationIcon.Children.Add(new CalibrationIcon(port, gamecubeController));
+
             Element_ProfileSelector.Children.Clear();
             Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, true));
 

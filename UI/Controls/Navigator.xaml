@@ -23,7 +23,8 @@
                 PointerEntered="OnPointerEntered"
                 PointerExited="OnPointerExited"
                 PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick">
+                PointerReleased="OnNavClick"
+                Background="{x:Bind Cubelicator:Colors.AppBackground}">
 
             <TextBlock Text="DASHBOARD"
                        VerticalAlignment="Center"

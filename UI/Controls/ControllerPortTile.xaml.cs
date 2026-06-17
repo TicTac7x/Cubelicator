@@ -31,8 +31,7 @@ namespace Cubelicator
 
         void InitializeControllerPortTile()
         {
-            // Port not calibrated tooltip.
-            ToolTipService.SetToolTip(Element_IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
+            Element_CalibrationIcon.Children.Add(new CalibrationIcon(port, gamecubeController));
 
             // Populate list of controller colors.
             foreach (var controllerColor in ControllerColors.Map.Keys)
@@ -77,52 +76,8 @@ namespace Cubelicator
                     Element_ControllerText.Visibility = controllerVisible;
                     Element_ProfileSelector.Visibility = controllerVisible;
                     Element_DetailsButton.Visibility = controllerVisible;
-
-                    if (connected)
-                    {
-                        var calibrated = gamecubeController.IsCalibrated();
-                        Element_IconCalibrated.Visibility = calibrated ? Visibility.Visible : Visibility.Collapsed;
-                        Element_IconNotCalibrated.Visibility = calibrated ? Visibility.Collapsed : Visibility.Visible;
-                    }
-                    else
-                    {
-                        Element_IconCalibrated.Visibility = Visibility.Collapsed;
-                        Element_IconNotCalibrated.Visibility = Visibility.Collapsed;
-                    }
+                    Element_CalibrationIcon.Visibility = controllerVisible;
                 });
-            };
-
-            gamecubeController.Event_CalibrationChanged += (calibration) =>
-            {
-                if (!gamecubeController.IsConnected()) return;
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    Element_IconNotCalibrated.Visibility = Visibility.Collapsed;
-                    Element_IconCalibrated.Visibility = Visibility.Visible;
-
-                    ToolTipService.SetToolTip(
-                        Element_IconCalibrated,
-                        $"""
-                        {Strings.TooltipPortIsCalibrated(port)}
-
-                        Left Stick X: {calibration.LeftStickXMin} / {calibration.LeftStickXCenter} / {calibration.LeftStickXMax}
-                        Left Stick Y: {calibration.LeftStickYMin} / {calibration.LeftStickYCenter} / {calibration.LeftStickYMax}
-                        Right Stick X: {calibration.RightStickXMin} / {calibration.RightStickXCenter} / {calibration.RightStickXMax}
-                        Right Stick Y: {calibration.RightStickYMin} / {calibration.RightStickYCenter} / {calibration.RightStickYMax}
-                        Left Trigger: {calibration.LeftTriggerMin} / {calibration.LeftTriggerMax}
-                        Right Trigger: {calibration.RightTriggerMin} / {calibration.RightTriggerMax}
-                        """
-                    );
-                });
-            };
-
-            settings.Event_ControllerColorChanged += (port, controllerColor) =>
-            {
-                if (port == this.port)
-                {
-                    SetControllerColor(ControllerColors.Map[controllerColor]);
-                }
             };
         }
 
@@ -164,11 +119,6 @@ namespace Cubelicator
                 return;
 
             settings.SetControllerProfile(port, profile);
-        }
-
-        public void SetControllerColor(string color)
-        {
-            gamecubeControllerView.SetControllerColor(color);
         }
     }
 }

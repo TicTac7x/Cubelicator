@@ -11,6 +11,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="ControllerView.xaml" />
+	  <None Remove="UI\Controls\CalibrationIcon.xaml" />
 	  <None Remove="UI\Controls\ControllerPort.xaml" />
 	  <None Remove="UI\Controls\ProfileSelector.xaml" />
 	  <None Remove="UI\Windows\CalibrationWindow.xaml" />
@@ -43,6 +44,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	  <Page Update="UI\Controls\ProfileSelector.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="UI\Controls\CalibrationIcon.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	  <None Update="UI\Views\GamecubeController.xaml">

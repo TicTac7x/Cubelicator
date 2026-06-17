@@ -19,7 +19,9 @@
             <Grid
                 Grid.Row="0"
                 HorizontalAlignment="Stretch"
-                Padding="10">
+                Padding="20,10">
+                <Grid x:Name="Element_CalibrationIcon" HorizontalAlignment="Left" />
+                
                 <Grid
                     x:Name="Element_ProfileSelector"
                     HorizontalAlignment="Center"/>

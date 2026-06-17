@@ -27,21 +27,6 @@ namespace Cubelicator
             InitializeComponent();
             InitializeUI();
             SetupEvents();
-        }
-
-        private void InitializeUI()
-        {
-            Element_SelectedProfileText.Text = gamecubeController.Profile.Name;
-            Element_SelectedProfile.IsEnabled = profileManager.Profiles.Count > 1;
-            Element_DeleteProfile.IsEnabled = profileManager.Profiles.Count > 1;
-            Element_ToggleRumble.Text = gamecubeController.Profile.Rumble ? Strings.ProfileSelector_DisableRumble : Strings.ProfileSelector_EnableRumble;
-            GenerateProfiles();
-
-            if (advanced)
-            {
-                Element_ProfileText.Visibility = Visibility.Visible;
-                Element_ProfileManagerButton.Visibility = Visibility.Visible;
-            }
 
             // Populate list of controller colors.
             Element_ChangeColor.Items.Clear();
@@ -59,6 +44,21 @@ namespace Cubelicator
                 item.Click += OnMenuItemChangeColor;
 
                 Element_ChangeColor.Items.Add(item);
+            }
+        }
+
+        private void InitializeUI()
+        {
+            Element_SelectedProfileText.Text = gamecubeController.Profile.Name;
+            Element_SelectedProfile.IsEnabled = profileManager.Profiles.Count > 1;
+            Element_DeleteProfile.IsEnabled = profileManager.Profiles.Count > 1;
+            Element_ToggleRumble.Text = gamecubeController.Profile.Rumble ? Strings.ProfileSelector_DisableRumble : Strings.ProfileSelector_EnableRumble;
+            GenerateProfiles();
+
+            if (advanced)
+            {
+                Element_ProfileText.Visibility = Visibility.Visible;
+                Element_ProfileManagerButton.Visibility = Visibility.Visible;
             }
         }
 

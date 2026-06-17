@@ -17,7 +17,8 @@
         }
         public const string Calibrate = "Calibrate";
         public const string ChangeColor = "Change Color";
-        public const string Edit = "Edit";
+
+        public const string PortTile_Edit = "Edit";
 
         public const string ProfileSelector_New = "New";
         public const string ProfileSelector_Rename = "Rename";

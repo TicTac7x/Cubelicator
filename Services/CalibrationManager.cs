@@ -28,7 +28,7 @@ namespace Cubelicator
         {
             try
             {
-                var file = Path.Combine(directoryCalibrations, $"Port{port}.json");
+                var file = Path.Combine(directoryCalibrations, $"Port{(int)port}.json");
 
                 if (!File.Exists(file)) return;
 
@@ -37,7 +37,7 @@ namespace Cubelicator
 
                 if (calibration == null) return;
 
-                Event_PortControllerCalibrationLoaded.Invoke(port, calibration);
+                Event_PortControllerCalibrationLoaded(port, calibration);
             }
             catch
             {

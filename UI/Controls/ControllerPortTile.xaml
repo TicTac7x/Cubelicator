@@ -27,26 +27,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0" Padding="7,0,0,0">
-                    <Image
-                        x:Name="Element_IconCalibrated"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Source="ms-appx:///Assets/Calibrated.svg"
-                        Width="16"
-                        Height="16"
-                        Visibility="Collapsed"/>
-
-                    <Image
-                        x:Name="Element_IconNotCalibrated"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Source="ms-appx:///Assets/NotCalibrated.svg"
-                        Width="16"
-                        Height="16"
-                        Visibility="Collapsed"/>
-                </Grid>
+                <Grid x:Name="Element_CalibrationIcon" Grid.Column="0" Padding="7,0,0,0" Visibility="Collapsed" />
 
                 <Grid x:Name="Element_ProfileSelector" Grid.Column="1" Visibility="Collapsed" />
 
@@ -74,7 +55,7 @@
                                 Text="{x:Bind Cubelicator:Strings.ChangeColor}"/>
 
                             <MenuFlyoutItem
-                                Text="{x:Bind Cubelicator:Strings.Edit}"
+                                Text="{x:Bind Cubelicator:Strings.PortTile_Edit}"
                                 Click="OnMenuItemEdit"/>
 
                         </MenuFlyout>

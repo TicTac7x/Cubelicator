@@ -14,6 +14,9 @@ namespace Cubelicator
         public event Action<ControllerSide, ControllerStickAxis, int> Event_StickChanged = delegate { };
         public event Action<ControllerSide, int> Event_TriggerChanged = delegate { };
 
+        private GamecubeControllerCalibration? calibration = null;
+        public GamecubeControllerCalibration? Calibration => calibration;
+        private GamecubeControllerState _state = new GamecubeControllerState();
         private readonly ProfileManager profileManager;
         private readonly IXbox360Controller controller;
         private GamecubeControllerProfile _profile;
@@ -39,8 +42,6 @@ namespace Cubelicator
                 }
             }
         }
-        private GamecubeControllerCalibration? calibration = null;
-        private GamecubeControllerState _state = new GamecubeControllerState();
 
         public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile, ProfileManager profileManager)
         {

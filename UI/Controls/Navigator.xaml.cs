@@ -15,6 +15,12 @@ namespace Cubelicator
             this.viewsManager = viewsManager;
             this.gamecubeAdapter = gamecubeAdapter;
 
+            InitializeComponent();
+            SetupEvents();
+        }
+
+        private void SetupEvents()
+        {
             gamecubeAdapter.Event_ControllerConnectionChanged += (port, connected) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
@@ -35,7 +41,6 @@ namespace Cubelicator
                 });
             };
 
-            InitializeComponent();
             viewsManager.Event_ViewChanged += OnViewChanged;
         }
 

@@ -2,7 +2,7 @@
 
 namespace Cubelicator
 {
-    public partial class ControllerEditor : UserControl
+    public partial class View_ControllerEditor : UserControl
     {
         private readonly AdapterPort port;
         private readonly GamecubeController gamecubeController;
@@ -12,7 +12,7 @@ namespace Cubelicator
 
         private readonly List<MappedButtonRow> mappedRows = new List<MappedButtonRow>();
 
-        public ControllerEditor(AdapterPort port, GamecubeController gamecubeController, ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
+        public View_ControllerEditor(AdapterPort port, GamecubeController gamecubeController, ProfileManager profileManager, ViewsManager viewsManager, Settings settings)
         {
             this.port = port;
             this.gamecubeController = gamecubeController;
@@ -33,19 +33,8 @@ namespace Cubelicator
             Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, true));
 
             Element_Controller.Children.Clear();
-            var controllerView = new GamecubeControllerView(gamecubeController);
-            controllerView.SetControllerColor(
-                ControllerColors.Map[settings.GetControllerColor(port)]
-            );
+            var controllerView = new GamecubeControllerView(port, gamecubeController, settings);
             Element_Controller.Children.Add(controllerView);
-
-            settings.Event_ControllerColorChanged += (changedPort, color) =>
-            {
-                if (changedPort == port)
-                {
-                    controllerView.SetControllerColor(ControllerColors.Map[color]);
-                }
-            };
 
             InitializeMappedButtons(gamecubeController);
         }

@@ -3,6 +3,7 @@
     public class ViewsManager
     {
         public event Action Event_ShowDashboard = delegate { };
+        public event Action<AdapterPort, GamecubeController> Event_ShowCalibration = delegate { };
         public event Action<AdapterPort, GamecubeController> Event_ShowControllerEditor = delegate { };
         public event Action<AppView> Event_ViewChanged = delegate { };
 
@@ -10,6 +11,12 @@
         {
             Event_ShowDashboard();
             Event_ViewChanged(AppView.Dashboard);
+        }
+
+        public void ShowCalibration(AdapterPort port, GamecubeController gamecubeController)
+        {
+            Event_ShowCalibration(port, gamecubeController);
+            Event_ViewChanged(AppView.Calibration);
         }
 
         public void ShowControllerEditor(AdapterPort port, GamecubeController gamecubeController)

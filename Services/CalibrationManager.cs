@@ -44,5 +44,26 @@ namespace Cubelicator
                 return;
             }
         }
+
+        public void SaveCalibration(AdapterPort port, GamecubeControllerCalibration calibration)
+        {
+            try
+            {
+                var file = Path.Combine(directoryCalibrations, $"Port{(int)port}.json");
+
+                var json = JsonSerializer.Serialize(
+                    calibration,
+                    new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    });
+
+                File.WriteAllText(file, json);
+            }
+            catch
+            {
+                // Ignore save failures for now
+            }
+        }
     }
 }

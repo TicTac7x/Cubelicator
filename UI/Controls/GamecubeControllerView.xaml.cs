@@ -8,7 +8,9 @@ namespace Cubelicator
 {
     public partial class GamecubeControllerView : UserControl
     {
+        private readonly AdapterPort port;
         private readonly GamecubeController gamecubeController;
+        private readonly Settings settings;
         private int _leftStickX;
         private int _leftStickY;
         private int _rightStickX;
@@ -17,17 +19,21 @@ namespace Cubelicator
         private readonly float rightStickCanvasMultiplier = 0.35f;
         private readonly float triggerCanvasMultiplier = 0.15f;
 
-        public GamecubeControllerView(GamecubeController gamecubeController)
+        public GamecubeControllerView(AdapterPort port, GamecubeController gamecubeController, Settings settings)
         {
+            this.port = port;
             this.gamecubeController = gamecubeController;
+            this.settings = settings;
+
             InitializeComponent();
-            SetupEventListeners();
-            SetControllerColor(ControllerColors.Map[ControllerColor.Indigo]);
+            SetupEvents();
+
+            SetControllerColor(settings.GetControllerColor(port));
         }
 
-        public void SetControllerColor(string color)
+        public void SetControllerColor(ControllerColor color)
         {
-            var brush = App.StringToSolidColorBrush(color);
+            var brush = App.StringToSolidColorBrush(ControllerColors.Map[color]);
 
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -40,8 +46,16 @@ namespace Cubelicator
                 
         }
 
-        private void SetupEventListeners()
+        private void SetupEvents()
         {
+            settings.Event_ControllerColorChanged += (port, color) =>
+            {
+                if (port == this.port)
+                {
+                    SetControllerColor(color);
+                }
+            };
+
             gamecubeController.Event_ButtonChanged += (button, pressed) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
@@ -94,8 +108,8 @@ namespace Cubelicator
                 {
                     switch (side)
                     {
-                        case ControllerSide.Left:
-                            if (axis == ControllerStickAxis.X)
+                        case GamecubeControllerStick.LeftStick:
+                            if (axis == Axis.X)
                                 _leftStickX = value;
                             else
                                 _leftStickY = value;
@@ -104,8 +118,8 @@ namespace Cubelicator
                             Canvas.SetTop(Element_LeftStick, _leftStickY * -1 * leftStickCanvasMultiplier);
                             break;
 
-                        case ControllerSide.Right:
-                            if (axis == ControllerStickAxis.X)
+                        case GamecubeControllerStick.RightStick:
+                            if (axis == Axis.X)
                                 _rightStickX = value;
                             else
                                 _rightStickY = value;
@@ -123,10 +137,10 @@ namespace Cubelicator
                 {
                     switch (side)
                     {
-                        case ControllerSide.Left:
+                        case GamecubeControllerTrigger.LeftTrigger:
                             Canvas.SetTop(LeftTrigger, value * triggerCanvasMultiplier);
                             break;
-                        case ControllerSide.Right:
+                        case GamecubeControllerTrigger.RightTrigger:
                             Canvas.SetTop(Element_RightTrigger, value * triggerCanvasMultiplier);
                             break;
                     }

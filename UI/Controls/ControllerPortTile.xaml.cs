@@ -21,7 +21,7 @@ namespace Cubelicator
             this.settings = settings;
             this.calibrationManager = calibrationManager;
             this.profileManager = profileManager;
-            this.gamecubeControllerView = new GamecubeControllerView(gamecubeController);
+            this.gamecubeControllerView = new GamecubeControllerView(port, gamecubeController, settings);
             this.viewsManager = viewsManager;
 
             InitializeComponent();
@@ -83,8 +83,7 @@ namespace Cubelicator
 
         private void OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)
         {
-            var calibrationWindow = new CalibrationWindow(port, calibrationManager);
-            calibrationWindow.Activate();
+            viewsManager.ShowCalibration(port, gamecubeController);
         }
 
         private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)

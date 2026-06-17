@@ -17,74 +17,100 @@
     <StackPanel Orientation="Horizontal"
                 Background="{x:Bind Cubelicator:Colors.DeviceBackground}">
 
-        <Border x:Name="Element_Dashboard"
-                Style="{StaticResource NavItemStyle}"
-                Tag="{x:Bind Cubelicator:AppView.Dashboard}"
-                PointerEntered="OnPointerEntered"
-                PointerExited="OnPointerExited"
-                PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick"
-                Background="{x:Bind Cubelicator:Colors.AppBackground}">
+        <Border
+            x:Name="Element_Dashboard"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Dashboard}"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem"
+            Background="{x:Bind Cubelicator:Colors.AppBackground}">
 
-            <TextBlock Text="DASHBOARD"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+            <TextBlock 
+                Text="{x:Bind Cubelicator:Strings.Navigator_Dashboard}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Element_Controller1"
-                Style="{StaticResource NavItemStyle}"
-                Tag="{x:Bind Cubelicator:AppView.Controller1}"
-                Visibility="Collapsed"
-                PointerEntered="OnPointerEntered"
-                PointerExited="OnPointerExited"
-                PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick">
+        <Border
+            x:Name="Element_Controller1"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Controller1}"
+            Visibility="Collapsed"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem">
 
-            <TextBlock Text="CONTROLLER 1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+            <TextBlock
+                Text="{x:Bind Cubelicator:Strings.Navigator_Controller1}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Element_Controller2"
-                Style="{StaticResource NavItemStyle}"
-                Tag="{x:Bind Cubelicator:AppView.Controller2}"
-                Visibility="Collapsed"
-                PointerEntered="OnPointerEntered"
-                PointerExited="OnPointerExited"
-                PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick">
+        <Border
+            x:Name="Element_Controller2"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Controller2}"
+            Visibility="Collapsed"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem">
 
-            <TextBlock Text="CONTROLLER 2"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+            <TextBlock
+                Text="{x:Bind Cubelicator:Strings.Navigator_Controller2}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Element_Controller3"
-                Style="{StaticResource NavItemStyle}"
-                Tag="{x:Bind Cubelicator:AppView.Controller3}"
-                Visibility="Collapsed"
-                PointerEntered="OnPointerEntered"
-                PointerExited="OnPointerExited"
-                PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick">
+        <Border
+            x:Name="Element_Controller3"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Controller3}"
+            Visibility="Collapsed"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem">
 
-            <TextBlock Text="CONTROLLER 3"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+            <TextBlock
+                Text="{x:Bind Cubelicator:Strings.Navigator_Controller3}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Element_Controller4"
-                Style="{StaticResource NavItemStyle}"
-                Tag="{x:Bind Cubelicator:AppView.Controller4}"
-                Visibility="Collapsed"
-                PointerEntered="OnPointerEntered"
-                PointerExited="OnPointerExited"
-                PointerPressed="OnPointerPressed"
-                PointerReleased="OnNavClick">
+        <Border
+            x:Name="Element_Controller4"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Controller4}"
+            Visibility="Collapsed"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem">
 
-            <TextBlock Text="CONTROLLER 4"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"/>
+            <TextBlock
+                Text="{x:Bind Cubelicator:Strings.Navigator_Controller4}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
+        </Border>
+
+        <Border
+            x:Name="Element_Calibration"
+            Style="{StaticResource NavItemStyle}"
+            Tag="{x:Bind Cubelicator:AppView.Calibration}"
+            Visibility="Collapsed"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited"
+            PointerPressed="OnPointerPressed"
+            PointerReleased="Click_NavigationItem">
+
+            <TextBlock
+                Text="{x:Bind Cubelicator:Strings.Navigator_Calibration}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Border>
 
     </StackPanel>

@@ -51,6 +51,9 @@ namespace Cubelicator
             Element_Controller2.Background = IsViewVisible(AppView.Controller2, view);
             Element_Controller3.Background = IsViewVisible(AppView.Controller3, view);
             Element_Controller4.Background = IsViewVisible(AppView.Controller4, view);
+            Element_Calibration.Background = IsViewVisible(AppView.Calibration, view);
+
+            Element_Calibration.Visibility = view == AppView.Calibration ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private Brush IsViewVisible(AppView neededView, AppView currentView)
@@ -64,7 +67,7 @@ namespace Cubelicator
             }
         }
 
-        private void OnNavClick(object sender, RoutedEventArgs args)
+        private void Click_NavigationItem(object sender, RoutedEventArgs args)
         {
             if (sender is not Border border)
                 return;

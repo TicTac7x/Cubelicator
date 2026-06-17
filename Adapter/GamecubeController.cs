@@ -11,8 +11,8 @@ namespace Cubelicator
         public event Action<bool> Event_RumbleChanged = delegate { };
         public event Action<GamecubeControllerCalibration> Event_CalibrationChanged = delegate { };
         public event Action<GamecubeControllerButton, bool> Event_ButtonChanged = delegate { };
-        public event Action<ControllerSide, ControllerStickAxis, int> Event_StickChanged = delegate { };
-        public event Action<ControllerSide, int> Event_TriggerChanged = delegate { };
+        public event Action<GamecubeControllerStick, Axis, int> Event_StickChanged = delegate { };
+        public event Action<GamecubeControllerTrigger, int> Event_TriggerChanged = delegate { };
 
         private GamecubeControllerCalibration? calibration = null;
         public GamecubeControllerCalibration? Calibration => calibration;
@@ -49,6 +49,31 @@ namespace Cubelicator
             _profile = profile;
             controller = CreateController(vigem);
             controller.AutoSubmitReport = false;
+        }
+
+        public int GetStickValue(GamecubeControllerStick stick, Axis axis)
+        {
+            return (stick, axis) switch
+            {
+                (GamecubeControllerStick.LeftStick, Axis.X) => _state.StickLeftX,
+                (GamecubeControllerStick.LeftStick, Axis.Y) => _state.StickLeftY,
+
+                (GamecubeControllerStick.RightStick, Axis.X) => _state.StickRightX,
+                (GamecubeControllerStick.RightStick, Axis.Y) => _state.StickRightY,
+
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        public int GetTriggerValue(GamecubeControllerTrigger trigger)
+        {
+            return trigger switch
+            {
+                GamecubeControllerTrigger.LeftTrigger => _state.TriggerLeft,
+                GamecubeControllerTrigger.RightTrigger => _state.TriggerRight,
+
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private IXbox360Controller CreateController(ViGEmClient vigem)
@@ -118,8 +143,8 @@ namespace Cubelicator
             // Sticks
             // Left Stick X
             HandleStick(
-                ControllerSide.Left, 
-                ControllerStickAxis.X, 
+                GamecubeControllerStick.LeftStick,
+                Axis.X, 
                 _state.StickLeftX, 
                 state.StickLeftX, 
                 calibration?.LeftStickXMin, 
@@ -132,8 +157,8 @@ namespace Cubelicator
 
             // Left Stick Y
             HandleStick(
-                ControllerSide.Left,
-                ControllerStickAxis.Y,
+                GamecubeControllerStick.LeftStick,
+                Axis.Y,
                 _state.StickLeftY,
                 state.StickLeftY,
                 calibration?.LeftStickYMin,
@@ -146,8 +171,8 @@ namespace Cubelicator
 
             // Right Stick X
             HandleStick(
-                ControllerSide.Right,
-                ControllerStickAxis.X,
+                GamecubeControllerStick.RightStick,
+                Axis.X,
                 _state.StickRightX,
                 state.StickRightX,
                 calibration?.RightStickXMin,
@@ -160,8 +185,8 @@ namespace Cubelicator
 
             // Right Stick Y
             HandleStick(
-                ControllerSide.Right,
-                ControllerStickAxis.Y,
+                GamecubeControllerStick.RightStick,
+                Axis.Y,
                 _state.StickRightY,
                 state.StickRightY,
                 calibration?.RightStickYMin,
@@ -174,7 +199,7 @@ namespace Cubelicator
 
             // Left Trigger
             HandleTrigger(
-                ControllerSide.Left,
+                GamecubeControllerTrigger.LeftTrigger,
                 _state.TriggerLeft,
                 state.TriggerLeft,
                 calibration?.LeftTriggerMin,
@@ -185,7 +210,7 @@ namespace Cubelicator
 
             // Right Trigger
             HandleTrigger(
-                ControllerSide.Right,
+                GamecubeControllerTrigger.RightTrigger,
                 _state.TriggerRight,
                 state.TriggerRight,
                 calibration?.RightTriggerMin,
@@ -220,40 +245,52 @@ namespace Cubelicator
 
         private int CalibrateStick(int value, int? resting, int? min, int? max, int targetRange)
         {
-            if (resting is not int restVal ||
+            try
+            {
+                if (resting is not int restVal ||
                 min is not int minVal ||
                 max is not int maxVal)
+                {
+                    return value;
+                }
+
+                value = Math.Clamp(value, minVal, maxVal);
+
+                int centered = value - restVal;
+
+                if (centered >= 0)
+                {
+                    int range = maxVal - restVal;
+                    return range == 0 ? value : (int)(centered / (float)range * targetRange);
+                }
+
+                int negativeRange = restVal - minVal;
+                return negativeRange == 0 ? value : (int)(centered / (float)negativeRange * targetRange);
+            } catch
             {
                 return value;
             }
-
-            value = Math.Clamp(value, minVal, maxVal);
-
-            int centered = value - restVal;
-
-            if (centered >= 0)
-            {
-                int range = maxVal - restVal;
-                return range == 0 ? value : (int)(centered / (float)range * targetRange);
-            }
-
-            int negativeRange = restVal - minVal;
-            return negativeRange == 0 ? value : (int)(centered / (float)negativeRange * targetRange);
         }
 
         private int CalibrateTrigger(int value, int? min, int? max, int? range)
         {
-            if (min is not int minVal ||
+            try
+            {
+                if (min is not int minVal ||
                 max is not int maxVal ||
                 range is not int rangeVal ||
                 maxVal == minVal)
+                {
+                    return value;
+                }
+
+                value = Math.Clamp(value, minVal, maxVal);
+
+                return (int)((value - minVal) / (float)(maxVal - minVal) * rangeVal);
+            } catch
             {
                 return value;
             }
-
-            value = Math.Clamp(value, minVal, maxVal);
-
-            return (int) ((value - minVal) / (float)(maxVal - minVal) * rangeVal);
         }
 
         private void HandleButton(
@@ -271,8 +308,8 @@ namespace Cubelicator
         }
 
         private void HandleStick(
-            ControllerSide side, 
-            ControllerStickAxis axis, 
+            GamecubeControllerStick stick,
+            Axis axis,
             int oldValue, 
             int newValue, 
             int? calibrationMin,
@@ -290,12 +327,12 @@ namespace Cubelicator
                 float stickSensitivity = stickCalibrate * sensitivity;
                 short stickFinal = (short) Math.Clamp(stickSensitivity * Constants.XboxControllerAxisMultiplier, -Constants.XboxControllerAxisRange, Constants.XboxControllerAxisRange);
                 controller.SetAxisValue(ToAxis(mappedButton, axis), stickFinal);
-                Event_StickChanged(side, axis, newValue);
+                Event_StickChanged(stick, axis, newValue);
             }
         }
 
         private void HandleTrigger(
-            ControllerSide side,
+            GamecubeControllerTrigger trigger,
             int oldValue,
             int newValue,
             int? calibrationMin,
@@ -326,7 +363,7 @@ namespace Cubelicator
                     Constants.GamecubeControllerTriggerRange);
 
                 controller.SetSliderValue(ToSlider(mappedTrigger), triggerFinal);
-                Event_TriggerChanged(side, newValue);
+                Event_TriggerChanged(trigger, newValue);
             }
         }
 
@@ -365,12 +402,12 @@ namespace Cubelicator
             };
         }
 
-        private Xbox360Axis ToAxis(XboxControllerStick input, ControllerStickAxis axis)
+        private Xbox360Axis ToAxis(XboxControllerStick input, Axis axis)
         {
             return input switch
             {
-                XboxControllerStick.LeftStick => axis == ControllerStickAxis.X ? Xbox360Axis.LeftThumbX : Xbox360Axis.LeftThumbY,
-                XboxControllerStick.RightStick => axis == ControllerStickAxis.X ? Xbox360Axis.RightThumbX : Xbox360Axis.RightThumbY,
+                XboxControllerStick.LeftStick => axis == Axis.X ? Xbox360Axis.LeftThumbX : Xbox360Axis.LeftThumbY,
+                XboxControllerStick.RightStick => axis == Axis.X ? Xbox360Axis.RightThumbX : Xbox360Axis.RightThumbY,
             };
         }
     }

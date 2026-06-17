@@ -6,7 +6,8 @@
         Controller1,
         Controller2,
         Controller3,
-        Controller4
+        Controller4,
+        Calibration
     }
 
     public enum AdapterPort
@@ -15,18 +16,6 @@
         Two = 2,
         Three = 3,
         Four = 4
-    }
-
-    public enum ControllerSide
-    {
-        Left,
-        Right
-    }
-
-    public enum ControllerStickAxis
-    {
-        X,
-        Y
     }
 
     public abstract record GamecubeControllerInput;
@@ -62,6 +51,12 @@
     {
         LeftStick,
         RightStick,
+    }
+
+    public enum Axis
+    {
+        X,
+        Y
     }
 
     public abstract record XboxControllerInput;

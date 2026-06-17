@@ -2,7 +2,7 @@
 
 namespace Cubelicator
 {
-    public partial class Dashboard : UserControl
+    public partial class View_Dashboard : UserControl
     {
         private readonly ViewsManager viewsManager;
         private readonly ProfileManager profileManager;
@@ -11,7 +11,7 @@ namespace Cubelicator
         private readonly Settings settings;
 
         private readonly ControllerPortTile[] controllerPortTiles = new ControllerPortTile[4];
-        public Dashboard(ProfileManager profileManager, CalibrationManager calibrationManager, GamecubeAdapter gamecubeAdapter, Settings settings, ViewsManager viewsManager)
+        public View_Dashboard(ProfileManager profileManager, CalibrationManager calibrationManager, GamecubeAdapter gamecubeAdapter, Settings settings, ViewsManager viewsManager)
         {
             this.viewsManager = viewsManager;
             this.profileManager = profileManager;

@@ -16,7 +16,7 @@ namespace Cubelicator
 
             notifyIcon = new NotifyIcon
             {
-                Icon = SystemIcons.Application,
+                Icon = new Icon("Cubelicator.ico"),
                 Text = Strings.AppName,
                 Visible = true,
                 ContextMenuStrip = menu

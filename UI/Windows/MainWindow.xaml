@@ -17,7 +17,8 @@
             Background="{x:Bind Cubelicator:Colors.DeviceBackground}"
             Padding="0">
             <TitleBar.IconSource>
-                <BitmapIconSource UriSource="ms-appx:///Cubelicator.ico" />
+                <ImageIconSource x:Name="AppIcon"
+                    ImageSource="ms-appx:///Cubelicator.ico" />
             </TitleBar.IconSource>
 
             <Grid HorizontalAlignment="Stretch">

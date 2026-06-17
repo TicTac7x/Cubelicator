@@ -50,6 +50,11 @@
                         x:Name="Element_DeleteProfile"
 						Text="{x:Bind Cubelicator:Strings.ProfileSelector_Delete}"
 						Click="OnDeleteProfile"/>
+
+                    <MenuFlyoutItem
+						x:Name="Element_ToggleRumble"
+						Text="{x:Bind Cubelicator:Strings.ProfileSelector_DisableRumble}"
+						Click="OnToggleRumble"/>
                 </MenuFlyout>
 			</Button.Flyout>
 

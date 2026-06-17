@@ -55,7 +55,10 @@ namespace Cubelicator
             var controller = vigem.CreateXbox360Controller();
             controller.FeedbackReceived += (_, args) =>
             {
-                Event_RumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
+                if (Profile.Rumble)
+                {
+                    Event_RumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
+                }
             };
 
             return controller;

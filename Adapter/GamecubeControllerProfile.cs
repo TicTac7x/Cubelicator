@@ -61,6 +61,15 @@ namespace Cubelicator
         public float LeftTriggerSensitivity { get; private set; } = 1f;
         public float RightTriggerSensitivity { get; private set; } = 1f;
 
+        // Rumble
+        public bool Rumble { get; private set; } = true;
+
+        public void SetRumble(bool rumble)
+        {
+            Rumble = rumble;
+            Event_Changed();
+        }
+
         public void SetButton(GamecubeControllerButton button, XboxControllerButton xboxControllerButton)
         {
             switch (button)

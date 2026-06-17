@@ -29,6 +29,7 @@ namespace Cubelicator
             Element_SelectedProfileText.Text = gamecubeController.Profile.Name;
             Element_SelectedProfile.IsEnabled = profileManager.Profiles.Count > 1;
             Element_DeleteProfile.IsEnabled = profileManager.Profiles.Count > 1;
+            Element_ToggleRumble.Text = gamecubeController.Profile.Rumble ? Strings.ProfileSelector_DisableRumble : Strings.ProfileSelector_EnableRumble;
             GenerateProfiles();
 
             if (advanced)
@@ -41,6 +42,11 @@ namespace Cubelicator
         private void SetupEvents()
         {
             gamecubeController.Event_ProfileChanged += (_) =>
+            {
+                InitializeUI();
+            };
+
+            gamecubeController.Profile.Event_Changed += () =>
             {
                 InitializeUI();
             };
@@ -80,6 +86,12 @@ namespace Cubelicator
         private void OnDeleteProfile(object sender, RoutedEventArgs args)
         {
             gamecubeController.Profile.Delete();
+        }
+
+        private void OnToggleRumble(object sender, RoutedEventArgs args)
+        {
+            App.DebugOutput(gamecubeController.Profile.Rumble);
+            gamecubeController.Profile.SetRumble(!gamecubeController.Profile.Rumble);
         }
 
         private void OnRenameProfile(object sender, RoutedEventArgs e)

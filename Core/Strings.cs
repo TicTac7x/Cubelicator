@@ -22,5 +22,7 @@
         public const string ProfileSelector_New = "New";
         public const string ProfileSelector_Rename = "Rename";
         public const string ProfileSelector_Delete = "Delete";
+        public const string ProfileSelector_EnableRumble = "Enable rumble";
+        public const string ProfileSelector_DisableRumble = "Disable rumble";
     }
 }

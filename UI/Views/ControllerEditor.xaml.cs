@@ -26,22 +26,22 @@ namespace Cubelicator
 
         private void InitializeUI(AdapterPort port, GamecubeController gamecubeController)
         {
-            RootProfileSelector.Children.Clear();
-            RootProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, true));
+            Element_ProfileSelector.Children.Clear();
+            Element_ProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, true));
 
-            ControllerRoot.Children.Clear();
+            Element_Controller.Children.Clear();
             var controllerView = new GamecubeControllerView(gamecubeController);
             controllerView.SetControllerColor(
                 ControllerColors.Map[settings.GetControllerColor(port)]
             );
-            ControllerRoot.Children.Add(controllerView);
+            Element_Controller.Children.Add(controllerView);
 
             InitializeMappedButtons(gamecubeController);
         }
 
         private void InitializeEvents()
         {
-            viewsManager.OnShowControllerEditor += (port, gamecubeController) =>
+            viewsManager.Event_ShowControllerEditor += (port, gamecubeController) =>
             {
                 InitializeUI(port, gamecubeController);
             };
@@ -49,14 +49,14 @@ namespace Cubelicator
 
         private void InitializeMappedButtons(GamecubeController gamecubeController)
         {
-            RootMappedButtons.Children.Clear();
+            Element_MappedButtons.Children.Clear();
             mappedRows.Clear();
 
             void AddRow(MappedButtonRow row)
             {
                 mappedRows.Add(row);
 
-                row.OnExpandedChanged += isExpanded =>
+                row.Event_ExpandedChanged += isExpanded =>
                 {
                     if (!isExpanded) return;
 
@@ -69,101 +69,101 @@ namespace Cubelicator
                     }
                 };
 
-                RootMappedButtons.Children.Add(row);
+                Element_MappedButtons.Children.Add(row);
             }
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.A),
                 new XboxControllerButtonInput(gamecubeController.Profile.A)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.B),
                 new XboxControllerButtonInput(gamecubeController.Profile.B)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.X),
                 new XboxControllerButtonInput(gamecubeController.Profile.X)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.Y),
                 new XboxControllerButtonInput(gamecubeController.Profile.Y)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.Z),
                 new XboxControllerButtonInput(gamecubeController.Profile.Z)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.Start),
                 new XboxControllerButtonInput(gamecubeController.Profile.Start)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.DPadUp),
                 new XboxControllerButtonInput(gamecubeController.Profile.DPadUp)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.DPadDown),
                 new XboxControllerButtonInput(gamecubeController.Profile.DPadDown)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.DPadLeft),
                 new XboxControllerButtonInput(gamecubeController.Profile.DPadLeft)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.DPadRight),
                 new XboxControllerButtonInput(gamecubeController.Profile.DPadRight)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerStickInput(GamecubeControllerStick.LeftStick),
                 new XboxControllerStickInput(gamecubeController.Profile.LeftStick)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerStickInput(GamecubeControllerStick.RightStick),
                 new XboxControllerStickInput(gamecubeController.Profile.RightStick)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerTriggerInput(GamecubeControllerTrigger.LeftTrigger),
                 new XboxControllerTriggerInput(gamecubeController.Profile.LeftTrigger)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerTriggerInput(GamecubeControllerTrigger.RightTrigger),
                 new XboxControllerTriggerInput(gamecubeController.Profile.RightTrigger)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.LeftBumper),
                 new XboxControllerButtonInput(gamecubeController.Profile.LeftBumper)
             ));
 
             AddRow(new MappedButtonRow(
-                gamecubeController.Profile,
+                gamecubeController,
                 new GamecubeControllerButtonInput(GamecubeControllerButton.RightBumper),
                 new XboxControllerButtonInput(gamecubeController.Profile.RightBumper)
             ));

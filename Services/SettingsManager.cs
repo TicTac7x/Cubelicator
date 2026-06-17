@@ -23,7 +23,7 @@ namespace Cubelicator
         public void Start()
         {
             LoadSettings();
-            settings.OnSettingsChanged += () =>
+            settings.Event_SettingsChanged += () =>
             {
                 Save();
             };

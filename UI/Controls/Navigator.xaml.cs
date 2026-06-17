@@ -15,16 +15,16 @@ namespace Cubelicator
             this.viewsManager = viewsManager;
             this.gamecubeAdapter = gamecubeAdapter;
 
-            gamecubeAdapter.OnControllerConnectionChanged += (port, connected) =>
+            gamecubeAdapter.Event_ControllerConnectionChanged += (port, connected) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     var button = port switch
                     {
-                        AdapterPort.One => Controller1,
-                        AdapterPort.Two => Controller2,
-                        AdapterPort.Three => Controller3,
-                        AdapterPort.Four => Controller4,
+                        AdapterPort.One => Element_Controller1,
+                        AdapterPort.Two => Element_Controller2,
+                        AdapterPort.Three => Element_Controller3,
+                        AdapterPort.Four => Element_Controller4,
                         _ => null
                     };
 
@@ -36,16 +36,16 @@ namespace Cubelicator
             };
 
             InitializeComponent();
-            viewsManager.OnViewChanged += OnViewChanged;
+            viewsManager.Event_ViewChanged += OnViewChanged;
         }
 
         private void OnViewChanged(AppView view)
         {
-            Dashboard.Background = IsViewVisible(AppView.Dashboard, view);
-            Controller1.Background = IsViewVisible(AppView.Controller1, view);
-            Controller2.Background = IsViewVisible(AppView.Controller2, view);
-            Controller3.Background = IsViewVisible(AppView.Controller3, view);
-            Controller4.Background = IsViewVisible(AppView.Controller4, view);
+            Element_Dashboard.Background = IsViewVisible(AppView.Dashboard, view);
+            Element_Controller1.Background = IsViewVisible(AppView.Controller1, view);
+            Element_Controller2.Background = IsViewVisible(AppView.Controller2, view);
+            Element_Controller3.Background = IsViewVisible(AppView.Controller3, view);
+            Element_Controller4.Background = IsViewVisible(AppView.Controller4, view);
         }
 
         private Brush IsViewVisible(AppView neededView, AppView currentView)

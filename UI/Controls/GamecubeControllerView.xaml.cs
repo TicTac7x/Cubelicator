@@ -31,64 +31,64 @@ namespace Cubelicator
 
             DispatcherQueue.TryEnqueue(() =>
             {
-                BaseCenter.Fill = brush;
-                BaseLeftPalm.Fill = brush;
-                BaseLeftPlate.Fill = brush;
-                BaseRightPalm.Fill = brush;
-                BaseRightPlate.Fill = brush;
+                Element_BaseCenter.Fill = brush;
+                Element_BaseLeftPalm.Fill = brush;
+                Element_BaseLeftPlate.Fill = brush;
+                Element_BaseRightPalm.Fill = brush;
+                Element_BaseRightPlate.Fill = brush;
             });
                 
         }
 
         private void SetupEventListeners()
         {
-            gamecubeController.OnButtonChanged += (button, pressed) =>
+            gamecubeController.Event_ButtonChanged += (button, pressed) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     switch (button)
                     {
                         case GamecubeControllerButton.A:
-                            ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonA);
+                            Element_ButtonA.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonA);
                             break;
                         case GamecubeControllerButton.B:
-                            ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonB);
+                            Element_ButtonB.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonB);
                             break;
                         case GamecubeControllerButton.X:
-                            ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonX);
+                            Element_ButtonX.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonX);
                             break;
                         case GamecubeControllerButton.Y:
-                            ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonY);
+                            Element_ButtonY.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonY);
                             break;
                         case GamecubeControllerButton.Z:
-                            ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonZ);
+                            Element_ButtonZ.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonZ);
                             break;
                         case GamecubeControllerButton.Start:
-                            ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonStart);
+                            Element_ButtonStart.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonStart);
                             break;
                         case GamecubeControllerButton.DPadUp:
-                            DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
+                            Element_DPadUp.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadDown:
-                            DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
+                            Element_DPadDown.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadLeft:
-                            DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
+                            Element_DPadLeft.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.DPadRight:
-                            DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
+                            Element_DPadRight.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.ButtonDPad);
                             break;
                         case GamecubeControllerButton.LeftBumper:
-                            LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
+                            Element_LeftTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
                             break;
                         case GamecubeControllerButton.RightBumper:
-                            RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
+                            Element_RightTriggerBase.Fill = App.StringToSolidColorBrush(pressed ? Colors.ControllerButtonPressed : ControllerInputColors.Trigger);
                             break;
                     }
                 });
             };
 
-            gamecubeController.OnStickChanged += (side, axis, value) =>
+            gamecubeController.Event_StickChanged += (side, axis, value) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -100,8 +100,8 @@ namespace Cubelicator
                             else
                                 _leftStickY = value;
 
-                            Canvas.SetLeft(LeftStick, _leftStickX * leftStickCanvasMultiplier);
-                            Canvas.SetTop(LeftStick, _leftStickY * -1 * leftStickCanvasMultiplier);
+                            Canvas.SetLeft(Element_LeftStick, _leftStickX * leftStickCanvasMultiplier);
+                            Canvas.SetTop(Element_LeftStick, _leftStickY * -1 * leftStickCanvasMultiplier);
                             break;
 
                         case ControllerSide.Right:
@@ -110,14 +110,14 @@ namespace Cubelicator
                             else
                                 _rightStickY = value;
 
-                            Canvas.SetLeft(RightStick, _rightStickX * rightStickCanvasMultiplier);
-                            Canvas.SetTop(RightStick, _rightStickY * rightStickCanvasMultiplier * -1);
+                            Canvas.SetLeft(Element_RightStick, _rightStickX * rightStickCanvasMultiplier);
+                            Canvas.SetTop(Element_RightStick, _rightStickY * rightStickCanvasMultiplier * -1);
                             break;
                     }
                 });
             };
 
-            gamecubeController.OnTriggerChanged += (side, value) =>
+            gamecubeController.Event_TriggerChanged += (side, value) =>
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -127,53 +127,12 @@ namespace Cubelicator
                             Canvas.SetTop(LeftTrigger, value * triggerCanvasMultiplier);
                             break;
                         case ControllerSide.Right:
-                            Canvas.SetTop(RightTrigger, value * triggerCanvasMultiplier);
+                            Canvas.SetTop(Element_RightTrigger, value * triggerCanvasMultiplier);
                             break;
                     }
                 });
                     
             };
-        }
-
-        private void OnClickButton(object sender, TappedRoutedEventArgs e)
-        {
-            if (sender is FrameworkElement element &&
-                element.Tag is GamecubeControllerButton gamecubeControllerButton)
-            {
-                var flyout = new MenuFlyout();
-
-                foreach (XboxControllerButton xboxControllerbutton in Enum.GetValues<XboxControllerButton>())
-                {
-                    var item = new MenuFlyoutItem
-                    {
-                        Text = xboxControllerbutton.ToString()
-                    };
-
-                    item.Click += (_, _) =>
-                    {
-                        gamecubeController.Profile.SetButton(gamecubeControllerButton, xboxControllerbutton);
-                    };
-
-                    flyout.Items.Add(item);
-                }
-
-                var centerBottomLocal = new Point(
-                    element.ActualWidth / 2,
-                    element.ActualHeight
-                );
-
-                var screenPoint = element
-                    .TransformToVisual(null)
-                    .TransformPoint(centerBottomLocal);
-
-                flyout.ShowAt(
-                    element,
-                    new FlyoutShowOptions
-                    {
-                        Placement = FlyoutPlacementMode.Bottom,
-                        Position = screenPoint
-                    });
-            }
         }
     }
 }

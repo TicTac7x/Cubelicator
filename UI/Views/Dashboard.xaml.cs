@@ -37,7 +37,7 @@ namespace Cubelicator
                     viewsManager);
 
                 controllerPortTiles[index] = controllerPortTile;
-                ControllerPortTiles.Children.Add(controllerPortTile);
+                Element_ControllerPortTiles.Children.Add(controllerPortTile);
             }
         }
     }

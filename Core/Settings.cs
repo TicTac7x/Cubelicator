@@ -2,19 +2,19 @@
 {
     public class Settings
     {
-        public event Action<ControllerColor> OnController1ColorChanged = delegate { };
-        public event Action<ControllerColor> OnController2ColorChanged = delegate { };
-        public event Action<ControllerColor> OnController3ColorChanged = delegate { };
-        public event Action<ControllerColor> OnController4ColorChanged = delegate { };
-        public event Action<AdapterPort, ControllerColor> OnControllerColorChanged = delegate { };
+        public event Action<ControllerColor> Event_Controller1ColorChanged = delegate { };
+        public event Action<ControllerColor> Event_Controller2ColorChanged = delegate { };
+        public event Action<ControllerColor> Event_Controller3ColorChanged = delegate { };
+        public event Action<ControllerColor> Event_Controller4ColorChanged = delegate { };
+        public event Action<AdapterPort, ControllerColor> Event_ControllerColorChanged = delegate { };
 
-        public event Action<GamecubeControllerProfile> OnController1ProfileChanged = delegate { };
-        public event Action<GamecubeControllerProfile> OnController2ProfileChanged = delegate { };
-        public event Action<GamecubeControllerProfile> OnController3ProfileChanged = delegate { };
-        public event Action<GamecubeControllerProfile> OnController4ProfileChanged = delegate { };
-        public event Action<AdapterPort, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> Event_Controller1ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> Event_Controller2ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> Event_Controller3ProfileChanged = delegate { };
+        public event Action<GamecubeControllerProfile> Event_Controller4ProfileChanged = delegate { };
+        public event Action<AdapterPort, GamecubeControllerProfile> Event_ControllerProfileChanged = delegate { };
 
-        public event Action OnSettingsChanged = delegate { };
+        public event Action Event_SettingsChanged = delegate { };
 
         private ControllerColor controller1Color = ControllerColor.Indigo;
         private ControllerColor controller2Color = ControllerColor.Indigo;
@@ -81,9 +81,9 @@
             set
             {
                 controller1Color = value;
-                OnController1ColorChanged(value);
-                OnControllerColorChanged(AdapterPort.One, value);
-                OnSettingsChanged();
+                Event_Controller1ColorChanged(value);
+                Event_ControllerColorChanged(AdapterPort.One, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -93,9 +93,9 @@
             set
             {
                 controller2Color = value;
-                OnController2ColorChanged(value);
-                OnControllerColorChanged(AdapterPort.Two, value);
-                OnSettingsChanged();
+                Event_Controller2ColorChanged(value);
+                Event_ControllerColorChanged(AdapterPort.Two, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -105,9 +105,9 @@
             set
             {
                 controller3Color = value;
-                OnController3ColorChanged(value);
-                OnControllerColorChanged(AdapterPort.Three, value);
-                OnSettingsChanged();
+                Event_Controller3ColorChanged(value);
+                Event_ControllerColorChanged(AdapterPort.Three, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -117,9 +117,9 @@
             set
             {
                 controller4Color = value;
-                OnController4ColorChanged(value);
-                OnControllerColorChanged(AdapterPort.Four, value);
-                OnSettingsChanged();
+                Event_Controller4ColorChanged(value);
+                Event_ControllerColorChanged(AdapterPort.Four, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -129,9 +129,9 @@
             set
             {
                 controller1Profile = value;
-                OnController1ProfileChanged(value);
-                OnControllerProfileChanged(AdapterPort.One, value);
-                OnSettingsChanged();
+                Event_Controller1ProfileChanged(value);
+                Event_ControllerProfileChanged(AdapterPort.One, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -141,9 +141,9 @@
             set
             {
                 controller2Profile = value;
-                OnController2ProfileChanged(value);
-                OnControllerProfileChanged(AdapterPort.Two, value);
-                OnSettingsChanged();
+                Event_Controller2ProfileChanged(value);
+                Event_ControllerProfileChanged(AdapterPort.Two, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -153,9 +153,9 @@
             set
             {
                 controller3Profile = value;
-                OnController3ProfileChanged(value);
-                OnControllerProfileChanged(AdapterPort.Three, value);
-                OnSettingsChanged();
+                Event_Controller3ProfileChanged(value);
+                Event_ControllerProfileChanged(AdapterPort.Three, value);
+                Event_SettingsChanged();
             }
         }
 
@@ -165,9 +165,9 @@
             set
             {
                 controller4Profile = value;
-                OnController4ProfileChanged(value);
-                OnControllerProfileChanged(AdapterPort.Four, value);
-                OnSettingsChanged();
+                Event_Controller4ProfileChanged(value);
+                Event_ControllerProfileChanged(AdapterPort.Four, value);
+                Event_SettingsChanged();
             }
         }
     }

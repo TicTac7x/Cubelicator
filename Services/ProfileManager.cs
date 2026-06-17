@@ -5,7 +5,7 @@ namespace Cubelicator
 {
     public class ProfileManager
     {
-        public event Action<List<GamecubeControllerProfile>> OnProfilesChanged = delegate { };
+        public event Action<List<GamecubeControllerProfile>> Event_ProfilesChanged = delegate { };
 
         private readonly string directoryProfiles = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -67,7 +67,7 @@ namespace Cubelicator
                 }
             }
 
-            OnProfilesChanged(profiles);
+            Event_ProfilesChanged(profiles);
         }
 
         public GamecubeControllerProfile? GetProfile(string profileName)
@@ -104,19 +104,19 @@ namespace Cubelicator
             profiles.Add(profile);
 
             SaveProfile(profile);
-            OnProfilesChanged(profiles);
+            Event_ProfilesChanged(profiles);
 
             return profile;
         }
 
         private void SetupProfileEvents(GamecubeControllerProfile profile)
         {
-            profile.OnChanged += () =>
+            profile.Event_Changed += () =>
             {
                 SaveProfile(profile);
             };
 
-            profile.OnNameChanged += (oldName, newName) =>
+            profile.Event_NameChanged += (oldName, newName) =>
             {
                 string oldPath = Path.Combine(directoryProfiles, oldName + ".json");
 
@@ -126,7 +126,7 @@ namespace Cubelicator
                 }
             };
 
-            profile.OnDelete += () =>
+            profile.Event_Deleted += () =>
             {
                 if (profiles.Count <= 1) return;
                 DeleteProfile(profile);
@@ -147,7 +147,7 @@ namespace Cubelicator
                 File.Delete(path);
             }
 
-            OnProfilesChanged(profiles);
+            Event_ProfilesChanged(profiles);
         }
     }
 }

@@ -35,7 +35,7 @@ public partial class App : Application
 
     private void SetupEvents()
     {
-        gamecubeAdapter.OnControllerProfileChanged += (port, profile) =>
+        gamecubeAdapter.Event_ControllerProfileChanged += (port, profile) =>
         {
             settingsManager.Settings.SetControllerProfile(port, profile);
         };

@@ -20,20 +20,20 @@ public partial class MainWindow : Window
 
         InitializeComponent();
         InitializeWindow();
-        NavigatorRoot.Children.Add(navigator);
-        DashboardRoot.Children.Add(dashboard);
-        ControllerEditorRoot.Children.Add(controllerEditor);
+        Element_Navigator.Children.Add(navigator);
+        Element_Dashboard.Children.Add(dashboard);
+        Element_ControllerEditor.Children.Add(controllerEditor);
 
-        viewsManager.OnShowDashboard += () =>
+        viewsManager.Event_ShowDashboard += () =>
         {
-            DashboardRoot.Visibility = Visibility.Visible;
-            ControllerEditorRoot.Visibility = Visibility.Collapsed;
+            Element_Dashboard.Visibility = Visibility.Visible;
+            Element_ControllerEditor.Visibility = Visibility.Collapsed;
         };
 
-        viewsManager.OnShowControllerEditor += (_, _) =>
+        viewsManager.Event_ShowControllerEditor += (_, _) =>
         {
-            DashboardRoot.Visibility = Visibility.Collapsed;
-            ControllerEditorRoot.Visibility = Visibility.Visible;
+            Element_Dashboard.Visibility = Visibility.Collapsed;
+            Element_ControllerEditor.Visibility = Visibility.Visible;
         };
     }
 
@@ -42,7 +42,7 @@ public partial class MainWindow : Window
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(TitleBar);
         TitleBar.Title = Strings.AppName;
-        Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
+        Element_Root.ActualThemeChanged += (_, _) => UpdateTitleBarTheme();
         this.Closed += OnClose;
     }
 
@@ -51,7 +51,7 @@ public partial class MainWindow : Window
         var titleBar = AppWindow.TitleBar;
 
         bool isDark =
-            Root.ActualTheme == ElementTheme.Dark;
+            Element_Root.ActualTheme == ElementTheme.Dark;
 
         titleBar.ButtonForegroundColor = isDark
             ? Microsoft.UI.Colors.White

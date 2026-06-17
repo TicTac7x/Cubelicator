@@ -5,11 +5,11 @@
     xmlns:Cubelicator="using:Cubelicator">
 
 	<StackPanel Orientation="Horizontal" Spacing="10">
-		<TextBlock x:Name="ProfileText" Visibility="Collapsed" VerticalAlignment="Center">Profile:</TextBlock>
+        <TextBlock x:Name="Element_ProfileText" Visibility="Collapsed" VerticalAlignment="Center">Profile:</TextBlock>
 		
 		<Button x:Name="Element_SelectedProfile" VerticalAlignment="Center" MinWidth="100">
 			<Button.Flyout>
-				<MenuFlyout x:Name="RootProfiles" Placement="Bottom"/>
+				<MenuFlyout x:Name="Element_Profiles" Placement="Bottom"/>
 			</Button.Flyout>
 
             <StackPanel
@@ -17,7 +17,7 @@
 				Spacing="5">
                 <Grid>
                     <TextBlock
-						x:Name="SelectedProfileText"
+						x:Name="Element_SelectedProfileText"
 						HorizontalAlignment="Center"
 						VerticalAlignment="Center" />
                 </Grid>
@@ -27,7 +27,7 @@
         </Button>
 
         <TextBox
-			x:Name="SelectedProfileEdit"
+			x:Name="Element_SelectedProfileEdit"
             MinWidth="100"
 			Visibility="Collapsed"
 			HorizontalAlignment="Center"
@@ -35,7 +35,7 @@
 			KeyDown="OnRenameKeyDown"
 			LostFocus="OnRenameLostFocus"/>
 
-        <Button x:Name="ProfileManagerButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0">
+        <Button x:Name="Element_ProfileManagerButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0">
 			<Button.Flyout>
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
 					<MenuFlyoutItem

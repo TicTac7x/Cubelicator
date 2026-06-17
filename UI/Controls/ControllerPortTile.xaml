@@ -7,7 +7,7 @@
     Height="240">
 
     <Border
-        x:Name="Root"
+        x:Name="Element_Root"
         Padding="5"
         Background="{x:Bind Cubelicator:Colors.DeviceBackground}"
         CornerRadius="10"
@@ -29,7 +29,7 @@
 
                 <Grid Grid.Column="0" Padding="7,0,0,0">
                     <Image
-                        x:Name="IconCalibrated"
+                        x:Name="Element_IconCalibrated"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Source="ms-appx:///Assets/Calibrated.svg"
@@ -38,7 +38,7 @@
                         Visibility="Collapsed"/>
 
                     <Image
-                        x:Name="IconNotCalibrated"
+                        x:Name="Element_IconNotCalibrated"
                         Grid.Column="0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -48,10 +48,10 @@
                         Visibility="Collapsed"/>
                 </Grid>
 
-                <Grid x:Name="RootProfileSelector" Grid.Column="1" Visibility="Collapsed" />
+                <Grid x:Name="Element_ProfileSelector" Grid.Column="1" Visibility="Collapsed" />
 
                 <Button
-                    x:Name="DetailsButton"
+                    x:Name="Element_DetailsButton"
                     Background="Transparent"
                     BorderThickness="0"
                     Padding="5"
@@ -70,7 +70,7 @@
                                 Click="OnMenuItemClickCalibrate"/>
 
                             <MenuFlyoutSubItem
-                                x:Name="DynamicControllerColors"
+                                x:Name="Element_ControllerColors"
                                 Text="{x:Bind Cubelicator:Strings.ChangeColor}"/>
 
                             <MenuFlyoutItem
@@ -87,7 +87,7 @@
             </Grid>
 
             <Grid
-                x:Name="ControllerRoot"
+                x:Name="Element_Controller"
                 Grid.Row="1"
                 Padding="20"
                 Visibility="Collapsed"
@@ -95,17 +95,16 @@
                 Tapped="OnMenuItemEdit"/>
 
             <Grid
-                x:Name="Port"
+                x:Name="Element_Port"
                 Grid.Row="1"
                 Width="60"
                 Height="60"
                 Visibility="Visible">
-                <Cubelicator:ControllerPort
-                    x:Name="ControllerPort" />
+                <Cubelicator:ControllerPort />
             </Grid>
 
             <TextBlock
-                x:Name="PortText"
+                x:Name="Element_PortText"
                 Grid.Row="2"
                 Padding="0,0,0,5"
                 HorizontalAlignment="Center"
@@ -116,7 +115,7 @@
             </TextBlock>
 
             <TextBlock
-                x:Name="ControllerText"
+                x:Name="Element_ControllerText"
                 Grid.Row="2"
                 Padding="0,0,0,5"
                 HorizontalAlignment="Center"

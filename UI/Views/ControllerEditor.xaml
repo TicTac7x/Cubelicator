@@ -21,11 +21,11 @@
                 HorizontalAlignment="Stretch"
                 Padding="10">
                 <Grid
-                    x:Name="RootProfileSelector"
+                    x:Name="Element_ProfileSelector"
                     HorizontalAlignment="Center"/>
             </Grid>
 
-            <Grid x:Name="ControllerRoot" Grid.Row="1" Padding="0,100" />
+            <Grid x:Name="Element_Controller" Grid.Row="1" Padding="0,100" />
         </Grid>
 
         <Grid Grid.Column="1" Background="{x:Bind Cubelicator:Colors.ButtonPressedBackground}"
@@ -35,7 +35,7 @@
                 HorizontalScrollBarVisibility="Disabled">
 
                 <StackPanel
-                    x:Name="RootMappedButtons"
+                    x:Name="Element_MappedButtons"
                     Orientation="Vertical" />
             </ScrollViewer>
         </Grid>

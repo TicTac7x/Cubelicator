@@ -26,26 +26,26 @@ namespace Cubelicator
 
         private void InitializeUI()
         {
-            SelectedProfileText.Text = gamecubeController.Profile.Name;
+            Element_SelectedProfileText.Text = gamecubeController.Profile.Name;
             Element_SelectedProfile.IsEnabled = profileManager.Profiles.Count > 1;
             Element_DeleteProfile.IsEnabled = profileManager.Profiles.Count > 1;
             GenerateProfiles();
 
             if (advanced)
             {
-                ProfileText.Visibility = Visibility.Visible;
-                ProfileManagerButton.Visibility = Visibility.Visible;
+                Element_ProfileText.Visibility = Visibility.Visible;
+                Element_ProfileManagerButton.Visibility = Visibility.Visible;
             }
         }
 
         private void SetupEvents()
         {
-            gamecubeController.OnProfileChanged += (_) =>
+            gamecubeController.Event_ProfileChanged += (_) =>
             {
                 InitializeUI();
             };
 
-            profileManager.OnProfilesChanged += (profiles) =>
+            profileManager.Event_ProfilesChanged += (profiles) =>
             {
                 InitializeUI();
             };
@@ -53,7 +53,7 @@ namespace Cubelicator
 
         private void GenerateProfiles()
         {
-            RootProfiles.Items.Clear();
+            Element_Profiles.Items.Clear();
             foreach (var profile in profileManager.Profiles)
             {
                 if (profile.Name == gamecubeController.Profile.Name) continue;
@@ -67,7 +67,7 @@ namespace Cubelicator
                     gamecubeController.Profile = profile;
                 };
 
-                RootProfiles.Items.Add(menuItem);
+                Element_Profiles.Items.Add(menuItem);
             }
         }
 
@@ -86,13 +86,13 @@ namespace Cubelicator
         {
             isRenaming = true;
 
-            SelectedProfileEdit.Text = gamecubeController.Profile.Name;
+            Element_SelectedProfileEdit.Text = gamecubeController.Profile.Name;
 
             Element_SelectedProfile.Visibility = Visibility.Collapsed;
-            SelectedProfileEdit.Visibility = Visibility.Visible;
+            Element_SelectedProfileEdit.Visibility = Visibility.Visible;
 
-            SelectedProfileEdit.Focus(FocusState.Programmatic);
-            SelectedProfileEdit.SelectAll();
+            Element_SelectedProfileEdit.Focus(FocusState.Programmatic);
+            Element_SelectedProfileEdit.SelectAll();
         }
 
         private void OnRenameKeyDown(object sender, KeyRoutedEventArgs args)
@@ -117,13 +117,13 @@ namespace Cubelicator
 
         private void CancelRename()
         {
-            SelectedProfileEdit.Text = gamecubeController.Profile.Name;
+            Element_SelectedProfileEdit.Text = gamecubeController.Profile.Name;
             ExitRenameMode();
         }
 
         private void CommitRename()
         {
-            string newName = SelectedProfileEdit.Text.Trim();
+            string newName = Element_SelectedProfileEdit.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(newName))
             {
@@ -140,7 +140,7 @@ namespace Cubelicator
             }
 
             gamecubeController.Profile.Name = newName;
-            SelectedProfileText.Text = newName;
+            Element_SelectedProfileText.Text = newName;
 
             ExitRenameMode();
         }
@@ -148,7 +148,7 @@ namespace Cubelicator
         private void ExitRenameMode()
         {
             isRenaming = false;
-            SelectedProfileEdit.Visibility = Visibility.Collapsed;
+            Element_SelectedProfileEdit.Visibility = Visibility.Collapsed;
             Element_SelectedProfile.Visibility = Visibility.Visible;
         }
     }

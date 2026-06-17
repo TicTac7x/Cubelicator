@@ -8,20 +8,21 @@ namespace Cubelicator
 {
     public partial class MappedButtonRow : UserControl
     {
-        public event Action<bool> OnExpandedChanged = delegate { };
+        public event Action<bool> Event_ExpandedChanged = delegate { };
         private readonly GamecubeControllerInput gamecubeControllerInput;
         private XboxControllerInput xboxControllerInput;
-        private readonly GamecubeControllerProfile profile;
+        private readonly GamecubeController gamecubeController;
         private bool isExpanded = false;
 
-        public MappedButtonRow(GamecubeControllerProfile profile, GamecubeControllerInput gamecubeControllerInput, XboxControllerInput xboxControllerInput)
+        public MappedButtonRow(GamecubeController gamecubeController, GamecubeControllerInput gamecubeControllerInput, XboxControllerInput xboxControllerInput)
         {
-            this.profile = profile;
+            this.gamecubeController = gamecubeController;
             this.gamecubeControllerInput = gamecubeControllerInput;
             this.xboxControllerInput = xboxControllerInput;
 
             InitializeComponent();
             InitializeMenus();
+            SetupEvents();
 
             var typeName = gamecubeControllerInput switch
             {
@@ -45,17 +46,49 @@ namespace Cubelicator
                 throw new Exception("Failed to create gamecube button control");
             }
 
-            GamecubeButton.Children.Add(control);
-            GamecubeButtonName.Text = gamecubeControllerInput.ToString();
+            Element_GamecubeButton.Children.Add(control);
+            Element_GamecubeButtonName.Text = gamecubeControllerInput.ToString();
             SetXboxControllerButton(xboxControllerInput);
+        }
+
+        private void SetupEvents()
+        {
+            gamecubeController.Event_ProfileChanged += profile =>
+            {
+                XboxControllerInput xboxInput = gamecubeControllerInput switch
+                {
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.A } => new XboxControllerButtonInput(profile.A),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.B } => new XboxControllerButtonInput(profile.B),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.X } => new XboxControllerButtonInput(profile.X),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.Y } => new XboxControllerButtonInput(profile.Y),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.Z } => new XboxControllerButtonInput(profile.Z),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.Start } => new XboxControllerButtonInput(profile.Start),
+
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.DPadUp } => new XboxControllerButtonInput(profile.DPadUp),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.DPadDown } => new XboxControllerButtonInput(profile.DPadDown),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.DPadLeft } => new XboxControllerButtonInput(profile.DPadLeft),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.DPadRight } => new XboxControllerButtonInput(profile.DPadRight),
+
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.LeftBumper } => new XboxControllerButtonInput(profile.LeftBumper),
+                    GamecubeControllerButtonInput { value: GamecubeControllerButton.RightBumper } => new XboxControllerButtonInput(profile.RightBumper),
+
+                    GamecubeControllerStickInput { value: GamecubeControllerStick.LeftStick } => new XboxControllerStickInput(profile.LeftStick),
+                    GamecubeControllerStickInput { value: GamecubeControllerStick.RightStick } => new XboxControllerStickInput(profile.RightStick),
+
+                    GamecubeControllerTriggerInput { value: GamecubeControllerTrigger.LeftTrigger } => new XboxControllerTriggerInput(profile.LeftTrigger),
+                    GamecubeControllerTriggerInput { value: GamecubeControllerTrigger.RightTrigger } => new XboxControllerTriggerInput(profile.RightTrigger),
+                };
+
+                SetXboxControllerButton(xboxInput);
+            };
         }
 
         public void SetExpandablePanelVisibility(bool visible)
         {
             isExpanded = visible;
-            ExpandablePanel.Visibility = isExpanded ? Visibility.Visible : Visibility.Collapsed;
-            Root.Background = App.StringToSolidColorBrush(isExpanded ? Colors.ButtonHoverBackground : Colors.ButtonPressedBackground);
-            OnExpandedChanged(isExpanded);
+            Element_ExpandablePanel.Visibility = isExpanded ? Visibility.Visible : Visibility.Collapsed;
+            Element_Root.Background = App.StringToSolidColorBrush(isExpanded ? Colors.ButtonHoverBackground : Colors.ButtonPressedBackground);
+            Event_ExpandedChanged(isExpanded);
         }
 
         private void SetXboxControllerButton(XboxControllerInput xboxControllerInput)
@@ -68,8 +101,8 @@ namespace Cubelicator
                 _ => throw new NotSupportedException()
             };
 
-            XboxButtonName.Text = value;
-            XboxButton.Source = new SvgImageSource(
+            Element_XboxButtonName.Text = value;
+            Element_XboxButton.Source = new SvgImageSource(
                 new Uri($"ms-appx:///Assets/XboxButton{value}.svg")
             );
         }
@@ -78,7 +111,7 @@ namespace Cubelicator
         {
             if (gamecubeControllerInput is GamecubeControllerButtonInput gamecubeControllerButton)
             {
-                MappedButton.Content = xboxControllerInput switch
+                Element_MappedButton.Content = xboxControllerInput switch
                 {
                     XboxControllerButtonInput button => button.value.ToString(),
                     XboxControllerTriggerInput trigger => trigger.value.ToString()
@@ -91,17 +124,17 @@ namespace Cubelicator
                         Text = xboxControllerButton.ToString(),
                     };
                     menuItem.Click += (_, _) => {
-                        MappedButton.Content = xboxControllerButton.ToString();
+                        Element_MappedButton.Content = xboxControllerButton.ToString();
                         SetXboxControllerButton(new XboxControllerButtonInput(xboxControllerButton));
-                        profile.SetButton(gamecubeControllerButton.value, xboxControllerButton);
+                        gamecubeController.Profile.SetButton(gamecubeControllerButton.value, xboxControllerButton);
                     };
-                    RootMappableButtons.Items.Add(menuItem);
+                    Element_MappableButtons.Items.Add(menuItem);
                 }
             }
 
             if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
             {
-                MappedButton.Content = xboxControllerInput switch
+                Element_MappedButton.Content = xboxControllerInput switch
                 {
                     XboxControllerTriggerInput trigger => trigger.value.ToString()
                 };
@@ -113,18 +146,18 @@ namespace Cubelicator
                         Text = xboxControllerTrigger.ToString(),
                     };
                     menuItem.Click += (_, _) => {
-                        MappedButton.Content = xboxControllerTrigger.ToString();
+                        Element_MappedButton.Content = xboxControllerTrigger.ToString();
                         SetXboxControllerButton(new XboxControllerTriggerInput(xboxControllerTrigger));
-                        profile.SetTrigger(gamecubeControllerTrigger.value, xboxControllerTrigger);
+                        gamecubeController.Profile.SetTrigger(gamecubeControllerTrigger.value, xboxControllerTrigger);
                     };
-                    RootMappableButtons.Items.Add(menuItem);
+                    Element_MappableButtons.Items.Add(menuItem);
                 }
 
-                SensitivityPanel.Visibility = Visibility.Visible;
-                DeadzonePanel.Visibility = Visibility.Visible;
+                Element_SensitivityPanel.Visibility = Visibility.Visible;
+                Element_DeadzonePanel.Visibility = Visibility.Visible;
 
-                float sensitivity = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? profile.LeftTriggerSensitivity : profile.RightTriggerSensitivity;
-                float deadzone = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? profile.LeftTriggerDeadzone : profile.RightTriggerDeadzone;
+                float sensitivity = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? gamecubeController.Profile.LeftTriggerSensitivity : gamecubeController.Profile.RightTriggerSensitivity;
+                float deadzone = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? gamecubeController.Profile.LeftTriggerDeadzone : gamecubeController.Profile.RightTriggerDeadzone;
 
                 SetSensitivity(sensitivity);
                 SetDeadzone(deadzone);
@@ -132,7 +165,7 @@ namespace Cubelicator
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
             {
-                MappedButton.Content = xboxControllerInput switch
+                Element_MappedButton.Content = xboxControllerInput switch
                 {
                     XboxControllerStickInput stick => stick.value.ToString()
                 };
@@ -144,18 +177,18 @@ namespace Cubelicator
                         Text = xboxControllerStick.ToString(),
                     };
                     menuItem.Click += (_, _) => {
-                        MappedButton.Content = xboxControllerStick.ToString();
+                        Element_MappedButton.Content = xboxControllerStick.ToString();
                         SetXboxControllerButton(new XboxControllerStickInput(xboxControllerStick));
-                        profile.SetStick(gamecubeControllerStick.value, xboxControllerStick);
+                        gamecubeController.Profile.SetStick(gamecubeControllerStick.value, xboxControllerStick);
                     };
-                    RootMappableButtons.Items.Add(menuItem);
+                    Element_MappableButtons.Items.Add(menuItem);
                 }
 
-                SensitivityPanel.Visibility = Visibility.Visible;
-                DeadzonePanel.Visibility = Visibility.Visible;
+                Element_SensitivityPanel.Visibility = Visibility.Visible;
+                Element_DeadzonePanel.Visibility = Visibility.Visible;
 
-                float sensitivity = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? profile.LeftStickSensitivity : profile.RightStickSensitivity;
-                float deadzone = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? profile.LeftStickDeadzone: profile.RightStickDeadzone;
+                float sensitivity = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? gamecubeController.Profile.LeftStickSensitivity : gamecubeController.Profile.RightStickSensitivity;
+                float deadzone = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? gamecubeController.Profile.LeftStickDeadzone: gamecubeController.Profile.RightStickDeadzone;
 
                 SetSensitivity(sensitivity);
                 SetDeadzone(deadzone);
@@ -164,14 +197,14 @@ namespace Cubelicator
 
         private void SetSensitivity(float sensitivity)
         {
-            SensitivityValue.Text = sensitivity.ToString("0.00").Replace(",", ".");
-            SensitivitySlider.Value = sensitivity;
+            Element_SensitivityValue.Text = sensitivity.ToString("0.00").Replace(",", ".");
+            Element_SensitivitySlider.Value = sensitivity;
         }
 
         private void SetDeadzone(float deadzone)
         {
-            DeadzoneValue.Text = deadzone.ToString("0.00").Replace(",", ".");
-            DeadzoneSlider.Value = deadzone;
+            Element_DeadzoneValue.Text = deadzone.ToString("0.00").Replace(",", ".");
+            Element_DeadzoneSlider.Value = deadzone;
         }
 
         private void OnSensitivityChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -180,13 +213,13 @@ namespace Cubelicator
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
             {
-                profile.SetSensitivity(gamecubeControllerStick.value, sensitivity);
+                gamecubeController.Profile.SetSensitivity(gamecubeControllerStick.value, sensitivity);
             } else if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
             {
-                profile.SetSensitivity(gamecubeControllerTrigger.value, sensitivity);
+                gamecubeController.Profile.SetSensitivity(gamecubeControllerTrigger.value, sensitivity);
             }
 
-            if (SensitivityValue != null)
+            if (Element_SensitivityValue != null)
             {
                 SetSensitivity(sensitivity);
             }
@@ -198,14 +231,14 @@ namespace Cubelicator
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
             {
-                profile.SetDeadzone(gamecubeControllerStick.value, deadzone);
+                gamecubeController.Profile.SetDeadzone(gamecubeControllerStick.value, deadzone);
             }
             else if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
             {
-                profile.SetDeadzone(gamecubeControllerTrigger.value, deadzone);
+                gamecubeController.Profile.SetDeadzone(gamecubeControllerTrigger.value, deadzone);
             }
 
-            if (DeadzoneValue != null)
+            if (Element_DeadzoneValue != null)
             {
                 SetDeadzone(deadzone);
             }
@@ -213,14 +246,14 @@ namespace Cubelicator
 
         private void OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            Root.Background = App.StringToSolidColorBrush(Colors.ButtonHoverBackground);
+            Element_Root.Background = App.StringToSolidColorBrush(Colors.ButtonHoverBackground);
         }
 
         private void OnPointerExited(object sender, PointerRoutedEventArgs args)
         {
             if (!isExpanded)
             {
-            Root.Background = App.StringToSolidColorBrush(Colors.ButtonPressedBackground);
+            Element_Root.Background = App.StringToSolidColorBrush(Colors.ButtonPressedBackground);
             }
         }
 

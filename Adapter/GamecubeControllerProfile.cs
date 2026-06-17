@@ -4,9 +4,9 @@ namespace Cubelicator
 {
     public class GamecubeControllerProfile
     {
-        public event Action OnDelete = delegate { };
-        public event Action<string, string> OnNameChanged = delegate { };
-        public event Action OnChanged = delegate { };
+        public event Action Event_Deleted = delegate { };
+        public event Action<string, string> Event_NameChanged = delegate { };
+        public event Action Event_Changed = delegate { };
         private string name = "Default";
 
         [JsonIgnore]
@@ -20,8 +20,8 @@ namespace Cubelicator
                 var oldName = name;
                 name = value;
                 
-                OnNameChanged(name, value);
-                OnChanged();
+                Event_NameChanged(name, value);
+                Event_Changed();
             }
         }
 
@@ -114,7 +114,7 @@ namespace Cubelicator
                     break;
             }
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetStick(GamecubeControllerStick stick, XboxControllerStick xboxControllerStick)
@@ -130,7 +130,7 @@ namespace Cubelicator
                     break;
             }
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetTrigger(GamecubeControllerTrigger trigger, XboxControllerTrigger xboxControllerTrigger)
@@ -146,7 +146,7 @@ namespace Cubelicator
                     break;
             }
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetSensitivity(GamecubeControllerStick stick, float sensitivity)
@@ -156,7 +156,7 @@ namespace Cubelicator
             else
                 RightStickSensitivity = sensitivity;
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetSensitivity(GamecubeControllerTrigger trigger, float sensitivity)
@@ -166,7 +166,7 @@ namespace Cubelicator
             else
                 RightTriggerSensitivity = sensitivity;
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetDeadzone(GamecubeControllerStick stick, float sensitivity)
@@ -176,7 +176,7 @@ namespace Cubelicator
             else
                 RightStickDeadzone = sensitivity;
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void SetDeadzone(GamecubeControllerTrigger trigger, float deadzone)
@@ -186,12 +186,12 @@ namespace Cubelicator
             else
                 RightTriggerDeadzone = deadzone;
 
-            OnChanged();
+            Event_Changed();
         }
 
         public void Delete()
         {
-            OnDelete();
+            Event_Deleted();
         }
     }
 }

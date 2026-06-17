@@ -6,13 +6,13 @@ namespace Cubelicator
 {
     public class GamecubeController
     {
-        public event Action<GamecubeControllerProfile> OnProfileChanged = delegate { };
-        public event Action<bool> OnConnectionChanged = delegate { };
-        public event Action<bool> OnRumbleChanged = delegate { };
-        public event Action<GamecubeControllerCalibration> OnCalibrationChanged = delegate { };
-        public event Action<GamecubeControllerButton, bool> OnButtonChanged = delegate { };
-        public event Action<ControllerSide, ControllerStickAxis, int> OnStickChanged = delegate { };
-        public event Action<ControllerSide, int> OnTriggerChanged = delegate { };
+        public event Action<GamecubeControllerProfile> Event_ProfileChanged = delegate { };
+        public event Action<bool> Event_ConnectionChanged = delegate { };
+        public event Action<bool> Event_RumbleChanged = delegate { };
+        public event Action<GamecubeControllerCalibration> Event_CalibrationChanged = delegate { };
+        public event Action<GamecubeControllerButton, bool> Event_ButtonChanged = delegate { };
+        public event Action<ControllerSide, ControllerStickAxis, int> Event_StickChanged = delegate { };
+        public event Action<ControllerSide, int> Event_TriggerChanged = delegate { };
 
         private readonly ProfileManager profileManager;
         private readonly IXbox360Controller controller;
@@ -25,7 +25,7 @@ namespace Cubelicator
                 if (value != _profile)
                 {
                     _profile = value;
-                    _profile.OnDelete += () =>
+                    _profile.Event_Deleted += () =>
                     {
                         foreach (var profile in profileManager.Profiles)
                         {
@@ -35,7 +35,7 @@ namespace Cubelicator
                             }
                         }
                     };
-                    OnProfileChanged(value);
+                    Event_ProfileChanged(value);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace Cubelicator
         public GamecubeController(ViGEmClient vigem, GamecubeControllerProfile profile, ProfileManager profileManager)
         {
             this.profileManager = profileManager;
-            Profile = profile;
+            _profile = profile;
             controller = CreateController(vigem);
             controller.AutoSubmitReport = false;
         }
@@ -55,7 +55,7 @@ namespace Cubelicator
             var controller = vigem.CreateXbox360Controller();
             controller.FeedbackReceived += (_, args) =>
             {
-                OnRumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
+                Event_RumbleChanged.Invoke(args.LargeMotor > 0 || args.SmallMotor > 0);
             };
 
             return controller;
@@ -89,7 +89,7 @@ namespace Cubelicator
                 {
                     controller.Disconnect();
                 }
-                OnConnectionChanged.Invoke(state.Connected);
+                Event_ConnectionChanged.Invoke(state.Connected);
             }
 
             if (!state.Connected)
@@ -201,7 +201,7 @@ namespace Cubelicator
         public void SetCalibration(GamecubeControllerCalibration calibration)
         {
             this.calibration = calibration;
-            OnCalibrationChanged(calibration);
+            Event_CalibrationChanged(calibration);
         }
 
         private int ApplyDeadzone(int value, float deadzone, int range)
@@ -259,10 +259,10 @@ namespace Cubelicator
             XboxControllerButton mappedButton
         )
         {
-            if (newValue != oldValue)
+            if (newValue != oldValue && mappedButton != XboxControllerButton.None)
             {
                 controller.SetButtonState(ToButton(mappedButton), newValue);
-                OnButtonChanged(button, newValue);
+                Event_ButtonChanged(button, newValue);
             }
         }
 
@@ -279,14 +279,14 @@ namespace Cubelicator
             XboxControllerStick mappedButton
         )
         {
-            if (newValue != oldValue)
+            if (newValue != oldValue && mappedButton != XboxControllerStick.None)
             {
                 int stickDeadzone = ApplyDeadzone(newValue, deadzone, Constants.GamecubeControllerStickRange);
                 int stickCalibrate = CalibrateStick(stickDeadzone, calibrationCenter, calibrationMin, calibrationMax, Constants.GamecubeControllerStickRange);
                 float stickSensitivity = stickCalibrate * sensitivity;
                 short stickFinal = (short) Math.Clamp(stickSensitivity * Constants.XboxControllerAxisMultiplier, -Constants.XboxControllerAxisRange, Constants.XboxControllerAxisRange);
                 controller.SetAxisValue(ToAxis(mappedButton, axis), stickFinal);
-                OnStickChanged(side, axis, newValue);
+                Event_StickChanged(side, axis, newValue);
             }
         }
 
@@ -301,7 +301,7 @@ namespace Cubelicator
             XboxControllerTrigger mappedTrigger
         )
         {
-            if (newValue != oldValue)
+            if (newValue != oldValue && mappedTrigger != XboxControllerTrigger.None)
             {
                 int triggerDeadzone = ApplyDeadzone(
                     newValue,
@@ -322,7 +322,7 @@ namespace Cubelicator
                     Constants.GamecubeControllerTriggerRange);
 
                 controller.SetSliderValue(ToSlider(mappedTrigger), triggerFinal);
-                OnTriggerChanged(side, newValue);
+                Event_TriggerChanged(side, newValue);
             }
         }
 

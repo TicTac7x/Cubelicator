@@ -5,7 +5,7 @@
 
     <Grid>
         <StackPanel
-            x:Name="ControllerPortTiles"
+            x:Name="Element_ControllerPortTiles"
             Grid.Row="1"
             Margin="20"
             Spacing="30"

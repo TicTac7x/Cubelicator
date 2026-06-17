@@ -17,7 +17,7 @@
     <StackPanel Orientation="Horizontal"
                 Background="{x:Bind Cubelicator:Colors.DeviceBackground}">
 
-        <Border x:Name="Dashboard"
+        <Border x:Name="Element_Dashboard"
                 Style="{StaticResource NavItemStyle}"
                 Tag="{x:Bind Cubelicator:AppView.Dashboard}"
                 PointerEntered="OnPointerEntered"
@@ -30,7 +30,7 @@
                        HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Controller1"
+        <Border x:Name="Element_Controller1"
                 Style="{StaticResource NavItemStyle}"
                 Tag="{x:Bind Cubelicator:AppView.Controller1}"
                 Visibility="Collapsed"
@@ -44,7 +44,7 @@
                        HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Controller2"
+        <Border x:Name="Element_Controller2"
                 Style="{StaticResource NavItemStyle}"
                 Tag="{x:Bind Cubelicator:AppView.Controller2}"
                 Visibility="Collapsed"
@@ -58,7 +58,7 @@
                        HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Controller3"
+        <Border x:Name="Element_Controller3"
                 Style="{StaticResource NavItemStyle}"
                 Tag="{x:Bind Cubelicator:AppView.Controller3}"
                 Visibility="Collapsed"
@@ -72,7 +72,7 @@
                        HorizontalAlignment="Center"/>
         </Border>
 
-        <Border x:Name="Controller4"
+        <Border x:Name="Element_Controller4"
                 Style="{StaticResource NavItemStyle}"
                 Tag="{x:Bind Cubelicator:AppView.Controller4}"
                 Visibility="Collapsed"

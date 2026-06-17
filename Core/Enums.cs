@@ -91,18 +91,24 @@
 
         LeftBumper,
         RightBumper,
+
+        None,
     }
 
     public enum XboxControllerTrigger
     {
         LeftTrigger,
         RightTrigger,
+
+        None,
     }
 
     public enum XboxControllerStick
     {
         LeftStick,
         RightStick,
+
+        None,
     }
 
     public enum ControllerColor

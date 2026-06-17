@@ -32,7 +32,7 @@ namespace Cubelicator
         void InitializeControllerPortTile()
         {
             // Port not calibrated tooltip.
-            ToolTipService.SetToolTip(IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
+            ToolTipService.SetToolTip(Element_IconNotCalibrated, Strings.TooltipPortIsNotCalibrated(port));
 
             // Populate list of controller colors.
             foreach (var controllerColor in ControllerColors.Map.Keys)
@@ -48,62 +48,62 @@ namespace Cubelicator
 
                 item.Click += OnMenuItemChangeColor;
 
-                DynamicControllerColors.Items.Add(item);
+                Element_ControllerColors.Items.Add(item);
             }
 
 
             // Gamecube controller view.
-            ControllerRoot.Children.Add(gamecubeControllerView);
+            Element_Controller.Children.Add(gamecubeControllerView);
 
             // Controller and port texts.
-            PortText.Text = PortText.Text + " " + (int) port;
-            ControllerText.Text = ControllerText.Text + " " + (int) port;
+            Element_PortText.Text = Element_PortText.Text + " " + (int) port;
+            Element_ControllerText.Text = Element_ControllerText.Text + " " + (int) port;
 
-            RootProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, false));
+            Element_ProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, false));
         }
 
         private void SetupEventListeners()
         {
-            gamecubeController.OnConnectionChanged += (connected) =>
+            gamecubeController.Event_ConnectionChanged += (connected) =>
             {
                 var portVisible = connected ? Visibility.Collapsed : Visibility.Visible;
                 var controllerVisible = connected ? Visibility.Visible : Visibility.Collapsed;
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    Root.Opacity = connected ? 1 : 0.4;
-                    Port.Visibility = portVisible;
-                    PortText.Visibility = portVisible;
-                    ControllerRoot.Visibility = controllerVisible;
-                    ControllerText.Visibility = controllerVisible;
-                    RootProfileSelector.Visibility = controllerVisible;
-                    DetailsButton.Visibility = controllerVisible;
+                    Element_Root.Opacity = connected ? 1 : 0.4;
+                    Element_Port.Visibility = portVisible;
+                    Element_PortText.Visibility = portVisible;
+                    Element_Controller.Visibility = controllerVisible;
+                    Element_ControllerText.Visibility = controllerVisible;
+                    Element_ProfileSelector.Visibility = controllerVisible;
+                    Element_DetailsButton.Visibility = controllerVisible;
 
                     if (connected)
                     {
                         var calibrated = gamecubeController.IsCalibrated();
-                        IconCalibrated.Visibility = calibrated ? Visibility.Visible : Visibility.Collapsed;
-                        IconNotCalibrated.Visibility = calibrated ? Visibility.Collapsed : Visibility.Visible;
+                        Element_IconCalibrated.Visibility = calibrated ? Visibility.Visible : Visibility.Collapsed;
+                        Element_IconNotCalibrated.Visibility = calibrated ? Visibility.Collapsed : Visibility.Visible;
                     }
                     else
                     {
-                        IconCalibrated.Visibility = Visibility.Collapsed;
-                        IconNotCalibrated.Visibility = Visibility.Collapsed;
+                        Element_IconCalibrated.Visibility = Visibility.Collapsed;
+                        Element_IconNotCalibrated.Visibility = Visibility.Collapsed;
                     }
                 });
             };
 
-            gamecubeController.OnCalibrationChanged += (calibration) =>
+            gamecubeController.Event_CalibrationChanged += (calibration) =>
             {
                 if (!gamecubeController.IsConnected()) return;
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    IconNotCalibrated.Visibility = Visibility.Collapsed;
-                    IconCalibrated.Visibility = Visibility.Visible;
+                    Element_IconNotCalibrated.Visibility = Visibility.Collapsed;
+                    Element_IconCalibrated.Visibility = Visibility.Visible;
 
                     ToolTipService.SetToolTip(
-                        IconCalibrated,
+                        Element_IconCalibrated,
                         $"""
                         {Strings.TooltipPortIsCalibrated(port)}
 
@@ -118,7 +118,7 @@ namespace Cubelicator
                 });
             };
 
-            settings.OnControllerColorChanged += (port, controllerColor) =>
+            settings.Event_ControllerColorChanged += (port, controllerColor) =>
             {
                 if (port == this.port)
                 {

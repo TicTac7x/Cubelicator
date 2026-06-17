@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Cubelicator="using:Cubelicator">
 
-    <Grid x:Name="Root" Background="{x:Bind Cubelicator:Colors.AppBackground}">
+    <Grid x:Name="Element_Root" Background="{x:Bind Cubelicator:Colors.AppBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -21,13 +21,13 @@
             </TitleBar.IconSource>
 
             <Grid HorizontalAlignment="Stretch">
-            <Grid x:Name="NavigatorRoot" Grid.Row="1" HorizontalAlignment="Right" />
+                <Grid x:Name="Element_Navigator" Grid.Row="1" HorizontalAlignment="Right" />
             </Grid>
         </TitleBar>
 
         <Grid Grid.Row="2">
-            <Grid x:Name="DashboardRoot" />
-            <Grid x:Name="ControllerEditorRoot" Visibility="Collapsed" />
+            <Grid x:Name="Element_Dashboard" />
+            <Grid x:Name="Element_ControllerEditor" Visibility="Collapsed" />
         </Grid>
     </Grid>
 </Window>

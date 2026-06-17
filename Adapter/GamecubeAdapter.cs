@@ -6,8 +6,8 @@ namespace Cubelicator
 {
     public class GamecubeAdapter
     {
-        public event Action<AdapterPort, bool> OnControllerConnectionChanged = delegate { };
-        public event Action<AdapterPort, GamecubeControllerProfile> OnControllerProfileChanged = delegate { };
+        public event Action<AdapterPort, bool> Event_ControllerConnectionChanged = delegate { };
+        public event Action<AdapterPort, GamecubeControllerProfile> Event_ControllerProfileChanged = delegate { };
 
         private const int DEVICE_VID = 0x057E;
         private const int DEVICE_PID = 0x0337;
@@ -40,12 +40,12 @@ namespace Cubelicator
 
         private void SetupListeners()
         {
-            calibrationManager.OnPortControllerCalibrationLoaded += (port, calibration) =>
+            calibrationManager.Event_PortControllerCalibrationLoaded += (port, calibration) =>
             {
                 SetPortControllerCalibration(port, calibration);
             };
 
-            settings.OnControllerProfileChanged += (port, profile) =>
+            settings.Event_ControllerProfileChanged += (port, profile) =>
             {
                 switch (port)
                 {
@@ -66,9 +66,9 @@ namespace Cubelicator
 
             foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
             {
-                GetPortController(port).OnProfileChanged += (profile) =>
+                GetPortController(port).Event_ProfileChanged += (profile) =>
                 {
-                    OnControllerProfileChanged(port, profile);
+                    Event_ControllerProfileChanged(port, profile);
                 };
             }
         }
@@ -134,14 +134,14 @@ namespace Cubelicator
 
                 var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile(), profileManager);
 
-                controller.OnRumbleChanged += (bool rumble) =>
+                controller.Event_RumbleChanged += (bool rumble) =>
                 {
                     SetControllerRumble(port, rumble);
                 };
 
-                controller.OnConnectionChanged += (bool connected) =>
+                controller.Event_ConnectionChanged += (bool connected) =>
                 {
-                    OnControllerConnectionChanged(port, connected);
+                    Event_ControllerConnectionChanged(port, connected);
                 };
 
                 controllers[i] = controller;

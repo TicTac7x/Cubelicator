@@ -1,20 +1,25 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System.Text.RegularExpressions;
 using Windows.System;
 
 namespace Cubelicator
 {
     public partial class ProfileSelector : UserControl
     {
+        private readonly AdapterPort port;
+        private readonly Settings settings;
         private readonly ProfileManager profileManager;
         private readonly GamecubeController gamecubeController;
         private readonly bool advanced;
 
         private bool isRenaming = false;
 
-        public ProfileSelector(ProfileManager profileManager, GamecubeController gamecubeController, bool advanced)
+        public ProfileSelector(AdapterPort port, Settings settings, ProfileManager profileManager, GamecubeController gamecubeController, bool advanced)
         {
+            this.port = port;
+            this.settings = settings;
             this.profileManager = profileManager;
             this.gamecubeController = gamecubeController;
             this.advanced = advanced;
@@ -37,6 +42,38 @@ namespace Cubelicator
                 Element_ProfileText.Visibility = Visibility.Visible;
                 Element_ProfileManagerButton.Visibility = Visibility.Visible;
             }
+
+            // Populate list of controller colors.
+            Element_ChangeColor.Items.Clear();
+            foreach (var controllerColor in ControllerColors.Map.Keys)
+            {
+                var item = new MenuFlyoutItem
+                {
+                    Text = Regex.Replace(
+                    controllerColor.ToString(),
+                    "(\\B[A-Z])",
+                    " $1"),
+                    Tag = controllerColor.ToString()
+                };
+
+                item.Click += OnMenuItemChangeColor;
+
+                Element_ChangeColor.Items.Add(item);
+            }
+        }
+
+        private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MenuFlyoutItem item)
+                return;
+
+            if (item.Tag is not string colorName)
+                return;
+
+            if (!Enum.TryParse<ControllerColor>(colorName, out var colorEnum))
+                return;
+
+            settings.SetControllerColor(port, colorEnum);
         }
 
         private void SetupEvents()

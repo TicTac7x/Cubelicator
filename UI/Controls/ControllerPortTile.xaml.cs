@@ -51,7 +51,6 @@ namespace Cubelicator
                 Element_ControllerColors.Items.Add(item);
             }
 
-
             // Gamecube controller view.
             Element_Controller.Children.Add(gamecubeControllerView);
 
@@ -59,7 +58,7 @@ namespace Cubelicator
             Element_PortText.Text = Element_PortText.Text + " " + (int) port;
             Element_ControllerText.Text = Element_ControllerText.Text + " " + (int) port;
 
-            Element_ProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, false));
+            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, false));
         }
 
         private void SetupEventListeners()

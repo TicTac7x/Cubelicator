@@ -27,7 +27,7 @@ namespace Cubelicator
         private void InitializeUI(AdapterPort port, GamecubeController gamecubeController)
         {
             Element_ProfileSelector.Children.Clear();
-            Element_ProfileSelector.Children.Add(new ProfileSelector(profileManager, gamecubeController, true));
+            Element_ProfileSelector.Children.Add(new ProfileSelector(port, settings, profileManager, gamecubeController, true));
 
             Element_Controller.Children.Clear();
             var controllerView = new GamecubeControllerView(gamecubeController);
@@ -35,6 +35,14 @@ namespace Cubelicator
                 ControllerColors.Map[settings.GetControllerColor(port)]
             );
             Element_Controller.Children.Add(controllerView);
+
+            settings.Event_ControllerColorChanged += (changedPort, color) =>
+            {
+                if (changedPort == port)
+                {
+                    controllerView.SetControllerColor(ControllerColors.Map[color]);
+                }
+            };
 
             InitializeMappedButtons(gamecubeController);
         }

@@ -55,6 +55,10 @@
 						x:Name="Element_ToggleRumble"
 						Text="{x:Bind Cubelicator:Strings.ProfileSelector_DisableRumble}"
 						Click="OnToggleRumble"/>
+
+                    <MenuFlyoutSubItem
+						x:Name="Element_ChangeColor"
+						Text="{x:Bind Cubelicator:Strings.ChangeColor}"/>
                 </MenuFlyout>
 			</Button.Flyout>
 

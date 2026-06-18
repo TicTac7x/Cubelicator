@@ -18,6 +18,8 @@
         public const string Calibrate = "Calibrate";
         public const string ChangeColor = "Change Color";
 
+        public const string MappedButtonRow_DisableTriggerOnClick = "Disable trigger on click";
+
         public const string PortTile_Edit = "Edit";
 
         public const string ProfileSelector_New = "New";

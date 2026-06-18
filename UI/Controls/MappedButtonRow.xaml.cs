@@ -130,6 +130,16 @@ namespace Cubelicator
                     };
                     Element_MappableButtons.Items.Add(menuItem);
                 }
+
+                if (gamecubeControllerButton.value == GamecubeControllerButton.LeftBumper)
+                {
+                    Element_DisableTriggerOnClick.Visibility = Visibility.Visible;
+                    Element_DisableTriggerOnClickCheckbox.IsChecked = gamecubeController.Profile.DisableLeftTriggerOnClick;
+                } else if (gamecubeControllerButton.value == GamecubeControllerButton.RightBumper)
+                {
+                    Element_DisableTriggerOnClick.Visibility = Visibility.Visible;
+                    Element_DisableTriggerOnClickCheckbox.IsChecked = gamecubeController.Profile.DisableRightTriggerOnClick;
+                }
             }
 
             if (gamecubeControllerInput is GamecubeControllerTriggerInput gamecubeControllerTrigger)
@@ -242,6 +252,15 @@ namespace Cubelicator
             {
                 SetDeadzone(deadzone);
             }
+        }
+
+        private void Click_DisableTriggerOnClick(object sender, RoutedEventArgs args)
+        {
+            bool isChecked = sender is CheckBox checkbox && checkbox.IsChecked == true;
+
+            var trigger = gamecubeControllerInput is GamecubeControllerButtonInput gamecubeControllerButtonInput && gamecubeControllerButtonInput.value == GamecubeControllerButton.LeftBumper ? GamecubeControllerTrigger.LeftTrigger : GamecubeControllerTrigger.RightTrigger;
+
+            gamecubeController.Profile.SetDisableTriggerOnClick(trigger, isChecked);
         }
 
         private void OnPointerEntered(object sender, PointerRoutedEventArgs args)

@@ -49,6 +49,10 @@ namespace Cubelicator
         public XboxControllerStick LeftStick { get; private set; } = XboxControllerStick.LeftStick;
         public XboxControllerStick RightStick { get; private set; } = XboxControllerStick.RightStick;
 
+        // Specials
+        public bool DisableLeftTriggerOnClick { get; set; } = false;
+        public bool DisableRightTriggerOnClick { get; set; } = false;
+
         // Deadzones
         public float LeftStickDeadzone { get; private set; } = 0f;
         public float RightStickDeadzone { get; private set; } = 0f;
@@ -201,6 +205,19 @@ namespace Cubelicator
         public void Delete()
         {
             Event_Deleted();
+        }
+
+        public void SetDisableTriggerOnClick(GamecubeControllerTrigger trigger, bool disable)
+        {
+            if (trigger == GamecubeControllerTrigger.LeftTrigger)
+            {
+                DisableLeftTriggerOnClick = disable;
+            } else
+            {
+                DisableRightTriggerOnClick = disable;
+            }
+
+            Event_Changed();
         }
     }
 }

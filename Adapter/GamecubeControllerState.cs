@@ -3,13 +3,13 @@
     public class GamecubeControllerState
     {
         public bool Connected;
-        public bool ButtonA, ButtonB, ButtonX, ButtonY;
-        public bool ButtonStart, ButtonZ, ButtonLeftShoulder, ButtonRightShoulder;
-        public bool ButtonDPadUp, ButtonDPadDown, ButtonDPadLeft, ButtonDPadRight;
+        public bool A, B, X, Y;
+        public bool Start, Z, LeftBumper, RightBumper;
+        public bool DPadUp, DPadDown, DPadLeft, DPadRight;
 
-        public short StickLeftX, StickLeftY;
-        public short StickRightX, StickRightY;
+        public short LeftStickX, LeftStickY;
+        public short RightStickX, RightStickY;
 
-        public byte TriggerLeft, TriggerRight;
+        public byte LeftTrigger, RightTrigger;
     }
 }

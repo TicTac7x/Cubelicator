@@ -189,28 +189,28 @@ namespace Cubelicator
             {
                 Connected = status == 0x10,
 
-                ButtonA = (b1 & 1) != 0,
-                ButtonB = (b1 & 2) != 0,
-                ButtonX = (b1 & 4) != 0,
-                ButtonY = (b1 & 8) != 0,
+                A = (b1 & 1) != 0,
+                B = (b1 & 2) != 0,
+                X = (b1 & 4) != 0,
+                Y = (b1 & 8) != 0,
 
-                ButtonStart = (b2 & 1) != 0,
-                ButtonZ = (b2 & 2) != 0,
-                ButtonRightShoulder = (b2 & 4) != 0,
-                ButtonLeftShoulder = (b2 & 8) != 0,
+                Start = (b2 & 1) != 0,
+                Z = (b2 & 2) != 0,
+                RightBumper = (b2 & 4) != 0,
+                LeftBumper = (b2 & 8) != 0,
 
-                ButtonDPadLeft = (b1 & 0x10) != 0,
-                ButtonDPadRight = (b1 & 0x20) != 0,
-                ButtonDPadDown = (b1 & 0x40) != 0,
-                ButtonDPadUp = (b1 & 0x80) != 0,
+                DPadLeft = (b1 & 0x10) != 0,
+                DPadRight = (b1 & 0x20) != 0,
+                DPadDown = (b1 & 0x40) != 0,
+                DPadUp = (b1 & 0x80) != 0,
 
-                StickLeftX = (short)((data[offset + 3] - Constants.GamecubeControllerStickRange)),
-                StickLeftY = (short)((data[offset + 4] - Constants.GamecubeControllerStickRange)),
-                StickRightX = (short)((data[offset + 5] - Constants.GamecubeControllerStickRange)),
-                StickRightY = (short)((data[offset + 6] - Constants.GamecubeControllerStickRange)),
+                LeftStickX = (short)((data[offset + 3] - Constants.GamecubeControllerStickRange)),
+                LeftStickY = (short)((data[offset + 4] - Constants.GamecubeControllerStickRange)),
+                RightStickX = (short)((data[offset + 5] - Constants.GamecubeControllerStickRange)),
+                RightStickY = (short)((data[offset + 6] - Constants.GamecubeControllerStickRange)),
 
-                TriggerLeft = data[offset + 7],
-                TriggerRight = data[offset + 8]
+                LeftTrigger = data[offset + 7],
+                RightTrigger = data[offset + 8]
             };
         }
 

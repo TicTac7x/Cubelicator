@@ -10,6 +10,8 @@ namespace Cubelicator
         private readonly ViewsManager viewsManager;
         private readonly GamecubeAdapter gamecubeAdapter;
 
+        private bool initialized = false;
+
         public Navigator(ViewsManager viewsManager, GamecubeAdapter gamecubeAdapter)
         {
             this.viewsManager = viewsManager;
@@ -17,6 +19,7 @@ namespace Cubelicator
 
             InitializeComponent();
             SetupEvents();
+            initialized = true;
         }
 
         private void SetupEvents()
@@ -67,8 +70,10 @@ namespace Cubelicator
             }
         }
 
-        private void Click_NavigationItem(object sender, RoutedEventArgs args)
+        private void UIEvent_NavigationItem(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
+
             if (sender is not Border border)
                 return;
 
@@ -109,25 +114,31 @@ namespace Cubelicator
 
         private Border? _active;
 
-        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        private void UIEvent_OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
-            if (sender is Border b && b != _active)
+            if (!initialized) return;
+
+            if (sender is Border border && border != _active)
             {
-                b.Background = App.StringToSolidColorBrush(Colors.ButtonHoverBackground);
+                border.Background = App.StringToSolidColorBrush(Colors.ButtonHoverBackground);
             }
         }
 
-        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
+        private void UIEvent_OnPointerExited(object sender, PointerRoutedEventArgs args)
         {
-            if (sender is Border b && b != _active)
+            if (!initialized) return;
+
+            if (sender is Border border && border != _active)
             {
-                b.Background = App.StringToSolidColorBrush(Colors.ButtonBackground);
+                border.Background = App.StringToSolidColorBrush(Colors.ButtonBackground);
             }
         }
 
-        private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
+        private void UIEvent_OnPointerPressed(object sender, PointerRoutedEventArgs args)
         {
-            if (sender is not Border b)
+            if (!initialized) return;
+
+            if (sender is not Border border)
                 return;
 
             // reset previous active
@@ -137,7 +148,7 @@ namespace Cubelicator
             }
 
             // set new active
-            _active = b;
+            _active = border;
             _active.Background = App.StringToSolidColorBrush(Colors.ButtonPressedBackground);
         }
     }

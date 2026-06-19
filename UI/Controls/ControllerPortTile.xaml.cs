@@ -14,6 +14,8 @@ namespace Cubelicator
         private readonly GamecubeControllerView gamecubeControllerView;
         private readonly ViewsManager viewsManager;
 
+        private bool initialized = false;
+
         public ControllerPortTile(AdapterPort port, GamecubeController gamecubeController, Settings settings, CalibrationManager calibrationManager, ProfileManager profileManager, ViewsManager viewsManager)
         {
             this.port = port;
@@ -27,6 +29,8 @@ namespace Cubelicator
             InitializeComponent();
             InitializeControllerPortTile();
             SetupEventListeners();
+
+            initialized = true;
         }
 
         void InitializeControllerPortTile()
@@ -45,7 +49,7 @@ namespace Cubelicator
                     Tag = controllerColor.ToString()
                 };
 
-                item.Click += OnMenuItemChangeColor;
+                item.Click += UIEvent_OnMenuItemChangeColor;
 
                 Element_ControllerColors.Items.Add(item);
             }
@@ -81,13 +85,16 @@ namespace Cubelicator
             };
         }
 
-        private void OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)
+        private void UIEvent_OnMenuItemClickCalibrate(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
             viewsManager.ShowCalibration(port, gamecubeController);
         }
 
-        private void OnMenuItemChangeColor(object sender, RoutedEventArgs e)
+        private void UIEvent_OnMenuItemChangeColor(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
+
             if (sender is not MenuFlyoutItem item)
                 return;
 
@@ -100,13 +107,17 @@ namespace Cubelicator
             settings.SetControllerColor(port, colorEnum);
         }
 
-        private void OnMenuItemEdit(object sender, RoutedEventArgs e)
+        private void UIEvent_OnMenuItemEdit(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
+
             viewsManager.ShowControllerEditor(port, gamecubeController);
         }
 
-        private void OnMenuItemChangeProfile(object sender, RoutedEventArgs e)
+        private void UIEvent_OnMenuItemChangeProfile(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
+
             if (sender is not MenuFlyoutItem item)
                 return;
 

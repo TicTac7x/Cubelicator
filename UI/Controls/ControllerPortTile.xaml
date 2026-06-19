@@ -48,7 +48,7 @@
 
                             <MenuFlyoutItem
                                 Text="{x:Bind Cubelicator:Strings.Calibrate}"
-                                Click="OnMenuItemClickCalibrate"/>
+                                Click="UIEvent_OnMenuItemClickCalibrate"/>
 
                             <MenuFlyoutSubItem
                                 x:Name="Element_ControllerColors"
@@ -56,7 +56,7 @@
 
                             <MenuFlyoutItem
                                 Text="{x:Bind Cubelicator:Strings.PortTile_Edit}"
-                                Click="OnMenuItemEdit"/>
+                                Click="UIEvent_OnMenuItemEdit"/>
 
                         </MenuFlyout>
                     </Button.Flyout>
@@ -73,7 +73,7 @@
                 Padding="20"
                 Visibility="Collapsed"
                 Background="Transparent"
-                Tapped="OnMenuItemEdit"/>
+                Tapped="UIEvent_OnMenuItemEdit"/>
 
             <Grid
                 x:Name="Element_Port"

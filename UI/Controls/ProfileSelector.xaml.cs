@@ -15,6 +15,7 @@ namespace Cubelicator
         private readonly GamecubeController gamecubeController;
         private readonly bool advanced;
 
+        private bool initialized = false;
         private bool isRenaming = false;
 
         public ProfileSelector(AdapterPort port, Settings settings, ViewsManager viewsManager, ProfileManager profileManager, GamecubeController gamecubeController, bool advanced)
@@ -43,10 +44,12 @@ namespace Cubelicator
                     Tag = controllerColor.ToString()
                 };
 
-                item.Click += Click_ChangeColor;
+                item.Click += UIEvent_ChangeColor;
 
                 Element_ChangeColor.Items.Add(item);
             }
+
+            initialized = true;
         }
 
         private void InitializeUI()
@@ -102,8 +105,9 @@ namespace Cubelicator
             }
         }
 
-        private void Click_ChangeColor(object sender, RoutedEventArgs e)
+        private void UIEvent_ChangeColor(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
             if (sender is not MenuFlyoutItem item)
                 return;
 
@@ -115,29 +119,34 @@ namespace Cubelicator
 
             settings.SetControllerColor(port, colorEnum);
         }
-        private void Click_NewProfile(object sender, RoutedEventArgs args)
+        private void UIEvent_NewProfile(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             var profile = profileManager.NewProfile();
             gamecubeController.Profile = profile;
         }
 
-        private void Click_DeleteProfile(object sender, RoutedEventArgs args)
+        private void UIEvent_DeleteProfile(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             gamecubeController.Profile.Delete();
         }
 
-        private void Click_ToggleRumble(object sender, RoutedEventArgs args)
+        private void UIEvent_ToggleRumble(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             gamecubeController.Profile.SetRumble(!gamecubeController.Profile.Rumble);
         }
 
-        private void Click_Calibrate(object sender, RoutedEventArgs args)
+        private void UIEvent_Calibrate(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             viewsManager.ShowCalibration(port, gamecubeController);
         }
 
-        private void Click_RenameProfile(object sender, RoutedEventArgs e)
+        private void UIEvent_RenameProfile(object sender, RoutedEventArgs e)
         {
+            if (!initialized) return;
             isRenaming = true;
 
             Element_SelectedProfileEdit.Text = gamecubeController.Profile.Name;
@@ -149,8 +158,9 @@ namespace Cubelicator
             Element_SelectedProfileEdit.SelectAll();
         }
 
-        private void Input_KeyDown(object sender, KeyRoutedEventArgs args)
+        private void UIEvent_KeyDown(object sender, KeyRoutedEventArgs args)
         {
+            if (!initialized) return;
             if (args.Key == VirtualKey.Enter)
             {
                 CommitRename();
@@ -161,8 +171,9 @@ namespace Cubelicator
             }
         }
 
-        private void Input_LostFocus(object sender, RoutedEventArgs args)
+        private void UIEvent_LostFocus(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             if (isRenaming)
             {
                 CommitRename();

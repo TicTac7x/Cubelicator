@@ -75,10 +75,10 @@ public partial class MainWindow : Window
             : Microsoft.UI.Colors.Black;
     }
 
-    private void OnClose(object sender, WindowEventArgs e)
+    private void OnClose(object sender, WindowEventArgs args)
     {
         Hide();
-        e.Handled = !exitApp;
+        args.Handled = !exitApp;
     }
 
     public void Exit()

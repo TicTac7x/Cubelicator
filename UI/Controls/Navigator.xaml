@@ -21,10 +21,10 @@
             x:Name="Element_Dashboard"
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Dashboard}"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem"
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem"
             Background="{x:Bind Cubelicator:Colors.AppBackground}">
 
             <TextBlock 
@@ -38,10 +38,10 @@
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Controller1}"
             Visibility="Collapsed"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem">
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem">
 
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Navigator_Controller1}"
@@ -54,10 +54,10 @@
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Controller2}"
             Visibility="Collapsed"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem">
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem">
 
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Navigator_Controller2}"
@@ -70,10 +70,10 @@
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Controller3}"
             Visibility="Collapsed"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem">
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem">
 
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Navigator_Controller3}"
@@ -86,10 +86,10 @@
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Controller4}"
             Visibility="Collapsed"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem">
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem">
 
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Navigator_Controller4}"
@@ -102,10 +102,10 @@
             Style="{StaticResource NavItemStyle}"
             Tag="{x:Bind Cubelicator:AppView.Calibration}"
             Visibility="Collapsed"
-            PointerEntered="OnPointerEntered"
-            PointerExited="OnPointerExited"
-            PointerPressed="OnPointerPressed"
-            PointerReleased="Click_NavigationItem">
+            PointerEntered="UIEvent_OnPointerEntered"
+            PointerExited="UIEvent_OnPointerExited"
+            PointerPressed="UIEvent_OnPointerPressed"
+            PointerReleased="UIEvent_NavigationItem">
 
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Navigator_Calibration}"

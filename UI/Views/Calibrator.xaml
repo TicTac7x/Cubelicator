@@ -38,7 +38,7 @@
                 TextWrapping="NoWrap" />
             </Grid>
 
-        <Button Grid.Row="2" HorizontalAlignment="Center" Margin="100" Click="Click_FinishCalibration">
+        <Button Grid.Row="2" HorizontalAlignment="Center" Margin="100" Click="UIEvent_FinishCalibration">
             <TextBlock
                 Text="{x:Bind Cubelicator:Strings.Calibrator_FinishCalibration}"
                 FontSize="24"/>

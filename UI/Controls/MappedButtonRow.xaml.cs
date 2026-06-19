@@ -13,6 +13,7 @@ namespace Cubelicator
         private XboxControllerInput xboxControllerInput;
         private readonly GamecubeController gamecubeController;
         private bool isExpanded = false;
+        private bool initialized = false;
 
         public MappedButtonRow(GamecubeController gamecubeController, GamecubeControllerInput gamecubeControllerInput, XboxControllerInput xboxControllerInput)
         {
@@ -49,6 +50,8 @@ namespace Cubelicator
             Element_GamecubeButton.Children.Add(control);
             Element_GamecubeButtonName.Text = gamecubeControllerInput.ToString();
             SetXboxControllerButton(xboxControllerInput);
+
+            initialized = true;
         }
 
         private void SetupEvents()
@@ -163,14 +166,14 @@ namespace Cubelicator
                     Element_MappableButtons.Items.Add(menuItem);
                 }
 
-                Element_SensitivityPanel.Visibility = Visibility.Visible;
-                Element_DeadzonePanel.Visibility = Visibility.Visible;
-
                 float sensitivity = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? gamecubeController.Profile.LeftTriggerSensitivity : gamecubeController.Profile.RightTriggerSensitivity;
                 float deadzone = gamecubeControllerTrigger.value == GamecubeControllerTrigger.LeftTrigger ? gamecubeController.Profile.LeftTriggerDeadzone : gamecubeController.Profile.RightTriggerDeadzone;
 
                 SetSensitivity(sensitivity);
                 SetDeadzone(deadzone);
+
+                Element_SensitivityPanel.Visibility = Visibility.Visible;
+                Element_DeadzonePanel.Visibility = Visibility.Visible;
             }
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
@@ -194,14 +197,14 @@ namespace Cubelicator
                     Element_MappableButtons.Items.Add(menuItem);
                 }
 
-                Element_SensitivityPanel.Visibility = Visibility.Visible;
-                Element_DeadzonePanel.Visibility = Visibility.Visible;
-
                 float sensitivity = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? gamecubeController.Profile.LeftStickSensitivity : gamecubeController.Profile.RightStickSensitivity;
                 float deadzone = gamecubeControllerStick.value == GamecubeControllerStick.LeftStick ? gamecubeController.Profile.LeftStickDeadzone: gamecubeController.Profile.RightStickDeadzone;
 
                 SetSensitivity(sensitivity);
                 SetDeadzone(deadzone);
+
+                Element_SensitivityPanel.Visibility = Visibility.Visible;
+                Element_DeadzonePanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -217,9 +220,10 @@ namespace Cubelicator
             Element_DeadzoneSlider.Value = deadzone;
         }
 
-        private void OnSensitivityChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private void UIEvent_OnSensitivityChanged(object sender, RangeBaseValueChangedEventArgs args)
         {
-            float sensitivity = (float) e.NewValue;
+            if (!initialized) return;
+            float sensitivity = (float) args.NewValue;
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
             {
@@ -235,9 +239,10 @@ namespace Cubelicator
             }
         }
 
-        private void OnDeadzoneChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private void UIEvent_OnDeadzoneChanged(object sender, RangeBaseValueChangedEventArgs args)
         {
-            float deadzone = (float)e.NewValue;
+            if (!initialized) return;
+            float deadzone = (float)args.NewValue;
 
             if (gamecubeControllerInput is GamecubeControllerStickInput gamecubeControllerStick)
             {
@@ -254,8 +259,9 @@ namespace Cubelicator
             }
         }
 
-        private void Click_DisableTriggerOnClick(object sender, RoutedEventArgs args)
+        private void UIEvent_DisableTriggerOnClick(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
             bool isChecked = sender is CheckBox checkbox && checkbox.IsChecked == true;
 
             var trigger = gamecubeControllerInput is GamecubeControllerButtonInput gamecubeControllerButtonInput && gamecubeControllerButtonInput.value == GamecubeControllerButton.LeftBumper ? GamecubeControllerTrigger.LeftTrigger : GamecubeControllerTrigger.RightTrigger;
@@ -263,21 +269,24 @@ namespace Cubelicator
             gamecubeController.Profile.SetDisableTriggerOnClick(trigger, isChecked);
         }
 
-        private void OnPointerEntered(object sender, PointerRoutedEventArgs args)
+        private void UIEvent_OnPointerEntered(object sender, PointerRoutedEventArgs args)
         {
+            if (!initialized) return;
             Element_Root.Background = App.StringToSolidColorBrush(Colors.ButtonHoverBackground);
         }
 
-        private void OnPointerExited(object sender, PointerRoutedEventArgs args)
+        private void UIEvent_OnPointerExited(object sender, PointerRoutedEventArgs args)
         {
+            if (!initialized) return;
             if (!isExpanded)
             {
             Element_Root.Background = App.StringToSolidColorBrush(Colors.ButtonPressedBackground);
             }
         }
 
-        private void OnPointerReleased(object sender, PointerRoutedEventArgs args)
+        private void UIEvent_OnPointerReleased(object sender, PointerRoutedEventArgs args)
         {
+            if (!initialized) return;
             SetExpandablePanelVisibility(!isExpanded);
         }
     }

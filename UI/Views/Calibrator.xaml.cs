@@ -9,6 +9,7 @@ namespace Cubelicator
         private readonly ViewsManager viewsManager;
         private readonly CalibrationManager calibrationManager;
 
+        private bool initialized = false;
         private AdapterPort? port;
         private GamecubeController? controller;
         private GamecubeControllerCalibration? calibration;
@@ -19,6 +20,7 @@ namespace Cubelicator
             this.viewsManager = viewsManager;
             this.calibrationManager = calibrationManager;
             InitializeComponent();
+            initialized = true;
         }
 
         public void StartCalibration(AdapterPort port, GamecubeController gamecubeController)
@@ -133,8 +135,10 @@ namespace Cubelicator
             });
         }
 
-        private void Click_FinishCalibration(object sender, RoutedEventArgs args)
+        private void UIEvent_FinishCalibration(object sender, RoutedEventArgs args)
         {
+            if (!initialized) return;
+
             if (controller is { } controllerLocal &&
                 calibration is { } calibrationLocal &&
                 port is { } portLocal)

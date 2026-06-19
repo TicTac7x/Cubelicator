@@ -107,8 +107,8 @@
 
                 <Slider x:Name="Element_SensitivitySlider"
                     Grid.Column="1"
-                    Minimum="0"
-                    Maximum="2"
+                    Minimum="0.1"
+                    Maximum="3"
                     SmallChange="0.1"
                     StepFrequency="0.1"
                     ValueChanged="OnSensitivityChanged" />

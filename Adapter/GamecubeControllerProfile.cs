@@ -20,49 +20,75 @@ namespace Cubelicator
                 var oldName = name;
                 name = value;
                 
-                Event_NameChanged(name, value);
+                Event_NameChanged(oldName, value);
                 Event_Changed();
             }
         }
 
         // Buttons
+        [JsonInclude]
         public XboxControllerButton A { get; private set; } = XboxControllerButton.A;
+        [JsonInclude]
         public XboxControllerButton B { get; private set; } = XboxControllerButton.B;
+        [JsonInclude]
         public XboxControllerButton X { get; private set; } = XboxControllerButton.X;
+        [JsonInclude]
         public XboxControllerButton Y { get; private set; } = XboxControllerButton.Y;
+        [JsonInclude]
         public XboxControllerButton Z { get; private set; } = XboxControllerButton.Back;
+        [JsonInclude]
         public XboxControllerButton Start { get; private set; } = XboxControllerButton.Start;
+        [JsonInclude]
         public XboxControllerButton LeftBumper { get; private set; } = XboxControllerButton.LeftBumper;
+        [JsonInclude]
         public XboxControllerButton RightBumper { get; private set; } = XboxControllerButton.RightBumper;
 
         // DPad
+        [JsonInclude]
         public XboxControllerButton DPadUp { get; private set; } = XboxControllerButton.DPadUp;
+        [JsonInclude]
         public XboxControllerButton DPadDown { get; private set; } = XboxControllerButton.DPadDown;
+        [JsonInclude]
         public XboxControllerButton DPadLeft { get; private set; } = XboxControllerButton.DPadLeft;
+        [JsonInclude]
         public XboxControllerButton DPadRight { get; private set; } = XboxControllerButton.DPadRight;
 
         // Triggers
+        [JsonInclude]
         public XboxControllerTrigger LeftTrigger { get; private set; } = XboxControllerTrigger.LeftTrigger;
+        [JsonInclude]
         public XboxControllerTrigger RightTrigger { get; private set; } = XboxControllerTrigger.RightTrigger;
 
         // Sticks
+        [JsonInclude]
         public XboxControllerStick LeftStick { get; private set; } = XboxControllerStick.LeftStick;
+        [JsonInclude]
         public XboxControllerStick RightStick { get; private set; } = XboxControllerStick.RightStick;
 
         // Specials
+        [JsonInclude]
         public bool DisableLeftTriggerOnClick { get; set; } = false;
+        [JsonInclude]
         public bool DisableRightTriggerOnClick { get; set; } = false;
 
         // Deadzones
+        [JsonInclude]
         public float LeftStickDeadzone { get; private set; } = 0f;
+        [JsonInclude]
         public float RightStickDeadzone { get; private set; } = 0f;
+        [JsonInclude]
         public float LeftTriggerDeadzone { get; private set; } = 0f;
+        [JsonInclude]
         public float RightTriggerDeadzone { get; private set; } = 0f;
 
         // Sensitivity
+        [JsonInclude]
         public float LeftStickSensitivity { get; private set; } = 1f;
+        [JsonInclude]
         public float RightStickSensitivity { get; private set; } = 1f;
+        [JsonInclude]
         public float LeftTriggerSensitivity { get; private set; } = 1f;
+        [JsonInclude]
         public float RightTriggerSensitivity { get; private set; } = 1f;
 
         // Rumble

@@ -356,8 +356,8 @@ namespace Cubelicator
                 Constants.GamecubeControllerTriggerRange);
 
             if (
-                Profile.DisableLeftTriggerOnClick && trigger == GamecubeControllerTrigger.LeftTrigger && triggerCalibrate >= 180 ||
-                Profile.DisableRightTriggerOnClick && trigger == GamecubeControllerTrigger.RightTrigger && triggerCalibrate >= 180
+                Profile.DisableLeftTriggerOnClick && trigger == GamecubeControllerTrigger.LeftTrigger && triggerCalibrate >= 190 ||
+                Profile.DisableRightTriggerOnClick && trigger == GamecubeControllerTrigger.RightTrigger && triggerCalibrate >= 190
                 )
             {
                 controller.SetSliderValue(ToSlider(mappedTrigger), 0);

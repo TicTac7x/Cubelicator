@@ -55,11 +55,11 @@ namespace Cubelicator
         {
             return (stick, axis) switch
             {
-                (GamecubeControllerStick.LeftStick, Axis.X) => _state.StickLeftX,
-                (GamecubeControllerStick.LeftStick, Axis.Y) => _state.StickLeftY,
+                (GamecubeControllerStick.LeftStick, Axis.X) => _state.LeftStickX,
+                (GamecubeControllerStick.LeftStick, Axis.Y) => _state.LeftStickY,
 
-                (GamecubeControllerStick.RightStick, Axis.X) => _state.StickRightX,
-                (GamecubeControllerStick.RightStick, Axis.Y) => _state.StickRightY,
+                (GamecubeControllerStick.RightStick, Axis.X) => _state.RightStickX,
+                (GamecubeControllerStick.RightStick, Axis.Y) => _state.RightStickY,
 
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -69,8 +69,8 @@ namespace Cubelicator
         {
             return trigger switch
             {
-                GamecubeControllerTrigger.LeftTrigger => _state.TriggerLeft,
-                GamecubeControllerTrigger.RightTrigger => _state.TriggerRight,
+                GamecubeControllerTrigger.LeftTrigger => _state.LeftTrigger,
+                GamecubeControllerTrigger.RightTrigger => _state.RightTrigger,
 
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -127,26 +127,26 @@ namespace Cubelicator
             }
 
             // Buttons
-            HandleButton(GamecubeControllerButton.A, _state.ButtonA, state.ButtonA, Profile.A);
-            HandleButton(GamecubeControllerButton.B, _state.ButtonB, state.ButtonB, Profile.B);
-            HandleButton(GamecubeControllerButton.X, _state.ButtonX, state.ButtonX, Profile.X);
-            HandleButton(GamecubeControllerButton.Y, _state.ButtonY, state.ButtonY, Profile.Y);
-            HandleButton(GamecubeControllerButton.Z, _state.ButtonZ, state.ButtonZ, Profile.Z);
-            HandleButton(GamecubeControllerButton.Start, _state.ButtonStart, state.ButtonStart, Profile.Start);
-            HandleButton(GamecubeControllerButton.LeftBumper, _state.ButtonLeftShoulder, state.ButtonLeftShoulder, Profile.LeftBumper);
-            HandleButton(GamecubeControllerButton.RightBumper, _state.ButtonRightShoulder, state.ButtonRightShoulder, Profile.RightBumper);
-            HandleButton(GamecubeControllerButton.DPadUp, _state.ButtonDPadUp, state.ButtonDPadUp, Profile.DPadUp);
-            HandleButton(GamecubeControllerButton.DPadDown, _state.ButtonDPadDown, state.ButtonDPadDown, Profile.DPadDown);
-            HandleButton(GamecubeControllerButton.DPadLeft, _state.ButtonDPadLeft, state.ButtonDPadLeft, Profile.DPadLeft);
-            HandleButton(GamecubeControllerButton.DPadRight, _state.ButtonDPadRight, state.ButtonDPadRight, Profile.DPadRight);
+            HandleButton(GamecubeControllerButton.A, _state.A, state.A, Profile.A);
+            HandleButton(GamecubeControllerButton.B, _state.B, state.B, Profile.B);
+            HandleButton(GamecubeControllerButton.X, _state.X, state.X, Profile.X);
+            HandleButton(GamecubeControllerButton.Y, _state.Y, state.Y, Profile.Y);
+            HandleButton(GamecubeControllerButton.Z, _state.Z, state.Z, Profile.Z);
+            HandleButton(GamecubeControllerButton.Start, _state.Start, state.Start, Profile.Start);
+            HandleButton(GamecubeControllerButton.LeftBumper, _state.LeftBumper, state.LeftBumper, Profile.LeftBumper);
+            HandleButton(GamecubeControllerButton.RightBumper, _state.RightBumper, state.RightBumper, Profile.RightBumper);
+            HandleButton(GamecubeControllerButton.DPadUp, _state.DPadUp, state.DPadUp, Profile.DPadUp);
+            HandleButton(GamecubeControllerButton.DPadDown, _state.DPadDown, state.DPadDown, Profile.DPadDown);
+            HandleButton(GamecubeControllerButton.DPadLeft, _state.DPadLeft, state.DPadLeft, Profile.DPadLeft);
+            HandleButton(GamecubeControllerButton.DPadRight, _state.DPadRight, state.DPadRight, Profile.DPadRight);
 
             // Sticks
             // Left Stick X
             HandleStick(
                 GamecubeControllerStick.LeftStick,
                 Axis.X, 
-                _state.StickLeftX, 
-                state.StickLeftX, 
+                _state.LeftStickX, 
+                state.LeftStickX, 
                 calibration?.LeftStickXMin, 
                 calibration?.LeftStickXCenter, 
                 calibration?.LeftStickXMax, 
@@ -159,8 +159,8 @@ namespace Cubelicator
             HandleStick(
                 GamecubeControllerStick.LeftStick,
                 Axis.Y,
-                _state.StickLeftY,
-                state.StickLeftY,
+                _state.LeftStickY,
+                state.LeftStickY,
                 calibration?.LeftStickYMin,
                 calibration?.LeftStickYCenter,
                 calibration?.LeftStickYMax,
@@ -173,8 +173,8 @@ namespace Cubelicator
             HandleStick(
                 GamecubeControllerStick.RightStick,
                 Axis.X,
-                _state.StickRightX,
-                state.StickRightX,
+                _state.RightStickX,
+                state.RightStickX,
                 calibration?.RightStickXMin,
                 calibration?.RightStickXCenter,
                 calibration?.RightStickXMax,
@@ -187,8 +187,8 @@ namespace Cubelicator
             HandleStick(
                 GamecubeControllerStick.RightStick,
                 Axis.Y,
-                _state.StickRightY,
-                state.StickRightY,
+                _state.RightStickY,
+                state.RightStickY,
                 calibration?.RightStickYMin,
                 calibration?.RightStickYCenter,
                 calibration?.RightStickYMax,
@@ -200,8 +200,8 @@ namespace Cubelicator
             // Left Trigger
             HandleTrigger(
                 GamecubeControllerTrigger.LeftTrigger,
-                _state.TriggerLeft,
-                state.TriggerLeft,
+                _state.LeftTrigger,
+                state.LeftTrigger,
                 calibration?.LeftTriggerMin,
                 calibration?.LeftTriggerMax,
                 Profile.LeftTriggerDeadzone,
@@ -211,8 +211,8 @@ namespace Cubelicator
             // Right Trigger
             HandleTrigger(
                 GamecubeControllerTrigger.RightTrigger,
-                _state.TriggerRight,
-                state.TriggerRight,
+                _state.RightTrigger,
+                state.RightTrigger,
                 calibration?.RightTriggerMin,
                 calibration?.RightTriggerMax,
                 Profile.RightTriggerDeadzone,
@@ -342,29 +342,39 @@ namespace Cubelicator
             XboxControllerTrigger mappedTrigger
         )
         {
-            if (newValue != oldValue && mappedTrigger != XboxControllerTrigger.None)
+            if (newValue == oldValue || mappedTrigger == XboxControllerTrigger.None) return;
+            
+            int triggerDeadzone = ApplyDeadzone(
+                newValue,
+                deadzone,
+                Constants.GamecubeControllerTriggerRange);
+
+            int triggerCalibrate = CalibrateTrigger(
+                triggerDeadzone,
+                calibrationMin,
+                calibrationMax,
+                Constants.GamecubeControllerTriggerRange);
+
+            if (
+                Profile.DisableLeftTriggerOnClick && trigger == GamecubeControllerTrigger.LeftTrigger && triggerCalibrate >= 190 ||
+                Profile.DisableRightTriggerOnClick && trigger == GamecubeControllerTrigger.RightTrigger && triggerCalibrate >= 190
+                )
             {
-                int triggerDeadzone = ApplyDeadzone(
-                    newValue,
-                    deadzone,
-                    Constants.GamecubeControllerTriggerRange);
-
-                int triggerCalibrate = CalibrateTrigger(
-                    triggerDeadzone,
-                    calibrationMin,
-                    calibrationMax,
-                    Constants.GamecubeControllerTriggerRange);
-
-                float triggerSensitivity = triggerCalibrate * sensitivity;
-
-                byte triggerFinal = (byte)Math.Clamp(
-                    triggerSensitivity,
-                    0,
-                    Constants.GamecubeControllerTriggerRange);
-
-                controller.SetSliderValue(ToSlider(mappedTrigger), triggerFinal);
+                controller.SetSliderValue(ToSlider(mappedTrigger), 0);
                 Event_TriggerChanged(trigger, newValue);
+                return;
             }
+
+            float triggerSensitivity = triggerCalibrate * sensitivity;
+
+            byte triggerFinal = (byte)Math.Clamp(
+                triggerSensitivity,
+                0,
+                Constants.GamecubeControllerTriggerRange);
+
+            controller.SetSliderValue(ToSlider(mappedTrigger), triggerFinal);
+            Event_TriggerChanged(trigger, newValue);
+            
         }
 
         private Xbox360Button ToButton(XboxControllerButton input)

@@ -165,7 +165,7 @@
                 
                 <TextBlock Text="{x:Bind Cubelicator:Strings.MappedButtonRow_DisableTriggerOnClick}" Grid.Column="0" VerticalAlignment="Center" />
 
-                <CheckBox x:Name="Element_DisableTriggerOnClickCheckbox" Grid.Column="1" Checked="{x:Bind UIEvent_DisableTriggerOnClick}" />
+                <CheckBox x:Name="Element_DisableTriggerOnClickCheckbox" Grid.Column="1" Checked="{x:Bind UIEvent_DisableTriggerOnClick}" Unchecked="{x:Bind UIEvent_DisableTriggerOnClick}" />
             </Grid>
         </Grid>
     </Grid>

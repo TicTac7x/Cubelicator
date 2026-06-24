@@ -17,7 +17,7 @@ namespace Cubelicator
         private readonly CalibrationManager calibrationManager;
         private readonly ProfileManager profileManager;
         private readonly Settings settings;
-        private readonly GamecubeController[] controllers = new GamecubeController[4];
+        private readonly Dictionary<AdapterPort, GamecubeController> controllers = new Dictionary<AdapterPort, GamecubeController>();
         private ViGEmClient? vigemClient;
         private UsbDevice? usbDevice;
         private UsbEndpointReader? usbReader;
@@ -34,8 +34,6 @@ namespace Cubelicator
             InitializeAdapter();
             CreateControllers();
             SetupListeners();
-
-            
         }
 
         private void SetupListeners()
@@ -47,21 +45,7 @@ namespace Cubelicator
 
             settings.Event_ControllerProfileChanged += (port, profile) =>
             {
-                switch (port)
-                {
-                    case AdapterPort.One:
-                        controllers[0].Profile = profile;
-                        break;
-                    case AdapterPort.Two:
-                        controllers[1].Profile = profile;
-                        break;
-                    case AdapterPort.Three:
-                        controllers[2].Profile = profile;
-                        break;
-                    case AdapterPort.Four:
-                        controllers[3].Profile = profile;
-                        break;
-                }
+                controllers[port].Profile = profile;
             };
 
             foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
@@ -87,7 +71,7 @@ namespace Cubelicator
                     if (usbDevice == null || usbReader == null)
                         break;
 
-                    var result = usbReader.Read(data, 5000, out int len);
+                    var result = usbReader.Read(data, 1000, out int len);
 
                     if (result != ErrorCode.None || len <= 0)
                         continue;
@@ -95,7 +79,7 @@ namespace Cubelicator
                     if (data[0] != ADAPTER_CONNECTED)
                         continue;
 
-                    for (int port = 0; port < controllers.Length; port++)
+                    foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
                     {
                         controllers[port].SetState(DecodeAdapterHexDataToControllerState(data, port));
                     }
@@ -112,7 +96,6 @@ namespace Cubelicator
             {
                 System.Diagnostics.Debug.WriteLine("Adapter device not found.");
                 return;
-
             }
 
             usbReader = usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
@@ -121,17 +104,15 @@ namespace Cubelicator
             // Initialize adapter into streaming mode
             var usbSetupPacket = new UsbSetupPacket(0x21, 11, 0x0001, 0, 0);
             usbDevice.ControlTransfer(ref usbSetupPacket, IntPtr.Zero, 0, out _);
-            usbWriter.Write([0x13], 5000, out int _);
+            usbWriter.Write([0x13], 1000, out int _);
         }
 
         private void CreateControllers()
         {
             vigemClient = new ViGEmClient();
 
-            for (int i = 0; i < controllers.Length; i++)
+            foreach (AdapterPort port in Enum.GetValues<AdapterPort>())
             {
-                AdapterPort port = (AdapterPort)(i + 1);
-
                 var controller = new GamecubeController(vigemClient, new GamecubeControllerProfile(), profileManager);
 
                 controller.Event_RumbleChanged += (bool rumble) =>
@@ -144,7 +125,7 @@ namespace Cubelicator
                     Event_ControllerConnectionChanged(port, connected);
                 };
 
-                controllers[i] = controller;
+                controllers[port] = controller;
             }
         }
 
@@ -152,7 +133,7 @@ namespace Cubelicator
         {
             byte[] report = [ADAPTER_RUMBLE, 0, 0, 0, 0];
 
-            report[(int)port] = (byte)(rumble ? 1 : 0);
+            report[(int) port] = (byte) (rumble ? 1 : 0);
 
             usbWriter?.Write(report, 1000, out _);
         }
@@ -168,26 +149,34 @@ namespace Cubelicator
             }
             catch { }
 
-            foreach (var controller in controllers)
+            foreach (var controller in controllers.Values)
             {
-                controller?.Disconnect();
+                controller.Disconnect();
             }
             usbDevice?.Close();
 
             UsbDevice.Exit();
         }
 
-        private GamecubeControllerState DecodeAdapterHexDataToControllerState(byte[] data, int port)
+        private GamecubeControllerState DecodeAdapterHexDataToControllerState(byte[] data, AdapterPort port)
         {
-            int offset = 1 + port * 9;
-            byte status = data[offset];
+            int offset = 1 + ((int) port - 1) * 9;
 
             byte b1 = data[offset + 1];
             byte b2 = data[offset + 2];
+            bool connected =
+                data[offset + 1] != 0 ||
+                data[offset + 2] != 0 ||
+                data[offset + 3] != 0 ||
+                data[offset + 4] != 0 ||
+                data[offset + 5] != 0 ||
+                data[offset + 6] != 0 ||
+                data[offset + 7] != 0 ||
+                data[offset + 8] != 0;
 
             return new GamecubeControllerState
             {
-                Connected = status == 0x10,
+                Connected = connected,
 
                 A = (b1 & 1) != 0,
                 B = (b1 & 2) != 0,
@@ -221,13 +210,7 @@ namespace Cubelicator
 
         public GamecubeController GetPortController(AdapterPort port)
         {
-            return port switch
-            {
-                AdapterPort.One => controllers[0],
-                AdapterPort.Two => controllers[1],
-                AdapterPort.Three => controllers[2],
-                AdapterPort.Four => controllers[3],
-            };
+            return controllers[port];
         }
     }
 }
